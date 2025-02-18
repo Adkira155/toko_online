@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .container {
+    @apply w-full pr-[var(--bs-gutter-x,0.75rem)] pl-[var(--bs-gutter-x,0.75rem)] mx-auto;
+} */
+.pattern {
+  background-image:  repeating-radial-gradient(circle at 0 0, transparent 0, #ffffff 10px), repeating-linear-gradient(#d8e7ff, #d8e7ff);
+  background-color: #ffffff;
+}
+
