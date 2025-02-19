@@ -17,9 +17,9 @@ class UserSeeder extends Seeder
         //====== seeder akun - user ======
         DB::table('users')->insert([
             [
-                'name' => 'Tebarkode',
-                'email' => 'tebarkode@gmail.com',
-                'password' => Hash::make('tebarkodewaqtuns01'), // Gunakan Hash untuk mengenkripsi password
+                'name' => 'Admin Test',
+                'email' => 'admin@example.com',
+                'password' => Hash::make('admin123'), // Gunakan Hash untuk mengenkripsi password
                 'role' => 'admin', // Set role ke admin
                 'alamat' => '-',
                 'nomor' => 0,

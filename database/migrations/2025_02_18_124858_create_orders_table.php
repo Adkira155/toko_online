@@ -13,6 +13,33 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('orderdetail_id')->constrained('orderdetails')->cascadeOnDelete();
+
+            $table->decimal('total_weight', 15, 2);
+            $table->decimal('total_price', 15, 2);
+            $table->enum('status', [
+                'pending',
+                'paid',
+                'processing',
+                'shipped',
+                'delivered',
+                'cancelled'
+            ])->default('pending');
+
+            $table->string('nama_penerima')->nullable();
+            $table->string('catatan')->nullable();
+            $table->string('alamat_detail')->nullable();
+
+            $table->string('no_resi')->nullable();
+            $table->string('metode_pembayaran');
+            $table->integer('ongkir');
+
+            $table->text('shipping_address')->nullable();
+            $table->string('midtrans_transaction_id')->nullable();
+            $table->string('midtrans_payment_type')->nullable();
+            $table->string('snap_token')->nullable();
+            $table->string('resi_code')->nullable();
             $table->timestamps();
         });
     }
