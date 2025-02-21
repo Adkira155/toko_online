@@ -29,9 +29,8 @@
                     </td>
                     <td class="border p-2">
                         <a href="{{ route('produk.update', $item->id) }}" class="bg-blue-500 text-white px-2 py-1 rounded">Edit</a>
-                        <button wire:click="hapus({{ $item->id }})" class="bg-red-500 text-white px-2 py-1 rounded">Hapus</button>
-                    </td>
-                </tr>
+                        <button wire:click="hapusProduk({{ $item->id }})" class="bg-red-500 text-white px-2 py-1 rounded">Hapus</button>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

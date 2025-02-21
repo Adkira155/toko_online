@@ -23,17 +23,22 @@ class TabelProduk extends Component
         return view('livewire.admin.tabel-produk', compact('produk'));
     }
     
-    public function hapusProduk($id): void
+    public function hapusProduk($id)
     {
         $produk = Produk::findOrFail($id);
+    
+        // Hapus gambar jika ada
         if ($produk->image) {
             Storage::disk('public')->delete($produk->image);
         }
-
+    
+        // Hapus produk dari database
         $produk->delete();
-        if ($this->data->role === 'admin') {
-            $this->produks = Produk::latest()->get();
-        }
+    
+        // Refresh data produk
+        $this->produks = Produk::latest()->get();
+    
+        // Kirim notifikasi sukses
         $this->dispatch('alert-success', message: 'Produk berhasil dihapus.');
     }
 }
