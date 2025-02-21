@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orderdetails', function (Blueprint $table) {
+        if (!Schema::hasTable('detailorders')) {
+        Schema::create('detailorders', function (Blueprint $table) {
+       
             $table->id();
-            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
+            $table->unsignedBigInteger('product_id');
+           // $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->integer('subtotal_harga_item');
             $table->integer('subtotal_berat_item');
             $table->timestamps();
         });
     }
+}
 
     /**
      * Reverse the migrations.

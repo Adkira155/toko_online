@@ -13,7 +13,7 @@
                     description: '{{ $r->deskripsi }}',
                     id_produk: '{{ $r->id }}',
                     price: 'Rp. {{ number_format($r->harga, 0, ',', '.') }}',
-                    kategori: '{{ $r->kategoris->nama }}',
+                    kategori: '{{ $r->kategoris }}',
                 },
             @endforeach
         ],

@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('carts')) {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
+            $table->unsignedBigInteger('product_id');
+           // $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->integer('quantity');
             $table->integer('subtotal_harga');
             $table->integer('subtotal_berat');
@@ -22,6 +24,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+}
 
     /**
      * Reverse the migrations.

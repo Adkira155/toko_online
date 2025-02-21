@@ -13,6 +13,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Agdasima&family=Exo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
+    
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -41,6 +43,8 @@
             <livewire:layout.footer />
             @endguest
         </div>
+
+        @livewireScripts
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
         {{-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script> --}}
     </body>

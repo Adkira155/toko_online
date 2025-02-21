@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('reviews')) {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->string('review')->nullable();
-            $table->string('reply')->nullable();
+            $table->text('review');
+            $table->text('reply')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('produk_id')->constrained('produks')->onDelete('cascade');
             $table->timestamps();
         });
     }
+}
 
     /**
      * Reverse the migrations.

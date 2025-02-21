@@ -15,13 +15,10 @@ class KategoriSeeder extends Seeder
     {
         DB::table('kategoris')->insert([
             [
-                'nama' => 'Internet Of Things',
+                'nama' => 'Fisik',
             ],
             [
-                'nama' => 'Robotik',
-            ],
-            [
-                'nama' => 'Software',
+                'nama' => 'Non-fisik',
             ],
         ]);  
     }
