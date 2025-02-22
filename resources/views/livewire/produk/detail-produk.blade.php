@@ -79,6 +79,9 @@
                 <a href="#" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
                     Keranjang
                 </a>
+                <a href="#" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
+                    beri review
+                </a>
             </div>
         </div>
     </div>

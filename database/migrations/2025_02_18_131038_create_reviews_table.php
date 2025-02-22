@@ -14,10 +14,9 @@ return new class extends Migration
         if (!Schema::hasTable('reviews')) {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->text('review');
-            $table->text('reply')->nullable();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('produk_id')->constrained('produks')->onDelete('cascade');
+            $table->text('review');
+            $table->foreignId('reply')->nullable();
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ return new class extends Migration
        
             $table->id();
             $table->unsignedBigInteger('product_id');
-           // $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+          //$table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->integer('subtotal_harga_item');
             $table->integer('subtotal_berat_item');
             $table->timestamps();

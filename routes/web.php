@@ -23,8 +23,8 @@ Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('callback/google', [GoogleController::class, 'handleCallback']);  
 Route::view('/', 'dashboard');
 
-Route::view('/produk', 'produk.data-produk')->name('produk.data');
-Route::view('/produk-detail/{id}', 'produk.detail-produk')->name('produk.detail');
+Route::view('/produk', 'data-produk')->name('produk.data');
+Route::view('/produk-detail/{id}', 'admin.produk.detail-produk')->name('produk.detail');
 
 
 Route::middleware(['auth'])->group(function () {   
@@ -58,8 +58,11 @@ Route::middleware(['auth'])->group(function () {
          // ==== User ADMIN CRUD ==== //
          Route::view('/tabel-user', 'admin.tabel-user')->name('user.tabel');
          Route::view('/create-user', 'admin.user.create-user')->name('user.create');
-         Route::view('/update-user', 'admin.user.update-user')->name('user.update');
          Route::view('/detail-user', 'admin.user.detail-user')->name('user.detail');
+       //  Route::view('/update-user/{id}', 'admin.user.update-user')->name('user.update');
+         Route::view('/user-update/{id}', 'admin.user.update-user')->name('user.update');
+
+
 
         // ==== Kategori ADMIN CU ==== //
         Route::view('/create-kategori', 'admin.kategori.create-kategori')->name('kategori.create');

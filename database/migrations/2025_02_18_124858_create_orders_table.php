@@ -15,7 +15,8 @@ return new class extends Migration
             Schema::create('orders', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-                $table->foreignId('detailorder_id')->constrained('detailorders');
+                $table->foreignId('id_detailorder');
+               // $table->foreignId('detailorder_id')->constrained('detailorders')->cascadeOnDelete();
                 $table->decimal('total_weight', 15, 2);
                 $table->decimal('total_price', 15, 2);
                 $table->enum('status', [

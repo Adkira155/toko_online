@@ -69,6 +69,7 @@
         </div>
         <div class="p-4">
             <x-primary-button>{{ __('Simpan Perubahan') }}</x-primary-button>
+            <x-primary-button wire:click="back()">{{ __('Kembali') }}</x-primary-button>
         </div>
     </form> 
 </div>
