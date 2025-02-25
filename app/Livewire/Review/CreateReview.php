@@ -1,51 +1,89 @@
 <?php
 namespace App\Livewire\Review;
 
+use App\Models\Produk;
 use App\Models\Review;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CreateReview extends Component
 {
-    public $review;
-    public $user_id;
-    public $produk_id;
-    public $data;
+    public $produk_id, $username, $comment, $parent_id;
+    public $produk;
+    public $replyUsername, $replyComment;
 
-    public function mount(): void
+    public function mount($produk_id)
     {
-        $this->user_id = Auth::id();
-        $this->data = Review::where('user_id', $this->user_id)
-                            ->where('produk_id', $this->produk_id)
-                            ->first();
+        $this->produk_id = $produk_id;
+        $this->produk = Produk::findOrFail($produk_id);
     }
-    
 
-    public function create(): void
+    protected $rules = [
+        'username' => 'required|string|max:255',
+        'comment' => 'required|string',
+    ];
+
+    public function submit()
     {
-        $this->validate([
-            'review' => 'required',
-        ]);
-       
-       dd($this->data);
-
-       dd($this);
-
+        $this->validate();
+    
+        if (!$this->produk_id) {
+            session()->flash('error', 'Terjadi kesalahan: Produk tidak ditemukan.');
+            return;
+        }
+    
         Review::create([
-            'review'    => $this->review,
-            'reply'     => null,
-            'user_id'   => $this->user_id,
             'produk_id' => $this->produk_id,
+            'parent_id' => $this->parent_id,
+            'username' => $this->username,
+            'comment' => $this->comment,
         ]);
-      
 
-        $this->dispatch('alert-success', 'Berhasil Menambahkan Review Anda !!!');
-
-        $this->reset('review'); // Reset input setelah submit
+        session()->flash('success', 'Komentar berhasil dikirim!');
+    
+        $this->reset(['username', 'comment', 'parent_id']); 
     }
 
     public function render()
     {
-        return view('livewire.review.create-review');
+       // dd($this->produk_id); 
+        $reviews = Review::where('produk_id', $this->produk_id)
+                        ->whereNull('parent_id')
+                        ->with('replies')
+                        ->latest()
+                        ->get();
+
+        return view('livewire.review.create-review', compact('reviews'));
+    }
+
+    
+    public function reply($reviewId)
+    {
+        $this->parent_id = $reviewId;
+        $this->replyUsername = '';
+        $this->replyComment = '';
+    }
+    
+    public function submitReply()
+    {
+        $this->validate([
+            'replyUsername' => 'required',
+            'replyComment' => 'required',
+        ]);
+    
+        Review::create([
+            'produk_id' => $this->produk_id,
+            'parent_id' => $this->parent_id,
+            'username' => $this->replyUsername,
+            'comment' => $this->replyComment,
+        ]);
+    
+        $this->resetReply();
+    }
+    
+    public function resetReply()
+    {
+        $this->parent_id = null;
+        $this->replyUsername = '';
+        $this->replyComment = '';
     }
 }

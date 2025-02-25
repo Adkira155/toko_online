@@ -44,6 +44,7 @@
                             </x-slot:trigger>
                             <x-dropdown-link href="{{ route('produk.create') }}">Tambah Produk</x-dropdown-link>
                             <x-dropdown-link href="{{ route('produk.create') }}">Daftar Produk</x-dropdown-link>
+                            <x-nav-link href="{{ route('produk.data') }}" :active="request()->routeIs('produk.data')">Produk</x-nav-link>
                         </x-dropdown>
 
                         <x-dropdown>

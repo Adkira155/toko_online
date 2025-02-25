@@ -9,8 +9,8 @@ class Order extends Model
     protected $table = 'orders';
     protected $guarded = ['id'];
 
-    public function orders()
+    public function detailorders()
     {
-        return $this->hasMany(Order::class,'id_order');
+        return $this->hasMany(Orderdetail::class,'id_detailorder');
     }
 }

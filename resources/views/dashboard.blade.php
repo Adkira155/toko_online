@@ -10,6 +10,7 @@
         {{-- Jika role adalah admin --}}
         @if (Auth::user()->role === 'admin')
             <h1>admin</h1>
+            
         @elseif (Auth::user()->role === 'user')
         <livewire:layout.hero />
         <livewire:layout.card-info />

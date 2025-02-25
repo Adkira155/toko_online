@@ -25,19 +25,20 @@ Route::view('/', 'dashboard');
 
 Route::view('/produk', 'data-produk')->name('produk.data');
 Route::view('/produk-detail/{id}', 'admin.produk.detail-produk')->name('produk.detail');
+Route::view('/review-create/{produk_id}', 'admin.review.create-review')->name('review.create');
 
 
-Route::middleware(['auth'])->group(function () {   
+Route::middleware(['auth'])->group(function () {  
+     
 /*
 |--------------------------------------------------------------------------
 | ================= PENGUNJUNG ROUTE ================= 
 |--------------------------------------------------------------------------
 */
-
     Route::middleware([pengunjung::class])->group(function () {
 
-        Route::view('/keranjang', 'user.keranjang')->name('user.keranjang');
-        Route::view('/review-create', 'review.create-review')->name('review.create');
+        Route::view('/keranjang', 'user.cart.keranjang')->name('user.keranjang');
+      
 
         //Di Pengunjung punya halaman keranjang, create keranjang, lalu checkout
         //bayar, lihat status transaksi punya dia dan melihat detail transaksi, user bisa membuat review
@@ -49,7 +50,6 @@ Route::middleware(['auth'])->group(function () {
 | ================= ADMIN ROUTE ================= 
 |--------------------------------------------------------------------------
 */
-
     Route::middleware([admin::class])->group(function () {
 
         // ==== DASHBOARD ADMIN ==== //
@@ -59,10 +59,7 @@ Route::middleware(['auth'])->group(function () {
          Route::view('/tabel-user', 'admin.tabel-user')->name('user.tabel');
          Route::view('/create-user', 'admin.user.create-user')->name('user.create');
          Route::view('/detail-user', 'admin.user.detail-user')->name('user.detail');
-       //  Route::view('/update-user/{id}', 'admin.user.update-user')->name('user.update');
          Route::view('/user-update/{id}', 'admin.user.update-user')->name('user.update');
-
-
 
         // ==== Kategori ADMIN CU ==== //
         Route::view('/create-kategori', 'admin.kategori.create-kategori')->name('kategori.create');
@@ -78,15 +75,11 @@ Route::middleware(['auth'])->group(function () {
          Route::view('/update-order', 'admin.order.update-order')->name('update.order');
 
          // ==== DetailOrder ADMIN RUD ==== //
-         Route::view('/tabel-detailorder', 'admin.tabel-detailorder')->name('tabel.detail-order');
          Route::view('/update-detailorder', 'admin.detailorder.update-detailorder')->name('update.detail-order');
 
-         // ==== Review ADMIN RUD ==== //
-         Route::view('/tabel-review', 'admin.tabel-review')->name('review.tabel');
-         Route::view('/review-update', 'admin.review.update-review')->name('review.update');
+         // ==== Review ADMIN Reply ==== //
+        //  Route::view('/data-review', 'admin.review.data-review')->name('review.data');
     });
-
-
 
 });
 

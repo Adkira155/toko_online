@@ -14,8 +14,8 @@ return new class extends Migration
         if (!Schema::hasTable('carts')) {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->unsignedBigInteger('product_id');
+            $table->foreignId('id_user')->constrained('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('id_produk');
            // $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->integer('quantity');
             $table->integer('subtotal_harga');
