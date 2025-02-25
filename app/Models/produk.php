@@ -13,9 +13,9 @@ class produk extends Model
     {
         return $this->belongsTo(Kategori::class,'id_kategori');
     }
+    
     public function reviews()
     {
-        return $this->hasMany(Review::class,'id_review');
+        return $this->hasMany(Review::class, 'produk_id')->whereNull('parent_id');
     }
-
 }

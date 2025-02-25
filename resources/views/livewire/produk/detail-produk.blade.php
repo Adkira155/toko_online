@@ -71,14 +71,18 @@
             
 
             <div class="mt-6 flex gap-4 flex-col">
+              
                 <!-- Keranjang Button -->
-                <a href="#" class="w-full bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-                    Beli
-                </a>
-                <!-- Beli Button -->
-                <a href="#" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
+
+                <a  wire:click="addToCart({{ $produk->id }})" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
                     Keranjang
                 </a>
+
+                <a href="{{ route('review.create', $data->id) }}" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
+                    beri review
+                </a>
+                
+
             </div>
         </div>
     </div>

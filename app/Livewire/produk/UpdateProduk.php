@@ -81,6 +81,11 @@ class UpdateProduk extends Component
             return redirect()->route('produk.update', $this->id_produk); 
     }
 
+    public function back()
+    {
+        return redirect()->route('tabel.produk');
+    }
+
     public function render()
     {
         return view('livewire.produk.update-produk');

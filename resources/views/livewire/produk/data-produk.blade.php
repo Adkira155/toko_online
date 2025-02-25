@@ -20,9 +20,9 @@
                     </a>
 
                     <!-- Tambahkan tombol menuju halaman buat review -->
-                    <a href="{{ route('review.create', ['id_produk' => $p->id]) }}" 
+                    <a
                         class="w-full bg-blue-500 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-                        Berikan Review
+                        Lihat Review
                     </a>
                 </div>
             </div>

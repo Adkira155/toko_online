@@ -21,4 +21,5 @@ class pengunjung
         }
         return redirect()->back()->with('error', 'Hak Akses Halaman Telah Dibatasi!');
     }
+
 }
