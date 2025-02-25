@@ -1,95 +1,63 @@
-<div>
-    <div class="bg-white">
-        <div class="flex flex-col mx-3 rounded-lg">
-            <div class="w-full draggable">
-                <div class="container flex flex-col mx-auto">
-                    <div class="flex flex-col items-center w-full mb-5 md:mb-10">
-                        <div class="mb-5">
-                            <div class="text-center">
-                                <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6 flex justify-center">Partner Kami</h2>
-                                <p class="max-w-md mx-auto mt-2 text-gray-500">
-                                    Terima kasih kepada setiap partner yang telah mendukung kami, sehingga kami dapat terus memberikan produk dan layanan terbaik.
-                                </p>
-                            </div>
-                            <div class="flex flex-wrap items-center justify-center gap-2 mt-2">
-                                <div class="text-gray-400">
-                                    <img src="https://kursus.cenari.sch.id/image/cenari.png" alt="Cenari" width="150">
-                                </div>
-                                <div class="text-gray-400">
-                                    <img src="https://tebarkode.com/logo.png" alt="Tebarkode" width="80" height="80">
-                                </div>
-                                <div class="text-gray-400">
-                                    <img src="https://sekolahrobotbanjarmasin.com/images/Logo-Sekolah-Robot-Banjarmasin-FINAL-BG-Hitam-Biru.png" alt="Cenari" width="150">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col items-center gap-6 mb-8">
-                            <div
-                                class="flex flex-wrap items-center justify-center gap-5 lg:gap-12 gap-y-3 lg:flex-nowrap text-dark-grey-900">
-                                <a href="#" class="text-black hover:text-blue-600 ">Tentang Kami</a>
-                                <a href="#" class="text-black hover:text-blue-600 ">Layanan Tersedia</a>
-                                <a href="#" class="text-black hover:text-blue-600 ">Bantuan (FAQ)</a>
-                                <a href="#" class="text-black hover:text-blue-600 ">Hubungi Kami</a>
-                            </div>
-                            <div class="flex items-center gap-8">
-                                <a href="#" class="text-black hover:text-blue-600">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M13.6348 20.7273V12.766H16.3582L16.7668 9.66246H13.6348V7.68128C13.6348 6.78301 13.8881 6.17085 15.2029 6.17085L16.877 6.17017V3.39424C16.5875 3.35733 15.5937 3.27273 14.437 3.27273C12.0216 3.27273 10.368 4.71881 10.368 7.37391V9.66246H7.63636V12.766H10.368V20.7273H13.6348Z"
-                                            fill="currentColor" />
-                                        <mask id="mask0_3320_6483" style="mask-type:luminance"
-                                            maskUnits="userSpaceOnUse" x="7" y="3" width="10" height="18">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M13.6348 20.7273V12.766H16.3582L16.7668 9.66246H13.6348V7.68128C13.6348 6.78301 13.8881 6.17085 15.2029 6.17085L16.877 6.17017V3.39424C16.5875 3.35733 15.5937 3.27273 14.437 3.27273C12.0216 3.27273 10.368 4.71881 10.368 7.37391V9.66246H7.63636V12.766H10.368V20.7273H13.6348Z"
-                                                fill="white" />
-                                        </mask>
-                                        <g mask="url(#mask0_3320_6483)">
-                                        </g>
-                                    </svg>
-                                </a>
-                                <a href="#" class="text-black hover:text-blue-600">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M21.8182 6.14597C21.1356 6.44842 20.4032 6.65355 19.6337 6.74512C20.4194 6.27461 21.0208 5.5283 21.3059 4.64176C20.5689 5.07748 19.7553 5.39388 18.8885 5.56539C18.1943 4.82488 17.207 4.36364 16.1118 4.36364C14.0108 4.36364 12.3072 6.06718 12.3072 8.16706C12.3072 8.46488 12.3408 8.75576 12.4058 9.03391C9.24436 8.87512 6.44106 7.36048 4.56485 5.05894C4.23688 5.61985 4.0503 6.27342 4.0503 6.97109C4.0503 8.29106 4.72246 9.45573 5.74227 10.1371C5.11879 10.1163 4.53239 9.94476 4.01903 9.65967V9.70718C4.01903 11.5498 5.33088 13.0876 7.07033 13.4376C6.75164 13.5234 6.41558 13.5709 6.06791 13.5709C5.82224 13.5709 5.58467 13.5465 5.35173 13.5002C5.83612 15.0125 7.2407 16.1123 8.90485 16.1424C7.60343 17.1622 5.96246 17.7683 4.18012 17.7683C3.87303 17.7683 3.57055 17.7498 3.27273 17.7162C4.95658 18.7974 6.95564 19.4278 9.10418 19.4278C16.1026 19.4278 19.9281 13.6312 19.9281 8.60397L19.9153 8.11145C20.6628 7.57833 21.3094 6.90851 21.8182 6.14597Z"
-                                            fill="currentColor" />
-                                        <mask id="mask0_3320_6484" style="mask-type:luminance"
-                                            maskUnits="userSpaceOnUse" x="3" y="4" width="19" height="16">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M21.8182 6.14597C21.1356 6.44842 20.4032 6.65355 19.6337 6.74512C20.4194 6.27461 21.0208 5.5283 21.3059 4.64176C20.5689 5.07748 19.7553 5.39388 18.8885 5.56539C18.1943 4.82488 17.207 4.36364 16.1118 4.36364C14.0108 4.36364 12.3072 6.06718 12.3072 8.16706C12.3072 8.46488 12.3408 8.75576 12.4058 9.03391C9.24436 8.87512 6.44106 7.36048 4.56485 5.05894C4.23688 5.61985 4.0503 6.27342 4.0503 6.97109C4.0503 8.29106 4.72246 9.45573 5.74227 10.1371C5.11879 10.1163 4.53239 9.94476 4.01903 9.65967V9.70718C4.01903 11.5498 5.33088 13.0876 7.07033 13.4376C6.75164 13.5234 6.41558 13.5709 6.06791 13.5709C5.82224 13.5709 5.58467 13.5465 5.35173 13.5002C5.83612 15.0125 7.2407 16.1123 8.90485 16.1424C7.60343 17.1622 5.96246 17.7683 4.18012 17.7683C3.87303 17.7683 3.57055 17.7498 3.27273 17.7162C4.95658 18.7974 6.95564 19.4278 9.10418 19.4278C16.1026 19.4278 19.9281 13.6312 19.9281 8.60397L19.9153 8.11145C20.6628 7.57833 21.3094 6.90851 21.8182 6.14597Z"
-                                                fill="white" />
-                                        </mask>
-                                        <g mask="url(#mask0_3320_6484)">
-                                        </g>
-                                    </svg>
-                                </a>
-                                <a href="#" class="text-black hover:text-blue-600">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M7.60063 2.18182H16.3991C19.3873 2.18182 21.8183 4.61281 21.8182 7.60074V16.3993C21.8182 19.3872 19.3873 21.8182 16.3991 21.8182H7.60063C4.6127 21.8182 2.18182 19.3873 2.18182 16.3993V7.60074C2.18182 4.61281 4.6127 2.18182 7.60063 2.18182ZM16.3993 20.0759C18.4266 20.0759 20.0761 18.4266 20.0761 16.3993H20.0759V7.60074C20.0759 5.57348 18.4265 3.92405 16.3991 3.92405H7.60063C5.57336 3.92405 3.92405 5.57348 3.92405 7.60074V16.3993C3.92405 18.4266 5.57336 20.0761 7.60063 20.0759H16.3993ZM6.85714 12.0001C6.85714 9.16424 9.16418 6.85714 12 6.85714C14.8358 6.85714 17.1429 9.16424 17.1429 12.0001C17.1429 14.8359 14.8358 17.1429 12 17.1429C9.16418 17.1429 6.85714 14.8359 6.85714 12.0001ZM8.62798 12C8.62798 13.8593 10.1407 15.3719 12 15.3719C13.8593 15.3719 15.372 13.8593 15.372 12C15.372 10.1406 13.8594 8.6279 12 8.6279C10.1406 8.6279 8.62798 10.1406 8.62798 12Z"
-                                            fill="currentColor" />
-                                        <mask id="mask0_3320_6487" style="mask-type:luminance"
-                                            maskUnits="userSpaceOnUse" x="2" y="2" width="20" height="20">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M7.60063 2.18182H16.3991C19.3873 2.18182 21.8183 4.61281 21.8182 7.60074V16.3993C21.8182 19.3872 19.3873 21.8182 16.3991 21.8182H7.60063C4.6127 21.8182 2.18182 19.3873 2.18182 16.3993V7.60074C2.18182 4.61281 4.6127 2.18182 7.60063 2.18182ZM16.3993 20.0759C18.4266 20.0759 20.0761 18.4266 20.0761 16.3993H20.0759V7.60074C20.0759 5.57348 18.4265 3.92405 16.3991 3.92405H7.60063C5.57336 3.92405 3.92405 5.57348 3.92405 7.60074V16.3993C3.92405 18.4266 5.57336 20.0761 7.60063 20.0759H16.3993ZM6.85714 12.0001C6.85714 9.16424 9.16418 6.85714 12 6.85714C14.8358 6.85714 17.1429 9.16424 17.1429 12.0001C17.1429 14.8359 14.8358 17.1429 12 17.1429C9.16418 17.1429 6.85714 14.8359 6.85714 12.0001ZM8.62798 12C8.62798 13.8593 10.1407 15.3719 12 15.3719C13.8593 15.3719 15.372 13.8593 15.372 12C15.372 10.1406 13.8594 8.6279 12 8.6279C10.1406 8.6279 8.62798 10.1406 8.62798 12Z"
-                                                fill="white" />
-                                        </mask>
-                                        <g mask="url(#mask0_3320_6487)">
-                                        </g>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <p class="text-base font-bold leading-7 text-center text-blue-600">
-                                © 2024 Waqtuns (PT Tebar Kode Teknologi)</p>
-                        </div>
+<footer class="bg-white border-t border-gray-100 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Store Info -->
+            <div class="space-y-4">
+                <div class="flex items-center">
+                    <div class="h-10 w-10 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center">
+                        <i class="bi bi-shop-window text-xl text-white"></i>
                     </div>
+                    <span class="ml-3 text-xl font-bold text-gray-900">Store</span>
+                </div>
+                <p class="text-gray-500">Your trusted online shopping destination.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Quick Links</h3>
+                <div class="mt-4 space-y-2">
+                    <a href="/" class="block text-gray-500 hover:text-emerald-600">Home</a>
+                    <a href="/products" class="block text-gray-500 hover:text-emerald-600">Products</a>
+                    <a href="/about" class="block text-gray-500 hover:text-emerald-600">About Us</a>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Contact</h3>
+                <div class="mt-4 space-y-2">
+                    <p class="text-gray-500">Email: </p>
+                    <p class="text-gray-500">Phone: </p>
+                    <p class="text-gray-500">Address: </p>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Follow Us</h3>
+                <div class="mt-4 flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-emerald-600">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-emerald-600">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-emerald-600">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03z"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
+
+        <!-- Copyright -->
+        <div class="mt-12 border-t border-gray-100 pt-8">
+            <p class="text-center text-gray-400">© (nama toko) 2024 Store. All rights reserved.</p>
+        </div>
     </div>
-</div>
+</footer>

@@ -10,38 +10,62 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Agdasima&family=Exo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            <livewire:layout.navbar />
-            <!-- Page Heading -->
-            {{-- @if (isset($header))
+    <body class="font-[Poppins]">
+        <div class="min-h-screen font-[Poppins] bg-white">
+            <div class="min-h-screen">
+                @auth
+                    @if (Auth::user()->role === 'admin')
+                    <livewire:layout.navbar />
+                        <!-- Sidebar untuk Admin -->
+                        <div class="flex">
+                            <livewire:layout.sidebar />
+                            <div class="flex-1">
+                                @if (isset($header))
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
-            @endif --}}
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-                {{-- Untuk semua pengguna yang login --}}
-                @auth
-                @if (Auth::user()->role === 'user')
-                <livewire:layout.footer />
-                @endif
-            @endauth
+            @endif
+                                <!-- Konten Halaman -->
+                                <main class="p-6">
+                                    {{ $slot }}
+                                </main>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Navbar untuk User -->
+                        <livewire:layout.navbar />
+                        {{-- <header class="p-4 bg-gray-100 shadow">
+                            {{ $header ?? '' }}
+                        </header> --}}
+                        <main class="p-6">
+                            {{ $slot }}
+                        </main>
+                        <livewire:layout.footer />
+                    @endif
+                @else
+                    <!-- Guest -->
+                    <livewire:layout.navbar />
+                    {{-- <header class="p-4 bg-gray-100 shadow">
+                        {{ $header ?? '' }}
+                    </header> --}}
+                    <main class="p-6">
+                        {{ $slot }}
+                    </main>
+                    <livewire:layout.footer />
+                @endauth
+            </div>
+            
             {{-- Jika pengguna adalah guest (tidak login) --}}
-            @guest
-            <livewire:layout.footer />
-            @endguest
         </div>
 
         @livewireScripts

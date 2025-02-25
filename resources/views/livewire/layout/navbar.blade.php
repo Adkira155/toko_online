@@ -1,10 +1,14 @@
 <div>
     <nav class="bg-white border-gray-200">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <!-- Logo -->
-            <a href="https://waqtuns.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="https://www.waqtuns.com/waqtuns.png" class="h-8" alt="Waqtuns Logo" />
-            </a>
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-around mx-auto p-4">
+                <!-- Logo -->
+                <a href="">
+                    <x-application-logo/>
+                    </a>
+                    
+        
+   
+
 
             <!-- Mobile Menu Button -->
             <button data-collapse-toggle="navbar-default" type="button"
@@ -20,9 +24,7 @@
 
             <!-- Navbar Menu -->
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul
-                    class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
-                    
+                <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">                     
                     @auth
                     <!-- Admin Menu -->
                         @if (Auth::user()->role === 'admin')
@@ -42,7 +44,7 @@
                                     <span class="text-base font-medium">Produk</span>
                                 </button>
                             </x-slot:trigger>
-                            <x-dropdown-link href="{{ route('produk.create') }}">Tambah Produk</x-dropdown-link>
+                            <x-dropdown-link href="{{ route('tabel.produk') }}">Data Produk</x-dropdown-link>
                             <x-dropdown-link href="{{ route('produk.create') }}">Daftar Produk</x-dropdown-link>
                         </x-dropdown>
 
@@ -82,16 +84,23 @@
                         </x-dropdown>
                         @endif
 
+
+
                         <!-- User Menu -->
                         @if (Auth::user()->role === 'user')
                         <li>
-                            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Dashboard</x-nav-link>
+                            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Home</x-nav-link>
                         </li>
                         <li>
                             <x-nav-link href="{{ route('produk.data') }}" :active="request()->routeIs('produk.data')">Produk</x-nav-link>
                         </li>
                         <li>
-                            <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')">Keranjang</x-nav-link>
+                            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">About Us</x-nav-link>
+                        </li>
+                        <li>
+                            <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')">
+                                <x-cart-logo/>
+                            </x-nav-link>
                         </li>
                         @endif
                     @endauth
@@ -99,34 +108,51 @@
                     <!-- Guest Menu -->
                     @guest
                     <li>
-                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Dashboard</x-nav-link>
+                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Home</x-nav-link>
                     </li>
                     <li>
                         <x-nav-link href="{{ route('produk.data') }}" :active="request()->routeIs('produk.data')">Produk</x-nav-link>
                     </li>
                     <li>
-                        <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')">Keranjang</x-nav-link>
+                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">About Us</x-nav-link>
+                    </li>
+                    <li>
+                        <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')">
+                            <x-cart-logo/>
+                        </x-nav-link>
                     </li>
                     @endguest
 
                     <!-- Authentication Links -->
                     @if (!Auth::check())
                     <li>
+                        <x-primary-button>
                         <a href="{{ route('login') }}"
                             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Login</a>
+                        </x-primary-button>
                     </li>
                     <li>
+                        <x-primary-button>
                         <a href="{{ route('register') }}"
                             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Register</a>
+                        </x-primary-button>
                     </li>
                     @else
-                    <li>
-                        <a href="{{ route('profile') }}"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Profile</a>
-                    </li>
-                    <li>
-                        <x-nav-link wire:click="logout" class="cursor-pointer">Logout</x-nav-link>
-                    </li>
+                    <x-dropdown>
+                        <x-slot:trigger>
+                            <button class="block py-2 px-3 bg-red-200 w-28 h-8 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">
+                                <span class="hidden lg:inline-block">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 256 256">
+                                        <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z">
+                                        </path>
+                                    </svg>
+                                </span>
+                                <span class="text-base font-medium">{{ Auth::user()->name }}</span>
+                            </button>
+                        </x-slot:trigger>
+                        <x-dropdown-link href="{{ route('profile') }}">Profile</x-dropdown-link>
+                        <x-dropdown-link wire:click="logout" class="cursor-pointer">Logout</x-dropdown-link>
+                    </x-dropdown>
                     @endif
                 </ul>
             </div>

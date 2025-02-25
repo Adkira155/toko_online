@@ -23,3 +23,5 @@ class KategoriSeeder extends Seeder
         ]);  
     }
 }
+
+

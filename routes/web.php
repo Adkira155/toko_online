@@ -53,7 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware([admin::class])->group(function () {
 
         // ==== DASHBOARD ADMIN ==== //
-        Route::view('/home', 'admin.home');
+        Route::view('/home', 'admin.home')->name('admin.home');
+        Route::view('/dashboard-admin', 'admin.dashboard-admin')->name('admin.dashboard');
 
          // ==== User ADMIN CRUD ==== //
          Route::view('/tabel-user', 'admin.tabel-user')->name('user.tabel');
