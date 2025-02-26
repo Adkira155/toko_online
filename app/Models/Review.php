@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     protected $fillable = ['comment', 'parent_id', 'username', 'produk_id'];
+    protected $dates = ['created_at', 'updated_at'];
   
     // public function users()
     // {
