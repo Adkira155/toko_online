@@ -8,12 +8,12 @@
         products: [
             @foreach ($random as $r)
                 {
-                    img: '{{ $r->image }}',
-                    name: '{{ $r->nama_produk }}',
-                    description: '{{ $r->deskripsi }}',
+                    img: '{{ $r->image ? asset($r->image) : asset('images/default.png') }}',
+                    name: '{{ e($r->nama_produk) }}',
+                    description: '{{ e($r->deskripsi) }}',
                     id_produk: '{{ $r->id }}',
                     price: 'Rp. {{ number_format($r->harga, 0, ',', '.') }}',
-                    kategori: '{{ $r->kategoris }}',
+                    kategori: '{{ is_iterable($r->kategoris) ? implode(", ", array_map(fn($k) => $k->nama, $r->kategoris->toArray())) : ($r->kategoris->nama ?? "-") }}',
                 },
             @endforeach
         ],
@@ -24,7 +24,7 @@
             return Math.ceil(this.products.length / this.visibleCards) - 1;
         },
         getProductUrl(id) {
-            return '/produk-detail/' + id; // Generate URL for each product
+            return '/produk-detail/' + id;
         }
     }">
         <div class="relative w-full overflow-hidden">
@@ -33,7 +33,6 @@
                 <template x-for="(product, index) in products" :key="index">
                     <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0">
                         <div class="bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl mx-auto">
-                            <!-- Use Alpine.js to generate the href -->
                             <a :href="getProductUrl(product.id_produk)" wire:navigate>
                                 <img :src="product.img" alt="Product" class="h-80 w-full object-cover rounded-t-xl" />
                                 <div class="px-4 py-3">
@@ -49,7 +48,6 @@
             </div>
 
             <br>
-            <!-- Tombol Navigasi -->
             <button @click="currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex"
                 class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-2 rounded-full">
                 &#10094;

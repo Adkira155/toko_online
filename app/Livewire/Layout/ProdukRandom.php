@@ -11,7 +11,6 @@ class ProdukRandom extends Component
 
     public function mount()
     {
-        // Fetch random products, limit to 4 or whatever number you want
         $this->random = produk::inRandomOrder()->limit(4)->get();
     }
 
