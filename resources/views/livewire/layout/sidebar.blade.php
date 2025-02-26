@@ -66,7 +66,7 @@ new class extends Component
             
             <div class="border-t p-3 flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-teal-200 flex items-center justify-center">
-                    <img src="{{ asset('storage/akira.png') }}" alt="Akira" class="w-full h-full rounded-full">
+                    <img src="{{ asset('img/akira.png') }}" alt="Akira" class="w-full h-full rounded-full">
                 </div>
                 <div class="flex-grow">
                     <h6 class="text-gray-900 font-medium">{{ Auth::user()->name }}</h6>
