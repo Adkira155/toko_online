@@ -68,13 +68,13 @@
                 </div>
             </div>
             <div class="flex items-baseline">
-                <p class="text-3xl font-bold text-gray-900">0</p>
+                <p class="text-3xl font-bold text-gray-900">{{ $totalProduk }}</p>
                 <span class="ml-2 text-sm text-gray-500">total produk</span>
             </div>
             <div class="mt-4 grid grid-cols-2 gap-4">
                 <div class="text-center p-2 bg-gray-50 rounded-lg">
                     <p class="text-sm text-gray-500">Stok</p>
-                    <p class="font-semibold text-gray-900">0</p>
+                    <p class="font-semibold text-gray-900">{{ $totalStok }}</p>
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div class="flex items-baseline">
-                <p class="text-3xl font-bold text-gray-900">0</p>
+                <p class="text-3xl font-bold text-gray-900">{{ $totalPelanggan }}</p>
                 <span class="ml-2 text-sm text-gray-500">telah daftar</span>
             </div>
         </div>

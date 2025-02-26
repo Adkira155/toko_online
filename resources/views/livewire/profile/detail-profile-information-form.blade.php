@@ -8,22 +8,23 @@ use Livewire\Volt\Component;
 
 new class extends Component
 {
-    public string $name = '';
-    public string $email = '';
+    public string $nomor = '';
+    public string $alamat = '';
+    public string $profile = '';
 
     /**
      * Mount the component.
      */
     public function mount(): void
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        // $this->name = Auth::user()->name;
+        // $this->email = Auth::user()->email;
     }
 
     /**
      * Update the profile information for the currently authenticated user.
      */
-    public function updateProfileInformation(): void
+    public function updateDetailProfileInformation(): void
     {
         $user = Auth::user();
 
@@ -43,49 +44,51 @@ new class extends Component
         $this->dispatch('profile-updated', name: $user->name);
     }
 
+    
     /**
      * Send an email verification notification to the current user.
      */
-    public function sendVerification(): void
-    {
-        $user = Auth::user();
+    // public function sendVerification(): void
+    // {
+    //     $user = Auth::user();
 
-        if ($user->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('dashboard', absolute: false));
+    //     if ($user->hasVerifiedEmail()) {
+    //         $this->redirectIntended(default: route('dashboard', absolute: false));
 
-            return;
-        }
+    //         return;
+    //     }
 
-        $user->sendEmailVerificationNotification();
+    //     $user->sendEmailVerificationNotification();
 
-        Session::flash('status', 'verification-link-sent');
-    }
+    //     Session::flash('status', 'verification-link-sent');
+    // }
+
 }; ?>
 
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Data Profile Pengguna') }}
+            {{ __('Detail Informasi') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Anda dapat memperbarui data nama pengguna dan email sesuai kebutuhan.") }}
+            {{ __("Berisi informasi lebih lanjut seperti Alamat, Nomor Telpon / WA untuk melengkapi profil pengguna.") }}
         </p>
     </header>
 
-    <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
+    <form wire:submit="updateDetailProfileInformation" class="mt-6 space-y-6">
         <div>
-            <x-input-label for="name" :value="__('Name')" />
+            <x-input-label for="name" :value="__('Nomor Telpon/WA')" />
             <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('Detail Alamat')" />
             <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-            @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
+            {{-- @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-gray-800">
                         {{ __('Your email address is unverified.') }}
@@ -101,7 +104,7 @@ new class extends Component
                         </p>
                     @endif
                 </div>
-            @endif
+            @endif --}}
         </div>
 
         <div class="flex items-center gap-4">

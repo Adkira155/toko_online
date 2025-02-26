@@ -74,9 +74,9 @@
               
                 <!-- Keranjang Button -->
 
-                <a  wire:click="addToCart({{ $produk->id }})" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
+                {{-- <a  wire:click="addToCart({{ $produk->id }})" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
                     Keranjang
-                </a>
+                </a> --}}
 
                 <a href="{{ route('review.create', $data->id) }}" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
                     beri review

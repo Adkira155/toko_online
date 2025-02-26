@@ -3,7 +3,7 @@
         Buat Produk
     </div>
     <hr />
-    <form wire:submit="create">
+    <form wire:submit="create" enctype="multipart/form-data">
         <div class="p-4 grid lg:grid-cols-2 gap-6">
             <!-- Kolom Kiri -->
             <div class="grid gap-4">
@@ -32,7 +32,7 @@
                 </div>
                 <div>
                     <x-input-label class="required" for="harga" :value="__('Harga')" />
-                    <x-text-input wire:model="harga" id="harga" name="harga" type="text"
+                    <x-text-input wire:model="harga" id="harga" name="harga" type="number"
                         class="mt-1 block w-full" required autocomplete="harga" />
                     <x-input-error class="mt-2" :messages="$errors->get('harga')" />
                 </div>
@@ -54,9 +54,9 @@
                 </div>
 
                 <div>
-                    <x-input-label class="required" for="image" :value="__('Gambar Produk')" />
-                    <x-text-input wire:model="image" id="image" name="image" type="file" 
-                        class="mt-1 block w-full" required />
+                    <x-input-label class="required" for="image" :value="__('image')" />
+                    <x-text-input type="file" class="mt-1 block w-full"  type="file"
+                     wire:model="image" id="image" name="image" class="mt-1 block w-full" required />
                     <x-input-error class="mt-2" :messages="$errors->get('image')" />
                 </div>
             </div>

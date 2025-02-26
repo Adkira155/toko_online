@@ -14,6 +14,13 @@ class TabelProduk extends Component
     public $produks, $data;
     public $search = ''; // Untuk pencarian
 
+    public function toggleStatus($id)
+    {
+        $produk = Produk::findOrFail($id);
+        $produk->status = $produk->status === 'aktif' ? 'tidak aktif' : 'aktif';
+        $produk->save();
+    }
+    
     public function render()
     {
         $produk = Produk::where('nama_produk', 'like', '%' . $this->search . '%')
