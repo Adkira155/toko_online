@@ -2,67 +2,63 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use Livewire\WithFileUploads;
 use Livewire\Volt\Component;
 
 new class extends Component
 {
+    use WithFileUploads;
+
     public string $nomor = '';
     public string $alamat = '';
-    public string $profile = '';
+    public $avatar;
+    public $existingAvatar;
 
     /**
      * Mount the component.
      */
     public function mount(): void
     {
-        // $this->name = Auth::user()->name;
-        // $this->email = Auth::user()->email;
+        $user = Auth::user();
+        $this->nomor = $user->nomor ?? '';
+        $this->alamat = $user->alamat ?? '';
+        $this->existingAvatar = $user->avatar ?? null;
     }
 
     /**
      * Update the profile information for the currently authenticated user.
      */
-    public function updateDetailProfileInformation(): void
+    public function updateInfoProfileInformation(): void
     {
         $user = Auth::user();
 
         $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'nomor' => ['required', 'string', 'max:20'],
+            'alamat' => ['required', 'string', 'max:255'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:5120'],
         ]);
 
-        $user->fill($validated);
+        $user->nomor = $validated['nomor'];
+        $user->alamat = $validated['alamat'];
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
+        // Jika ada gambar baru, hapus gambar lama dan simpan gambar baru
+        if ($this->avatar) {
+            if ($this->existingAvatar) {
+                Storage::disk('public')->delete($this->existingAvatar);
+            }
+
+            $avatarPath = $this->avatar->store('avatars', 'public');
+            $user->avatar = $avatarPath;
         }
 
         $user->save();
 
-        $this->dispatch('profile-updated', name: $user->name);
+        // Update existingAvatar agar tetap sinkron di frontend
+        $this->existingAvatar = $user->avatar;
+
+        $this->dispatch('profile-updated');
     }
-
-    
-    /**
-     * Send an email verification notification to the current user.
-     */
-    // public function sendVerification(): void
-    // {
-    //     $user = Auth::user();
-
-    //     if ($user->hasVerifiedEmail()) {
-    //         $this->redirectIntended(default: route('dashboard', absolute: false));
-
-    //         return;
-    //     }
-
-    //     $user->sendEmailVerificationNotification();
-
-    //     Session::flash('status', 'verification-link-sent');
-    // }
-
 }; ?>
 
 <section>
@@ -76,35 +72,28 @@ new class extends Component
         </p>
     </header>
 
-    <form wire:submit="updateDetailProfileInformation" class="mt-6 space-y-6">
+    <form wire:submit="updateInfoProfileInformation" class="mt-6 space-y-6">
         <div>
-            <x-input-label for="name" :value="__('Nomor Telpon/WA')" />
-            <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="nomor" :value="__('Nomor Telpon/WA')" />
+            <x-text-input wire:model="nomor" id="nomor" type="text" class="mt-1 block w-full" required autofocus autocomplete="nomor" />
+            <x-input-error class="mt-2" :messages="$errors->get('nomor')" />
         </div>
 
         <div>
-            <x-input-label for="email" :value="__('Detail Alamat')" />
-            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-input-label for="alamat" :value="__('Detail Alamat')" />
+            <x-text-input wire:model="alamat" id="alamat" type="text" class="mt-1 block w-full" required autocomplete="alamat" />
+            <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
+        </div>
 
-            {{-- @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800">
-                        {{ __('Your email address is unverified.') }}
+        <div>
+            <x-input-label class="required" for="avatar" :value="__('Gambar Profil')" />
+            <input type="file" wire:model="avatar" id="avatar" class="mt-1 block w-full">
+            <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
 
-                        <button wire:click.prevent="sendVerification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif --}}
+            <!-- Preview avatar jika ada -->
+            @if ($existingAvatar)
+                <img src="{{ asset('storage/' . $existingAvatar) }}" class="mt-2 w-20 h-20 rounded-full">
+            @endif
         </div>
 
         <div class="flex items-center gap-4">

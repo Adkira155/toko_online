@@ -44,6 +44,7 @@ class GoogleController extends Controller
                     'name' => $googleUser->name,
                     'alamat' => '-',
                     'nomor' => 0,
+                    'avatar' => '-',
                     'role' => 'user',
                     'email' => $googleUser->email,
                     'social_id' => $googleUser->id,
