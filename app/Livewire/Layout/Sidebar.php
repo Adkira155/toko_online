@@ -5,11 +5,11 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Livewire\Actions\Logout;
 
-class Sidebar extends Component
+class sidebar extends Component
 {
     public function render()
     {
-        return view('livewire.sidebar');
+        return view('livewire.layout.sidebar');
     }
 
     public function logout(Logout $logout): void

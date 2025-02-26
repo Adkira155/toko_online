@@ -24,10 +24,11 @@
     @foreach ($reviews as $review)
         <div class="border p-2 mb-2">
             <strong>{{ $review->username }}</strong> 
+            <small class="text-muted">{{ $review->created_at->format('d M Y H:i') }}</small>
             <p>{{ $review->comment }}</p>
 
             @if (Auth::user()->role === 'admin')
-            <button class="btn btn-link btn-sm" wire:click="reply({{ $review->id }})">Balas</button>
+                <button class="btn btn-link btn-sm" wire:click="reply({{ $review->id }})">Balas</button>
             @endif
 
             {{-- Tampilkan Form Balasan Jika Komentar Ini yang Dipilih --}}
@@ -48,6 +49,7 @@
             @foreach ($review->replies as $reply)
                 <div class="ms-4 p-2 border-start">
                     <strong>{{ $reply->username }}</strong>
+                    <small class="text-muted">{{ $reply->created_at->format('d M Y H:i') }}</small>
                     <p>{{ $reply->comment }}</p>
                 </div>
             @endforeach

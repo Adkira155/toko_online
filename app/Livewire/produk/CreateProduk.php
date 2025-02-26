@@ -30,9 +30,10 @@ class CreateProduk extends Component
             'deskripsi' => ['required'],
             'stok' => ['required', 'integer'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:5120'],
-            'kategori' => ['required'], // Pastikan kategori dipilih
+            'kategori' => ['required'],
         ]);
 
+        // dd($this->all());
         // Simpan gambar jika diunggah
         if ($this->image) {
             $imageName = $this->image->store('images', 'public');
@@ -47,7 +48,7 @@ class CreateProduk extends Component
             'deskripsi' => $this->deskripsi,
             'stok' => $this->stok,
             'berat' => $this->berat,
-            'image' => $imageName,
+           'image' => $imageName,
             'id_kategori' => $this->kategori,
         ]);
 

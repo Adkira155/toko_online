@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('nama_produk');
             $table->string('slug')->unique()->nullable();
             $table->foreignId('id_kategori');
+            $table->text('deskripsi');
             $table->decimal('harga', 15, 2);
             $table->decimal('berat', 10, 2)->nullable();            
-            $table->string('deskripsi');
             $table->integer('stok');
             $table->string('image');
-            $table->string('status')->default('in stock');
+            $table->string('status')->default('aktif'); // Status sebagai string
             $table->timestamps();
         });
     }

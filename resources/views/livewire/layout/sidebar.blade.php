@@ -1,3 +1,20 @@
+<?php
+
+use App\Livewire\Actions\Logout;
+use Livewire\Volt\Component;
+
+new class extends Component
+{
+    /**
+     * Log the current user out of the application.
+     */
+    public function logout(Logout $logout): void
+    {
+        $logout();
+
+        $this->redirect('/', navigate: true);
+    }
+}; ?>
 <div>
     <aside id="sidebar" class="h-screen w-64 bg-white shadow transition-all duration-300 z-40">
         <div class="flex flex-col h-full">
@@ -60,7 +77,7 @@
                         ...
                     </button>
                     <ul id="dropdownMenu" class="absolute right-0 bottom-full mb-2 w-40 bg-white shadow-lg rounded-md overflow-hidden hidden">
-                        <li><a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Profil</a></li>
+                        {{-- <x-dropdown-link href="{{ route('profile') }}">Profile</x-dropdown-link> --}}
                         <x-dropdown-link wire:click="logout" class="cursor-pointer">Logout</x-dropdown-link>
                         
                     </ul>
@@ -69,6 +86,7 @@
             
         </div>
     </aside>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

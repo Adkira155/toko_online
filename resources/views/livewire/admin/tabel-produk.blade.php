@@ -29,16 +29,19 @@
                     Gambar
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    <span class="sr-only">Edit</span>
+                    Status
+                </th>
+                <th scope="col" class="px-6 py-3">
+                   Aksi
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach($produk as $item)
             <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                     {{ $loop->iteration }}
-                </th>
+                </td>
                 <td class="px-6 py-4">
                     {{ $item->nama_produk }}
                 </td>
@@ -49,8 +52,20 @@
                     {{ $item->stok }}
                 </td>
                 <td class="px-6 py-4">
-                    {{-- {{ asset('storage/images/' . $item->image) }} --}}
+                    <img class="size-12 lg:size-20" src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->image }}">
                 </td>
+
+                <td>
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" wire:click="toggleStatus({{ $item->id }})"
+                               class="sr-only peer" 
+                               @checked($item->status === 'aktif')>
+                        <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600">
+                            <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition peer-checked:translate-x-5"></div>
+                        </div>
+                    </label>
+                </td>
+
                 <td class="px-6 py-4 text-right">
                     <x-primary-button>
                         <a href="{{ route('produk.update', $item->id) }}"">Edit</a>

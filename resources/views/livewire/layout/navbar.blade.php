@@ -151,6 +151,7 @@
                                 <span class="text-base font-medium">{{ Auth::user()->name }}</span>
                             </button>
                         </x-slot:trigger>
+                        {{-- berikan kondisi hanya user yang punya profile  --}}
                         <x-dropdown-link href="{{ route('profile') }}">Profile</x-dropdown-link>
                         <x-dropdown-link wire:click="logout" class="cursor-pointer">Logout</x-dropdown-link>
                     </x-dropdown>

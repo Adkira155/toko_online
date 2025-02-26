@@ -4,7 +4,7 @@
         {{-- {{$produk}} --}}
     </div>
     <hr />
-     <form wire:submit="update">
+     <form wire:submit="update" enctype="multipart/form-data">
         <div class="p-4 grid lg:grid-cols-2 gap-4">
             <div class="grid gap-4">
                 <div>
@@ -16,7 +16,7 @@
                 <div>
                     <x-input-label class="required" for="image" :value="__('Gambar Produk')" />
                     <x-text-input wire:model="image" id="image" name="image" type="file" class="mt-1 block w-full"
-                        required autofocus autocomplete="image" value="{{$produk->image}}"/>
+                     autofocus autocomplete="image" value="{{$produk->image}}"/>
                     <x-input-error class="mt-2" :messages="$errors->get('image')" />
                 </div>
 
@@ -59,12 +59,25 @@
                     <x-input-error class="mt-2" :messages="$errors->get('stok')" />
                 </div>
 
-                <div>
-                    <x-input-label class="required" for="status" :value="__('status')" />
-                    <x-text-input wire:model="status" id="status" name="status" type="text"
-                        class="mt-1 block w-full" required autocomplete="status" value="{{$status}}"/>
+                {{-- <div>
+                    <label class="inline-flex items-center mb-5 cursor-pointer">
+                        <input type="checkbox" wire:model.defer="status" class="sr-only peer">
+                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 
+                                    peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full 
+                                    peer dark:bg-gray-700 peer-checked:after:translate-x-full 
+                                    rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white 
+                                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                                    after:bg-white after:border-gray-300 after:border after:rounded-full 
+                                    after:w-5 after:h-5 after:transition-all dark:border-gray-600 
+                                    peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600">
+                        </div>
+                        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            In Stock
+                        </span>
+                    </label>
+                    
                     <x-input-error class="mt-2" :messages="$errors->get('status')" />
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="p-4">

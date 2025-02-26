@@ -36,7 +36,7 @@ class UpdateProduk extends Component
         $this->berat = $this->produk->berat;
         $this->cekImage = $this->produk->image; 
         $this->id_kategori = $this->produk->id_kategori;
-        $this->status = $this->produk->status;
+      //  $this->status = $this->produk->status;
         
         $this->kategori = Kategori::all(); 
     }
@@ -51,7 +51,7 @@ class UpdateProduk extends Component
                 'stok' => ['required', 'integer'],
                 'berat' => ['required', 'integer'], 
                 'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:5120'],
-                'status' => ['required'],
+             //   'status' => ['required'],
             ]);
         
             $produk = Produk::findOrFail($this->id_produk); 
@@ -73,7 +73,7 @@ class UpdateProduk extends Component
                 'harga' => $this->harga,
                 'stok' => $this->stok,
                 'berat' => $this->berat,
-                'status' => $this->status,
+                //'status' => $this->status,
                 'image' => $imageName,
             ]);
         
