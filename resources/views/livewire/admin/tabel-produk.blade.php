@@ -49,7 +49,7 @@
                     {{ $item->stok }}
                 </td>
                 <td class="px-6 py-4">
-                    {{-- {{ asset('storage/' . $item->image) }} --}}
+                    {{-- {{ asset('storage/images/' . $item->image) }} --}}
                 </td>
                 <td class="px-6 py-4 text-right">
                     <x-primary-button>
@@ -98,7 +98,7 @@
     </div> --}}
 
     <!-- Pagination -->
-    <div class="mt-4">
+    <div class="mt-4 bg-none">
         {{ $produk->links() }}
     </div>
 </div>

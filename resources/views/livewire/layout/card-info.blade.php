@@ -13,77 +13,24 @@
 
         <!-- Products Grid -->
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <!-- Product Card 1 -->
             <div
                 class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
-                <img src="{{ asset('storage/akidol.jpg') }}" alt="Product" class="w-full h-72 object-cover">
+                @foreach ($produk as $item)
+                <img src="{{ asset('img/akidol.jpg') }}" alt="Product" class="w-full h-72 object-cover">
                 <div class="p-4">
-                    <h3 class="product-name text-lg font-medium text-gray-900">Akito Idol</h3>
-                    <p class="product-description mt-1 text-sm text-gray-500">High-performance laptop with the latest
-                        features.</p>
+                    <h3 class="product-name text-lg font-medium text-gray-900"></h3>
+                    <p class="product-description mt-1 text-sm text-gray-500">{{ $item->nama_produk }}</p>
                     <div class="mt-4 flex items-center justify-between">
-                        <p class="text-lg font-semibold text-[#fb9229]">Rp 12.999.000</p>
+                        <p class="text-lg font-semibold text-[#FF8201]">Rp {{ number_format($item->harga, 0, ',', '.') }}</p>
                         <button
-                            class="add-to-cart px-4 py-2 bg-[#FF8201] text-white rounded-lg hover:bg-[#FF8201] transition-colors">
-                            Add to Cart
+                            class="add-to-cart px-4 py-2 bg-[#FF8201] text-white rounded-lg hover:bg-[#FF8201] transition-colors"> <x-cart-logo /> Keranjang 
                         </button>
                     </div>
                 </div>
+                @endforeach
+                
             </div>
 
-            <!-- Product Card 2 -->
-            <div
-                class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
-                <img src="{{ asset('storage/akidol.jpg') }}" alt="Product" class="w-full h-72 object-cover">
-                <div class="p-4">
-                    <h3 class="product-name text-lg font-medium text-gray-900">Akito jele</h3>
-                    <p class="product-description mt-1 text-sm text-gray-500">Premium wireless earbuds with noise
-                        cancellation.</p>
-                    <div class="mt-4 flex items-center justify-between">
-                        <p class="text-lg font-semibold text-[#FF8201]">Rp 1.899.000</p>
-                        <button
-                            class="add-to-cart px-4 py-2 bg-[#FF8201] text-white rounded-lg hover:bg-[#FF8201] transition-colors">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product Card 3 -->
-            <div
-                class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
-                <img src="{{ asset('storage/akidol.jpg') }}" alt="Product" class="w-full h-72 object-cover">
-                <div class="p-4">
-                    <h3 class="product-name text-lg font-medium text-gray-900">Akito oren</h3>
-                    <p class="product-description mt-1 text-sm text-gray-500">Feature-rich smartwatch with health
-                        monitoring.</p>
-                    <div class="mt-4 flex items-center justify-between">
-                        <p class="text-lg font-semibold text-[#FF8201]">Rp 2.499.000</p>
-                        <button
-                            class="add-to-cart px-4 py-2 bg-[#FF8201] text-white rounded-lg hover:bg-[#FF8201] transition-colors">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product Card 4 -->
-            <div
-                class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
-                <img src="{{ asset('storage/akidol.jpg') }}" alt="Product" class="w-full h-72 object-cover">
-                <div class="p-4">
-                    <h3 class="product-name text-lg font-medium text-gray-900">Akito jamet</h3>
-                    <p class="product-description mt-1 text-sm text-gray-500">Professional digital camera for
-                        photography enthusiasts.</p>
-                    <div class="mt-4 flex items-center justify-between">
-                        <p class="text-lg font-semibold text-[#FF8201]">Rp 8.999.000</p>
-                        <button
-                            class="add-to-cart px-4 py-2 bg-[#FF8201] text-white rounded-lg hover:bg-[#FF8201] transition-colors">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- No Results Message -->
