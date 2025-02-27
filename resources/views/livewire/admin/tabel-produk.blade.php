@@ -113,8 +113,7 @@
     </div> --}}
 
     <!-- Pagination -->
-    <div class="mt-4 bg-none">
+    <div class="mt-4">
         {{ $produk->links() }}
     </div>
 </div>
-

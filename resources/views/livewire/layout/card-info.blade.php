@@ -15,19 +15,19 @@
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div
                 class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
-                @foreach ($produk as $item)
+                
                 <img src="{{ asset('img/akidol.jpg') }}" alt="Product" class="w-full h-72 object-cover">
                 <div class="p-4">
                     <h3 class="product-name text-lg font-medium text-gray-900"></h3>
-                    <p class="product-description mt-1 text-sm text-gray-500">{{ $item->nama_produk }}</p>
+                    <p class="product-description mt-1 text-sm text-gray-500"></p>
                     <div class="mt-4 flex items-center justify-between">
-                        <p class="text-lg font-semibold text-[#FF8201]">Rp {{ number_format($item->harga, 0, ',', '.') }}</p>
+                        <p class="text-lg font-semibold text-[#FF8201]"></p>
                         <button
                             class="add-to-cart px-4 py-2 bg-[#FF8201] text-white rounded-lg hover:bg-[#FF8201] transition-colors"> <x-cart-logo /> Keranjang 
                         </button>
                     </div>
                 </div>
-                @endforeach
+                
                 
             </div>
 

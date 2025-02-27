@@ -5,11 +5,7 @@
                 <a href="">
                     <x-application-logo/>
                     </a>
-                    
-        
-   
-
-
+ 
             <!-- Mobile Menu Button -->
             <button data-collapse-toggle="navbar-default" type="button"
                 class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
@@ -118,7 +114,8 @@
                         <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">About Us</x-nav-link>
                     </li>
                     <li>
-                        <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')">
+                        <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')"
+                            class="ml-32">
                             <x-cart-logo/>
                         </x-nav-link>
                     </li>
@@ -129,13 +126,13 @@
                     <li>
                         <x-primary-button>
                         <a href="{{ route('login') }}"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Login</a>
+                            class="block py-2 px-3 text-gray-900 rounded hover:text-gray-100 md:hover:bg-transparent md:border-0 md:p-0">Login</a>
                         </x-primary-button>
                     </li>
                     <li>
                         <x-primary-button>
                         <a href="{{ route('register') }}"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Register</a>
+                            class="block py-2 px-3 text-gray-900 rounded hover:text-gray-100 md:hover:bg-transparent md:border-0 md:p-0">Register</a>
                         </x-primary-button>
                     </li>
                     @else

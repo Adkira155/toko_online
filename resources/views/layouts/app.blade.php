@@ -18,12 +18,11 @@
         @livewireStyles
     
     </head>
-    <body class="font-[Poppins]">
+    <body class="">
         <div class="min-h-screen font-[Poppins] bg-white">
             <div class="min-h-screen">
                 @auth
                     @if (Auth::user()->role === 'admin')
-                    <livewire:layout.navbar />
                         <!-- Sidebar untuk Admin -->
                         <div class="flex">
                             <livewire:layout.sidebar />
