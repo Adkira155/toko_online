@@ -29,7 +29,7 @@
                     Gambar
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Status
+                   Status Produk
                 </th>
                 <th scope="col" class="px-6 py-3">
                    Aksi
