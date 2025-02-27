@@ -86,13 +86,19 @@
                         <!-- User Menu -->
                         @if (Auth::user()->role === 'user')
                         <li>
-                            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Home</x-nav-link>
+                            <a href="#hero-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                                Home
+                            </a>
                         </li>
                         <li>
-                            <x-nav-link href="{{ route('produk.data') }}" :active="request()->routeIs('produk.data')">Produk</x-nav-link>
+                            <a href="#produk-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                                Produk
+                            </a>
                         </li>
                         <li>
-                            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">About Us</x-nav-link>
+                            <a href="#about-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                                About Us
+                            </a>
                         </li>
                         <li>
                             <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')">
@@ -105,13 +111,19 @@
                     <!-- Guest Menu -->
                     @guest
                     <li>
-                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Home</x-nav-link>
+                        <a href="#hero-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                            Home
+                        </a>
                     </li>
                     <li>
-                        <x-nav-link href="{{ route('produk.data') }}" :active="request()->routeIs('produk.data')">Produk</x-nav-link>
+                        <a href="#produk-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                            Produk
+                        </a>
                     </li>
                     <li>
-                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">About Us</x-nav-link>
+                        <a href="#about-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                            About Us
+                        </a>
                     </li>
                     <li>
                         <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')"
