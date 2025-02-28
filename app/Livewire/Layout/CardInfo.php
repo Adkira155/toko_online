@@ -13,7 +13,7 @@ class CardInfo extends Component
     public function mount()
     {
         // Memuat produk saat pertama kali halaman dibuka
-        $this->produk = Produk::all();
+        $this->produk = Produk::inRandomOrder()->limit(4)->get();
     }
 
     public function applySearch()

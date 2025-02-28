@@ -1,22 +1,27 @@
 <div>
     <h4>Tambahkan Review</h4>
-    <form wire:submit.prevent="submit">
-        <input type="hidden" wire:model="produk_id">
 
-        <div class="mb-2">
-            <label>Username:</label>
-            <input type="text" class="form-control" wire:model="username">
-            @error('username') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
-        
-        <div class="mb-2">
-            <label>Komentar:</label>
-            <textarea class="form-control" wire:model="comment"></textarea>
-            @error('comment') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
+    @guest
+        <p>Silakan <a href="{{ route('login') }}">login</a> untuk memberikan review.</p>
+    @else
+        <form wire:submit.prevent="submit">
+            <input type="hidden" wire:model="produk_id">
 
-        <button class="btn btn-primary btn-sm">Kirim</button>
-    </form>
+            <div class="mb-2">
+                <label>Username:</label>
+                <input type="text" class="form-control" wire:model="username">
+                @error('username') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
+            
+            <div class="mb-2">
+                <label>Komentar:</label>
+                <textarea class="form-control" wire:model="comment"></textarea>
+                @error('comment') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
+
+            <button class="btn btn-primary btn-sm">Kirim</button>
+        </form>
+    @endguest
 
     <hr>
 
@@ -27,12 +32,12 @@
             <small class="text-muted">{{ $review->created_at->format('d M Y H:i') }}</small>
             <p>{{ $review->comment }}</p>
 
-            @if (Auth::user()->role === 'admin')
+            @if (Auth::check() && Auth::user()->role === 'admin')
                 <button class="btn btn-link btn-sm" wire:click="reply({{ $review->id }})">Balas</button>
             @endif
 
             {{-- Tampilkan Form Balasan Jika Komentar Ini yang Dipilih --}}
-            @if ($parent_id === $review->id)
+            @if (Auth::check() && $parent_id === $review->id)
                 <div class="ms-4 p-2">
                     <input type="text" wire:model="replyUsername" class="form-control" placeholder="Nama Anda">
                     @error('replyUsername') <span class="text-danger">{{ $message }}</span> @enderror
