@@ -61,7 +61,7 @@
 
     <body>
 <!-- source:https://codepen.io/owaiswiz/pen/jOPvEPB -->
-<div class="min-h-screen font-[Poppins] bg-gradient-to-br from-[#a8e8f6] to-[#90fab9] text-gray-900 flex justify-center">
+<div class="min-h-screen bg-[#FFF5E1] text-gray-900 flex justify-center">
 
     <div class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
@@ -70,9 +70,9 @@
             </div>
             {{ $slot }}
         </div>
-        <div class="flex-1 bg-teal-100 text-center hidden lg:flex">
-            <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
-                style="background-image: url('https://drive.google.com/uc?export=view&id=1KZ_Ub_2lZ0dHbKV0fAIhxVhiQA183RCz');">
+        <div class="flex-1 bg-[#ffb28b] text-center hidden lg:flex">
+            <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat">
+              {{-- <img src="{{asset('img/coding.png')}}" alt="login"> --}}
             </div>
         </div>
     </div>

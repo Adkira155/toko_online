@@ -44,7 +44,31 @@
     @guest
     <livewire:layout.hero />
     <livewire:layout.card-info />
+    <livewire:layout.about />
     {{-- <livewire:layout.shop-category />
     <livewire:layout.produk-random /> --}}
     @endguest
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const links = document.querySelectorAll('.scroll-link');
+        
+            links.forEach(link => {
+                link.addEventListener("click", function(e) {
+                    e.preventDefault();
+        
+                    const targetId = this.getAttribute("href").substring(1);
+                    const targetSection = document.getElementById(targetId);
+        
+                    if (targetSection) {
+                        const yOffset = -70; // Sesuaikan agar tidak tertutup navbar
+                        const y = targetSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                    }
+                });
+            });
+        });
+        </script>
+        
 </x-app-layout>

@@ -5,11 +5,7 @@
                 <a href="">
                     <x-application-logo/>
                     </a>
-                    
-        
-   
-
-
+ 
             <!-- Mobile Menu Button -->
             <button data-collapse-toggle="navbar-default" type="button"
                 class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
@@ -90,13 +86,19 @@
                         <!-- User Menu -->
                         @if (Auth::user()->role === 'user')
                         <li>
-                            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Home</x-nav-link>
+                            <a href="#hero-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                                Home
+                            </a>
                         </li>
                         <li>
-                            <x-nav-link href="{{ route('produk.data') }}" :active="request()->routeIs('produk.data')">Produk</x-nav-link>
+                            <a href="#produk-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                                Produk
+                            </a>
                         </li>
                         <li>
-                            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">About Us</x-nav-link>
+                            <a href="#about-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                                About Us
+                            </a>
                         </li>
                         <li>
                             <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')">
@@ -109,16 +111,23 @@
                     <!-- Guest Menu -->
                     @guest
                     <li>
-                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Home</x-nav-link>
+                        <a href="#hero-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                            Home
+                        </a>
                     </li>
                     <li>
-                        <x-nav-link href="{{ route('produk.data') }}" :active="request()->routeIs('produk.data')">Produk</x-nav-link>
+                        <a href="#produk-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                            Produk
+                        </a>
                     </li>
                     <li>
-                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">About Us</x-nav-link>
+                        <a href="#about-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                            About Us
+                        </a>
                     </li>
                     <li>
-                        <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')">
+                        <x-nav-link href="{{ route('user.keranjang') }}" :active="request()->routeIs('user.keranjang')"
+                            class="ml-32">
                             <x-cart-logo/>
                         </x-nav-link>
                     </li>
@@ -129,19 +138,19 @@
                     <li>
                         <x-primary-button>
                         <a href="{{ route('login') }}"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Login</a>
+                            class="block py-2 px-3 text-gray-900 rounded hover:text-gray-100 md:hover:bg-transparent md:border-0 md:p-0">Login</a>
                         </x-primary-button>
                     </li>
                     <li>
                         <x-primary-button>
                         <a href="{{ route('register') }}"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Register</a>
+                            class="block py-2 px-3 text-gray-900 rounded hover:text-gray-100 md:hover:bg-transparent md:border-0 md:p-0">Register</a>
                         </x-primary-button>
                     </li>
                     @else
                     <x-dropdown>
                         <x-slot:trigger>
-                            <button class="block py-2 px-3 bg-red-200 w-28 h-8 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">
+                            <button class="block py-2 px-3 w-28 h-8 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">
                                 <span class="hidden lg:inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 256 256">
                                         <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z">
