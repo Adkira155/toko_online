@@ -91,10 +91,11 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#produk-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
-                                Produk
+                            <a href="/" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0 cursor-pointer">
+                                Home
                             </a>
                         </li>
+                        
                         <li>
                             <a href="#about-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
                                 About Us
@@ -111,11 +112,11 @@
                     <!-- Guest Menu -->
                     @guest
                     <li>
-                        <a href="{{ route('dashboard') }}" 
-                           class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                        <a href="/" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0 cursor-pointer">
                             Home
                         </a>
                     </li>
+                    
                     <li>
                         <a href="#produk-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
                             Produk
