@@ -4,16 +4,9 @@
             <h2 class="text-2xl font-bold text-gray-900">Jelajahi Produk Kami</h2>
 
             <div class="flex items-center gap-4">
-                <!-- Search Bar -->
-                <input type="text" wire:model="search" placeholder="Search products..." class="px-4 py-2 border border-gray-200 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
-
-                <!-- Sorting -->
-                <select wire:model="sort" class="px-4 py-2 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
-                    <option value="">All Products</option>
-                    <option value="low-high">Price: Low to High</option>
-                    <option value="high-low">Price: High to Low</option>
-                    <option value="newest">Newest</option>
-                </select>
+                    <!-- Search Bar -->
+                    <input type="text" wire:model.defer="search" placeholder="Search products..."  class="px-4 py-2 border border-gray-200 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
+                    <x-primary-button wire:click="applySearch" class="px-4 py-2">Search  </x-primary-button>
             </div>
         </div>
 
@@ -43,9 +36,11 @@
 
             <!-- Load More Button -->
             <div class="mt-8 text-center">
-                <x-primary-button wire:click="loadMore" class="px-6 py-3 text-white font-semibold rounded-lg transition">
-                    Load More
-                </x-primary-button>
+                <a href="{{ route('produk.page') }}">
+                    <x-primary-button class="px-6 py-3 text-white font-semibold rounded-lg transition">
+                        Load More
+                    </x-primary-button>
+                </a>
             </div>
         @else
             <div id="noResults" class="text-center py-12">

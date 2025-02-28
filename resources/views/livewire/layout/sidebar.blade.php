@@ -57,14 +57,14 @@ new class extends Component
                 </div>
             </nav>
 
-            <div class="px-3 py-4">
+            {{-- <div class="px-3 py-4">
                 <a href="" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
                     <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"/>
                     </svg>
                     <span wire:click="logout" class="cursor-pointer">Logout</span>
                 </a>
-            </div>
+            </div> --}}
             <!-- User Profile -->
             
             <div class="border-t p-3 flex items-center gap-3">
@@ -75,16 +75,18 @@ new class extends Component
                     <h6 class="text-gray-900 font-medium">{{ Auth::user()->name }}</h6>
                     <small class="text-gray-500">{{ Auth::user()->role }}</small>
                 </div>
-                {{-- <div class="relative">
-                    <button id="dropdownToggle" class="text-gray-600 focus:outline-none">
-                        ...
-                    </button>
-                    <ul id="dropdownMenu" class="absolute right-0 bottom-full mb-2 w-40 bg-white shadow-lg rounded-md overflow-hidden hidden"> --}}
-                        {{-- <x-dropdown-link href="{{ route('profile') }}">Profile</x-dropdown-link> --}}
-                        {{-- <x-dropdown-link wire:click="logout" class="cursor-pointer">Logout</x-dropdown-link> --}}
-                        
-                    {{-- </ul>
-                </div> --}}
+
+                <div class="relative">
+                        <button id="dropdownToggle" class="text-gray-600 text-2xl px-4 py-2 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h.01M12 12h.01M18 12h.01" />
+                            </svg>
+                        </button>
+                        <ul id="dropdownMenu" class="absolute right-0 bottom-full mb-2 w-40 bg-white shadow-lg rounded-md overflow-hidden hidden">
+                            <x-dropdown-link wire:click="logout" class="cursor-pointer">Logout</x-dropdown-link>
+                        </ul>
+                </div>
+
             </div>
             
         </div>

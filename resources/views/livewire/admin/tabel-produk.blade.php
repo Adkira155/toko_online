@@ -6,9 +6,29 @@
     <a href="{{ route('produk.create') }}">Tambah Produk</a>
     </x-primary-button>
 
+     <!-- Pencarian & Filter -->
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center mt-4 space-y-2 md:space-y-0">
+        <!-- Input Pencarian -->
+        <input 
+            type="text" 
+            wire:model.defer="tempSearch" 
+            class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300" 
+            placeholder="Cari produk...">
+        
+        <!-- Filter Status -->
+        <select wire:model.defer="tempFilterStatus" class="w-full md:w-1/4 px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300">
+            <option value="">Semua Status</option>
+            <option value="aktif">Aktif</option>
+            <option value="tidak aktif">Tidak Aktif</option>
+        </select>
+
+        <!-- Tombol Filter -->
+        <x-primary-button wire:click="applyFilter">
+            Cari / Filter
+        </x-primary-button>
+    </div>
+    
     <!-- Tabel Produk -->
-
-
 <div class="relative overflow-x-auto mt-5 shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dat-table">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -55,7 +75,7 @@
                     {{ $item->stok }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $item->berat }}
+                    {{ $item->berat }} Gram
                 </td>
                 <td class="px-6 py-4">
                     <img class="size-12 lg:size-20" src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->image }}">

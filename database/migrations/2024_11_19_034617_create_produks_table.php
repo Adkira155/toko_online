@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('id_kategori');
             $table->text('deskripsi');
             $table->decimal('harga', 15, 2);
-            $table->decimal('berat', 10, 2)->nullable();            
+            $table->integer('berat')->nullable();            
             $table->integer('stok');
             $table->string('image');
             $table->string('status')->default('aktif'); // Status sebagai string

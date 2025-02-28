@@ -52,6 +52,6 @@ class ResetPasswordNotification extends Notification
             ->line('Jika Anda menghadapi kesulitan saat mengklik tombol "Reset Kata Sandi", salin dan tempel tautan berikut ke browser Anda:')
             ->line($resetUrl)
             ->salutation('Salam hangat,')
-            ->salutation('Tim Waqtuns');
+            ->salutation('Tim Coding');
     }
 }

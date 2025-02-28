@@ -111,7 +111,8 @@
                     <!-- Guest Menu -->
                     @guest
                     <li>
-                        <a href="#hero-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                        <a href="{{ route('dashboard') }}" 
+                           class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
                             Home
                         </a>
                     </li>

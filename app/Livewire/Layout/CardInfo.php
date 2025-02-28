@@ -3,20 +3,27 @@
 namespace App\Livewire\Layout;
 
 use Livewire\Component;
-use Livewire\WithPagination;
-// use App\Livewire\Layout\Produk;
 use App\Models\Produk;
-
 
 class CardInfo extends Component
 {
-   public $produks,$data;
-   public $search = '';
+    public $search = '';
+    public $produk = [];
+
+    public function mount()
+    {
+        // Memuat produk saat pertama kali halaman dibuka
+        $this->produk = Produk::all();
+    }
+
+    public function applySearch()
+    {
+        // Query pencarian
+        $this->produk = Produk::where('nama_produk', 'like', '%' . $this->search . '%')->get();
+    }
 
     public function render()
     {
-        $produk = Produk::all();
-
-        return view('livewire.layout.card-info', compact('produk'));
+        return view('livewire.layout.card-info');
     }
 }
