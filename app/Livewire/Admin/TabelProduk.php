@@ -11,8 +11,18 @@ class TabelProduk extends Component
 {
     use WithPagination;
 
-    public $produks, $data;
     public $search = ''; // Untuk pencarian
+    public $filterStatus = ''; // Untuk filter status
+
+    public $tempSearch = ''; // Variabel sementara untuk pencarian
+    public $tempFilterStatus = ''; // Variabel sementara untuk filter status
+
+    public function applyFilter()
+    {
+        $this->search = $this->tempSearch;
+        $this->filterStatus = $this->tempFilterStatus;
+        $this->resetPage(); // Reset ke halaman pertama saat filter diterapkan
+    }
 
     public function toggleStatus($id)
     {
@@ -20,32 +30,33 @@ class TabelProduk extends Component
         $produk->status = $produk->status === 'aktif' ? 'tidak aktif' : 'aktif';
         $produk->save();
     }
-    
-    public function render()
-    {
-        $produk = Produk::where('nama_produk', 'like', '%' . $this->search . '%')
-        ->orderBy('created_at', 'desc')
-        ->paginate(3);
-    
-        return view('livewire.admin.tabel-produk', compact('produk'));
-    }
-    
+
     public function hapusProduk($id)
     {
         $produk = Produk::findOrFail($id);
-    
+
         // Hapus gambar jika ada
         if ($produk->image) {
             Storage::disk('public')->delete($produk->image);
         }
-    
+
         // Hapus produk dari database
         $produk->delete();
-    
-        // Refresh data produk
-        $this->produks = Produk::latest()->get();
-    
+
         // Kirim notifikasi sukses
         $this->dispatch('alert-success', message: 'Produk berhasil dihapus.');
+    }
+
+    public function render()
+    {
+        $query = Produk::where('nama_produk', 'like', '%' . $this->search . '%');
+
+        if ($this->filterStatus) {
+            $query->where('status', $this->filterStatus);
+        }
+
+        $produk = $query->orderBy('created_at', 'desc')->paginate(5);
+
+        return view('livewire.admin.tabel-produk', compact('produk'));
     }
 }

@@ -24,6 +24,7 @@ Route::get('callback/google', [GoogleController::class, 'handleCallback']);
 Route::view('/', 'dashboard');
 
 Route::view('/produk', 'data-produk')->name('produk.data');
+Route::view('/produk-page', 'user.produk-page')->name('produk.page');
 Route::view('/produk-detail/{id}', 'admin.produk.detail-produk')->name('produk.detail');
 Route::view('/review-create/{produk_id}', 'admin.review.create-review')->name('review.create');
 
