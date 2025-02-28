@@ -1,88 +1,120 @@
 <div class="bg-white border border-slate-200 shadow-lg rounded-sm">
     <div class="text-slate-700 py-4 px-4">
         Edit Produk
-        {{-- {{$produk}} --}}
     </div>
     <hr />
-     <form wire:submit="update" enctype="multipart/form-data">
-        <div class="p-4 grid lg:grid-cols-2 gap-4">
+    <form wire:submit="create" enctype="multipart/form-data">
+        <div class="p-4 grid lg:grid-cols-2 gap-6">
+            <!-- Kolom Kiri -->
             <div class="grid gap-4">
                 <div>
-                    <x-input-label class="required" for="nama_produk" :value="__('nama_produk Produk')" />
-                    <x-text-input wire:model="nama_produk" id="nama_produk" name="nama_produk" type="text" class="mt-1 block w-full" value="{{$produk->nama_produk}}"
-                        required autofocus autocomplete="nama_produk"  />
+                    <x-input-label class="required" for="nama_produk" :value="__('Nama Produk')" />
+                    <x-text-input 
+                        wire:model="nama_produk" 
+                        id="nama_produk" 
+                        name="nama_produk" 
+                        type="text" 
+                        class="mt-1 block w-full" 
+                        required autofocus autocomplete="nama_produk"
+                        placeholder="Nama Produk" />
                     <x-input-error class="mt-2" :messages="$errors->get('nama_produk')" />
                 </div>
-                <div>
-                    <x-input-label class="required" for="image" :value="__('Gambar Produk')" />
-                    <x-text-input wire:model="image" id="image" name="image" type="file" class="mt-1 block w-full"
-                     autofocus autocomplete="image" value="{{$produk->image}}"/>
-                    <x-input-error class="mt-2" :messages="$errors->get('image')" />
-                </div>
-
+                
                 <div class="mt-4">
                     <x-input-label class="required" for="kategori" :value="__('Kategori')" />
-                    <select wire:model="kategori" id="kategori" name="kategori" class="mt-1 block w-full" required>
+                   <div class="relative">
+                    <select wire:model="kategori" id="kategori" name="kategori" class="mt-1 w-full h-12 px-4 pr-10 block shadow-lg rounded-md border border-gray-300 appearance-none" required>
                         <option value="">Pilih Kategori</option>
                          @foreach($kategori as $k)
                         <option value="{{ $k->id }}">{{ $k->nama }}</option>
                     
                     @endforeach
                     </select>  
+                    <!-- Ikon panah -->
+                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </div> 
                     <x-input-error class="mt-2" :messages="$errors->get('kategori')" />
                 </div>
 
                 <div>
                     <x-input-label for="deskripsi" :value="__('Deskripsi')" />
-                    <x-text-input wire:model="deskripsi" id="deskripsi" class="block mt-1 w-full" type="text"
-                        name="deskripsi" required autocomplete="deskripsi" value="{{$deskripsi}}"/>
+                    <textarea 
+                        wire:model="deskripsi" 
+                        id="deskripsi" 
+                        name="deskripsi" 
+                        rows="4"
+                        class="block mt-1 w-full p-2 shadow-lg rounded-md border border-gray-300 appearance-none resize-y"
+                        placeholder="Deskripsi Produk"></textarea>
                     <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                 </div>
+                
                 <div>
                     <x-input-label class="required" for="harga" :value="__('Harga')" />
-                    <x-text-input wire:model="harga" id="harga" name="harga" type="number"
-                        class="mt-1 block w-full" required autocomplete="harga" value="{{$harga}}" />
+                    <x-text-input 
+                        wire:model="harga" 
+                        id="harga" name="harga" 
+                        type="number"
+                        class="mt-1 block w-full" 
+                        required autocomplete="harga"
+                        placeholder="Harga Produk" />
                     <x-input-error class="mt-2" :messages="$errors->get('harga')" />
                 </div>
-
+            </div>
+    
+            <!-- Kolom Kanan -->
+            <div class="grid gap-4">
                 <div>
-                    <x-input-label class="required" for="berat" :value="__('berat')" />
-                    <x-text-input wire:model="berat" id="berat" name="berat" type="number"
-                        class="mt-1 block w-full" required autocomplete="berat" value="{{$berat}}"/>
+                    <x-input-label class="required" for="berat" :value="__('Berat')" />
+                    <div class="relative mt-1">
+                        <x-text-input 
+                            wire:model="berat" 
+                            id="berat" 
+                            name="berat" 
+                            type="number"
+                            class="block w-full pr-16 appearance-none" 
+                            required 
+                            autocomplete="berat"
+                            placeholder="berat per-gram"
+                        />
+                        <span class="absolute inset-y-0 right-3 flex items-center text-gray-500 text-sm">
+                            gram
+                        </span>
+                    </div>
                     <x-input-error class="mt-2" :messages="$errors->get('berat')" />
                 </div>
-
+                
                 <div>
                     <x-input-label class="required" for="stok" :value="__('Stok')" />
-                    <x-text-input wire:model="stok" id="stok" name="stok" type="number"
-                        class="mt-1 block w-full" required autocomplete="stok" value="{{$stok}}"/>
+                    <x-text-input 
+                        wire:model="stok" 
+                        id="stok" 
+                        name="stok" 
+                        type="number"
+                        class="mt-1 block w-full" 
+                        required autocomplete="stok"
+                        placeholder="Stok Produk" />
                     <x-input-error class="mt-2" :messages="$errors->get('stok')" />
                 </div>
 
-                {{-- <div>
-                    <label class="inline-flex items-center mb-5 cursor-pointer">
-                        <input type="checkbox" wire:model.defer="status" class="sr-only peer">
-                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 
-                                    peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full 
-                                    peer dark:bg-gray-700 peer-checked:after:translate-x-full 
-                                    rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white 
-                                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                                    after:bg-white after:border-gray-300 after:border after:rounded-full 
-                                    after:w-5 after:h-5 after:transition-all dark:border-gray-600 
-                                    peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600">
-                        </div>
-                        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                            In Stock
-                        </span>
-                    </label>
-                    
-                    <x-input-error class="mt-2" :messages="$errors->get('status')" />
-                </div> --}}
+                <div>
+                    <x-input-label class="required mb-2" for="image" :value="__('Gambar Produk')" />
+                    <x-text-input type="file" class="mt-1 block w-full"  type="file"
+                     wire:model="image" id="image" name="image" class="mt-1 block w-full py-2" required />
+                    <x-input-error class="mt-2" :messages="$errors->get('image')" />
+                </div>
             </div>
         </div>
-        <div class="p-4">
-            <x-primary-button>{{ __('Simpan Perubahan') }}</x-primary-button>
+    
+        <!-- Tombol Simpan & Kembali -->
+        <div class="p-4 flex justify-end space-x-4">
+            <x-primary-button>{{ __('Simpan') }}</x-primary-button>
             <x-primary-button wire:click="back()">{{ __('Kembali') }}</x-primary-button>
         </div>
-    </form> 
+    </form>
+    
 </div>

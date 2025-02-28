@@ -22,14 +22,26 @@
                 
                 <div>
                     <x-input-label class="required" for="kategori" :value="__('Kategori')" />
-                    <select wire:model="kategori" id="kategori" name="kategori" class="mt-1 w-22 h-12 block w-full shadow-lg" required>
-                        <option value="">Pilih Kategori</option>
-                        @foreach($id_kategori as $kategori)
-                            <option value="{{ $kategori->id }}">{{ $kategori->nama}}</option>
-                        @endforeach
-                    </select>
+                    <div class="relative">
+                        <select wire:model="kategori" id="kategori" name="kategori"
+                            class="mt-1 w-full h-12 px-4 pr-10 block shadow-lg rounded-md border border-gray-300 appearance-none"
+                            required>
+                            <option value="">Pilih Kategori</option>
+                            @foreach($id_kategori as $kategori)
+                                <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                            @endforeach
+                        </select>
+                        <!-- Ikon panah -->
+                        <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
                     <x-input-error class="mt-2" :messages="$errors->get('kategori')" />
                 </div>
+                
                 <div>
                     <x-input-label for="deskripsi" :value="__('Deskripsi')" />
                     <textarea 
@@ -37,7 +49,7 @@
                         id="deskripsi" 
                         name="deskripsi" 
                         rows="4"
-                        class="block mt-1 w-full p-2 border-gray-300 rounded-md shadow-lg resize-y"
+                        class="block mt-1 w-full p-2 shadow-lg rounded-md border border-gray-300 appearance-none resize-y"
                         placeholder="Deskripsi Produk"></textarea>
                     <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                 </div>
@@ -65,7 +77,7 @@
                             id="berat" 
                             name="berat" 
                             type="number"
-                            class="block w-full pr-12" 
+                            class="block w-full pr-16 appearance-none" 
                             required 
                             autocomplete="berat"
                             placeholder="berat per-gram"
@@ -84,18 +96,25 @@
                         id="stok" 
                         name="stok" 
                         type="number"
-                        class="mt-1 block w-full" 
+                        class="block w-full pr-8 appearance-none"
                         required autocomplete="stok"
                         placeholder="Stok Produk" />
                     <x-input-error class="mt-2" :messages="$errors->get('stok')" />
                 </div>
 
                 <div>
-                    <x-input-label class="required" for="image" :value="__('image')" />
-                    <x-text-input type="file" class="mt-1 block w-full"  type="file"
-                     wire:model="image" id="image" name="image" class="mt-1 block w-full" required />
+                    <x-input-label class="required mb-2" for="image" :value="__('image')" />
+                    <x-text-input 
+                        type="file" 
+                        wire:model="image" 
+                        id="image" 
+                        name="image" 
+                        class="mt-1 block w-full py-2" 
+                        required 
+                    />
                     <x-input-error class="mt-2" :messages="$errors->get('image')" />
                 </div>
+                
             </div>
         </div>
     

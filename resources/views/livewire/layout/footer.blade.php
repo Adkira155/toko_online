@@ -16,9 +16,9 @@
             <div>
                 <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Quick Links</h3>
                 <div class="mt-4 space-y-2">
-                    <a href="/" class="block text-gray-500 hover:text-softoren">Home</a>
-                    <a href="/products" class="block text-gray-500 hover:text-softoren">Products</a>
-                    <a href="/about" class="block text-gray-500 hover:text-softoren">About Us</a>
+                    <a href="#hero-section" class="block text-gray-500 hover:text-softoren">Home</a>
+                    <a href="#produk-section" class="block text-gray-500 hover:text-softoren">Products</a>
+                    <a href="#about-section" class="block text-gray-500 hover:text-softoren">About Us</a>
                 </div>
             </div>
 
