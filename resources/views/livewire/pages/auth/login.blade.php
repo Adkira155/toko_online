@@ -71,10 +71,10 @@ new #[Layout('layouts.guest')] class extends Component
             </div>
     
             <!-- Login & Google Login -->
-            <div class="flex flex-col space-y-3 mt-6">
+            <div class="flex items-center justify-between mt-4">
                 <!-- Login Button -->
                 <x-primary-button class="w-full py-3 text-white text-center font-bold rounded-lg transition-all duration-300 flex items-center justify-center">
-                    {{ __('Log in') }}
+                    {{ __('Masuk') }}
                 </x-primary-button>
     
                 
@@ -86,7 +86,7 @@ new #[Layout('layouts.guest')] class extends Component
                     <a href="/" class="border-b border-gray-500 border-dotted">Kembali</a>
                 </p>
                 <p class="mt-4">
-                    <a href="/register" class="border-b border-gray-500 border-dotted">Sudah punya akun?</a>
+                    Belum punya akun? <a href="/register" class="border-b border-gray-500 border-dotted">Daftar</a>
                 </p>
             </div>
         </form>
