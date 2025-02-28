@@ -27,13 +27,15 @@
                         <div class="flex">
                             <livewire:layout.sidebar />
                             <div class="flex-1">
-                                @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+                                <div class="flex-1 flex flex-col">
+                                    <!-- Header Konten -->
+                                    <header class="bg-white shadow-md p-7 flex items-center justify-between md:pl-8">
+                                        <!-- Tombol Burger di Mobile -->
+                                        
+                                        <h1 class="text-xl font-bold ml-14">Dashboard</h1>
+                            
+                                    </header>
+                                </div>
                                 <!-- Konten Halaman -->
                                 <main class="p-6">
                                     {{ $slot }}

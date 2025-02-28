@@ -15,7 +15,7 @@
                             <a href="{{ route('produk.page') }}"
                                 class="w-full flex items-center justify-center px-8 py-3 text-base font-medium rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 text-white bg-gradient-to-r from-[#C62B00] via-[#ff6701] to-[#FF8201] md:py-4 md:text-lg md:px-10 
 group hover:scale-105 active:scale-95 ease-out">
-                                Shop Now
+                                Mulai Jelajahi
                             </a>
                         </div>
                     </div>

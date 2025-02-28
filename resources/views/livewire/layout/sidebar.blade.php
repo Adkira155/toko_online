@@ -1,36 +1,20 @@
-<?php
+<div class="flex flex-col min-h-screen">
+    <!-- Tombol Toggle Sidebar -->
+    <input type="checkbox" id="sidebar-toggle" class="hidden peer">
+    <label for="sidebar-toggle" class="fixed top-4 left-4 z-50 p-2 text-gray-600 bg-white rounded-md shadow-md cursor-pointer md:absolute md:top-4 md:left-4 md:p-2 md:z-10">
+        ☰
+    </label>
 
-use App\Livewire\Actions\Logout;
-use Livewire\Volt\Component;
-
-new class extends Component
-{
-    /**
-     * Log the current user out of the application.
-     */
-    public function logout(Logout $logout): void
-    {
-        $logout();
-
-        $this->redirect('/', navigate: true);
-    }
-}; ?>
-<div>
-    <aside id="sidebar" class="h-screen w-64 bg-white shadow transition-all duration-300 z-40">
+    <!-- Sidebar -->
+    <aside class="fixed inset-y-0 left-0 w-64 h-auto min-h-full bg-white shadow-md transform -translate-x-full peer-checked:translate-x-0 transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:hidden peer-checked:md:block">
         <div class="flex flex-col h-full">
-            <!-- Logo -->
-            <div class="px-4 py-4 border-b">
-                {{-- <div class="">
-                   <center> <x-application-logo/></center>
-                </div> --}}
-                <div class="text-center">
-                    <h2 class="text-sky-700 font-bold text-lg">Admin</h2>
-                    <small class="text-gray-500">Panel Manajemen</small>
-                </div>
-                
+            <!-- Header Sidebar -->
+            <div class="px-4 py-4 border-b text-center">
+                <h2 class="text-sky-700 font-bold text-lg">Admin</h2>
+                <small class="text-gray-500">Panel Manajemen</small>
             </div>
 
-            <!-- Navigation -->
+            <!-- Navigasi -->
             <nav class="flex-grow px-3 py-4 overflow-auto">
                 <div class="flex flex-col gap-1">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('dashboard') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
@@ -57,16 +41,7 @@ new class extends Component
                 </div>
             </nav>
 
-            {{-- <div class="px-3 py-4">
-                <a href="" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
-                    <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"/>
-                    </svg>
-                    <span wire:click="logout" class="cursor-pointer">Logout</span>
-                </a>
-            </div> --}}
             <!-- User Profile -->
-            
             <div class="border-t p-3 flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-teal-200 flex items-center justify-center">
                     <img src="{{ asset('img/akira.png') }}" alt="Akira" class="w-full h-full rounded-full">
@@ -88,26 +63,12 @@ new class extends Component
                 </div>
 
             </div>
-            
         </div>
     </aside>
 
+    <!-- Overlay hanya muncul di mobile -->
+    <label for="sidebar-toggle" class="fixed inset-0 hidden peer-checked:block md:peer-checked:hidden"></label>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const dropdownToggle = document.getElementById("dropdownToggle");
-            const dropdownMenu = document.getElementById("dropdownMenu");
-            
-            dropdownToggle.addEventListener("click", function (event) {
-                event.stopPropagation();
-                dropdownMenu.classList.toggle("hidden");
-            });
-
-            document.addEventListener("click", function (event) {
-                if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.classList.add("hidden");
-                }
-            });
-        });
-    </script>
+    
+   
 </div>

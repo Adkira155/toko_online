@@ -138,17 +138,16 @@
                     <!-- Authentication Links -->
                     @if (!Auth::check())
                     <li>
-                        <x-primary-button>
-                        <a href="{{ route('login') }}"
-                            class="block py-2 px-3 text-gray-900 rounded hover:text-gray-100 md:hover:bg-transparent md:border-0 md:p-0">Login</a>
+                        <x-primary-button onclick="window.location='{{ route('login') }}'">
+                            Login
                         </x-primary-button>
                     </li>
                     <li>
-                        <x-primary-button>
-                        <a href="{{ route('register') }}"
-                            class="block py-2 px-3 text-gray-900 rounded hover:text-gray-100 md:hover:bg-transparent md:border-0 md:p-0">Register</a>
+                        <x-primary-button onclick="window.location='{{ route('register') }}'">
+                            Register
                         </x-primary-button>
                     </li>
+                    
                     @else
                     <x-dropdown>
                         <x-slot:trigger>
