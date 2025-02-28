@@ -25,7 +25,7 @@ class TabelProduk extends Component
     {
         $produk = Produk::where('nama_produk', 'like', '%' . $this->search . '%')
         ->orderBy('created_at', 'desc')
-        ->paginate(10);
+        ->paginate(3);
     
         return view('livewire.admin.tabel-produk', compact('produk'));
     }

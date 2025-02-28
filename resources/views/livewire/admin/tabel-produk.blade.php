@@ -10,7 +10,7 @@
 
 
 <div class="relative overflow-x-auto mt-5 shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dat-table">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -24,6 +24,9 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Stok
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Berat
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Gambar
@@ -50,6 +53,9 @@
                 </td>
                 <td class="px-6 py-4">
                     {{ $item->stok }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ $item->berat }}
                 </td>
                 <td class="px-6 py-4">
                     <img class="size-12 lg:size-20" src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->image }}">
@@ -116,4 +122,16 @@
     <div class="mt-4">
         {{ $produk->links() }}
     </div>
+
+    @script
+    <script>
+        $(document).ready(function() {
+            var table = $('.dat-table').DataTable({
+                    responsive: true
+                })
+                .columns.adjust()
+                .responsive.recalc();
+        });
+    </script>
+@endscript
 </div>

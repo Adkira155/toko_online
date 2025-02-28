@@ -9,14 +9,20 @@
             <div class="grid gap-4">
                 <div>
                     <x-input-label class="required" for="nama_produk" :value="__('Nama Produk')" />
-                    <x-text-input wire:model="nama_produk" id="nama_produk" name="nama_produk" type="text" 
-                        class="mt-1 block w-full" required autofocus autocomplete="nama_produk" />
+                    <x-text-input 
+                        wire:model="nama_produk" 
+                        id="nama_produk" 
+                        name="nama_produk" 
+                        type="text" 
+                        class="mt-1 block w-full" 
+                        required autofocus autocomplete="nama_produk"
+                        placeholder="Nama Produk" />
                     <x-input-error class="mt-2" :messages="$errors->get('nama_produk')" />
                 </div>
                 
                 <div>
                     <x-input-label class="required" for="kategori" :value="__('Kategori')" />
-                    <select wire:model="kategori" id="kategori" name="kategori" class="mt-1 block w-full" required>
+                    <select wire:model="kategori" id="kategori" name="kategori" class="mt-1 w-22 h-12 block w-full shadow-lg" required>
                         <option value="">Pilih Kategori</option>
                         @foreach($id_kategori as $kategori)
                             <option value="{{ $kategori->id }}">{{ $kategori->nama}}</option>
@@ -26,14 +32,25 @@
                 </div>
                 <div>
                     <x-input-label for="deskripsi" :value="__('Deskripsi')" />
-                    <x-text-input wire:model="deskripsi" id="deskripsi" class="block mt-1 w-full" type="text"
-                        name="deskripsi" required autocomplete="deskripsi" />
+                    <textarea 
+                        wire:model="deskripsi" 
+                        id="deskripsi" 
+                        name="deskripsi" 
+                        rows="4"
+                        class="block mt-1 w-full p-2 border-gray-300 rounded-md shadow-lg resize-y"
+                        placeholder="Deskripsi Produk"></textarea>
                     <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                 </div>
+                
                 <div>
                     <x-input-label class="required" for="harga" :value="__('Harga')" />
-                    <x-text-input wire:model="harga" id="harga" name="harga" type="number"
-                        class="mt-1 block w-full" required autocomplete="harga" />
+                    <x-text-input 
+                        wire:model="harga" 
+                        id="harga" name="harga" 
+                        type="number"
+                        class="mt-1 block w-full" 
+                        required autocomplete="harga"
+                        placeholder="Harga Produk" />
                     <x-input-error class="mt-2" :messages="$errors->get('harga')" />
                 </div>
             </div>
@@ -42,14 +59,34 @@
             <div class="grid gap-4">
                 <div>
                     <x-input-label class="required" for="berat" :value="__('Berat')" />
-                    <x-text-input wire:model="berat" id="berat" name="berat" type="number"
-                        class="mt-1 block w-full" required autocomplete="berat" />
+                    <div class="relative mt-1">
+                        <x-text-input 
+                            wire:model="berat" 
+                            id="berat" 
+                            name="berat" 
+                            type="number"
+                            class="block w-full pr-12" 
+                            required 
+                            autocomplete="berat"
+                            placeholder="berat per-gram"
+                        />
+                        <span class="absolute inset-y-0 right-3 flex items-center text-gray-500 text-sm">
+                            gram
+                        </span>
+                    </div>
                     <x-input-error class="mt-2" :messages="$errors->get('berat')" />
                 </div>
+                
                 <div>
                     <x-input-label class="required" for="stok" :value="__('Stok')" />
-                    <x-text-input wire:model="stok" id="stok" name="stok" type="number"
-                        class="mt-1 block w-full" required autocomplete="stok" />
+                    <x-text-input 
+                        wire:model="stok" 
+                        id="stok" 
+                        name="stok" 
+                        type="number"
+                        class="mt-1 block w-full" 
+                        required autocomplete="stok"
+                        placeholder="Stok Produk" />
                     <x-input-error class="mt-2" :messages="$errors->get('stok')" />
                 </div>
 
