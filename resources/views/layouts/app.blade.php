@@ -25,15 +25,22 @@
                     @if (Auth::user()->role === 'admin')
                         <!-- Sidebar untuk Admin -->
                         <div class="flex">
+                           
                             <livewire:layout.sidebar />
                             {{-- <livewire:layout.navbar /> --}}
                             <div class="flex-1">
                                 <div class="flex-1 flex flex-col">
                                     <!-- Header Konten -->
-                                    <header class="bg-white shadow-md p-7 flex items-center justify-between md:pl-8">
+                                    <header class="bg-white shadow-md p-3 flex items-center justify-between md:pl-8">
                                         <!-- Tombol Burger di Mobile -->
                                         
                                         <h1 class="text-xl font-bold ml-14">Dashboard</h1>
+
+                                        <!-- User Profile -->
+                                        <livewire:layout.user-profile />
+
+                                        
+                                        
                             
                                     </header>
                                 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use view;
 use Livewire\Component;
 use App\Livewire\Actions\Logout;
 
@@ -12,10 +13,5 @@ class sidebar extends Component
         return view('livewire.layout.sidebar');
     }
 
-    public function logout(Logout $logout): void
-    {
-        $logout();
 
-        $this->redirect('/', navigate: true);
-    }
 }
