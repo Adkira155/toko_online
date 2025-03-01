@@ -63,7 +63,10 @@ new #[Layout('layouts.guest')] class extends Component {
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="text-center mt-6 text-sm text-gray-600 flex justify-between">
+            <p class="mt-4">
+                <a href="/" class="border-b border-gray-500 border-dotted">Kembali</a>
+            </p>
             <x-primary-button>
                 {{ __('Kirim Tautan Reset Kata Sandi') }}
             </x-primary-button>

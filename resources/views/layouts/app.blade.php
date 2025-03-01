@@ -26,6 +26,7 @@
                         <!-- Sidebar untuk Admin -->
                         <div class="flex">
                             <livewire:layout.sidebar />
+                            {{-- <livewire:layout.navbar /> --}}
                             <div class="flex-1">
                                 <div class="flex-1 flex flex-col">
                                     <!-- Header Konten -->

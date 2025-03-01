@@ -72,7 +72,10 @@
                     Rp {{ number_format($item->harga, 0, ',', '.') }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $item->stok }}
+                    {{ $item->stok }} 
+                    <span class="badge {{ $item->stock > 0 ? 'bg-success' : 'bg-danger' }}">
+                       / {{ $item->stok > 0 ? 'In Stock' : 'Out of Stock' }}
+                    </span>
                 </td>
                 <td class="px-6 py-4">
                     {{ $item->berat }} Gram
@@ -105,7 +108,6 @@
         </tbody>
     </table>
 </div>
-
 
     {{-- <div class="overflow-x-auto">
         <table class="w-full border-collapse border border-gray-300">
