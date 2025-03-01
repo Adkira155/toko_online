@@ -77,7 +77,7 @@
                             id="berat" 
                             name="berat" 
                             type="number"
-                            class="block w-full pr-16 appearance-none" 
+                            class="block w-full pr-20 appearance-none" 
                             required 
                             autocomplete="berat"
                             placeholder="berat per-gram"

@@ -1,14 +1,23 @@
 <div id="produk-section" class="products-section bg-white py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-gray-900">Jelajahi Produk Kami</h2>
-
-            <div class="flex items-center gap-4">
-                    <!-- Search Bar -->
-                    <input type="text" wire:model.defer="search" placeholder="Search products..."  class="px-4 py-2 border border-gray-200 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
-                    <x-primary-button wire:click="applySearch" class="px-4 py-2">Search  </x-primary-button>
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 gap-4 sm:gap-0">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 text-center sm:text-left">
+                Jelajahi Produk Kami
+            </h2>
+        
+            <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 w-full sm:w-auto">
+                <!-- Search Bar -->
+                <input type="text" wire:model.defer="search" placeholder="Search products..."  
+                    class="w-full sm:w-auto px-4 py-2 border border-gray-200 rounded-lg 
+                           focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
+                
+                <x-primary-button wire:click="applySearch" 
+                    class="w-full sm:w-auto px-4 py-2 text-center">
+                    Search
+                </x-primary-button>
             </div>
         </div>
+        
 
         <!-- Products Grid -->
         @if ($produk && $produk->count() > 0)

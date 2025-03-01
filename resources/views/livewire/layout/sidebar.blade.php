@@ -9,7 +9,7 @@
     <aside class="fixed inset-y-0 left-0 w-64 h-auto min-h-full bg-white shadow-md transform -translate-x-full peer-checked:translate-x-0 transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:hidden peer-checked:md:block">
         <div class="flex flex-col h-full">
             <!-- Header Sidebar -->
-            <div class="px-4 py-4 border-b text-center">
+            <div class="px-3 py-3 border-b text-center">
                 <h2 class="text-sky-700 font-bold text-lg">Admin</h2>
                 <small class="text-gray-500">Panel Manajemen</small>
             </div>
@@ -41,28 +41,7 @@
                 </div>
             </nav>
 
-            <!-- User Profile -->
-            <div class="border-t p-3 flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-teal-200 flex items-center justify-center">
-                    <img src="{{ asset('img/akira.png') }}" alt="Akira" class="w-full h-full rounded-full">
-                </div>
-                <div class="flex-grow">
-                    <h6 class="text-gray-900 font-medium">{{ Auth::user()->name }}</h6>
-                    <small class="text-gray-500">{{ Auth::user()->role }}</small>
-                </div>
-
-                <div class="relative">
-                        <button id="dropdownToggle" class="text-gray-600 text-2xl px-4 py-2 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h.01M12 12h.01M18 12h.01" />
-                            </svg>
-                        </button>
-                        <ul id="dropdownMenu" class="absolute right-0 bottom-full mb-2 w-40 bg-white shadow-lg rounded-md overflow-hidden hidden">
-                            <x-dropdown-link wire:click="logout" class="cursor-pointer">Logout</x-dropdown-link>
-                        </ul>
-                </div>
-
-            </div>
+            
         </div>
     </aside>
 
