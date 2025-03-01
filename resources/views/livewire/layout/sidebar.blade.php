@@ -1,3 +1,4 @@
+
 <div class="flex flex-col min-h-screen">
     <!-- Tombol Toggle Sidebar -->
     <input type="checkbox" id="sidebar-toggle" class="hidden peer">
@@ -68,7 +69,23 @@
 
     <!-- Overlay hanya muncul di mobile -->
     <label for="sidebar-toggle" class="fixed inset-0 hidden peer-checked:block md:peer-checked:hidden"></label>
-
-    
-   
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdownToggle = document.getElementById("dropdownToggle");
+        const dropdownMenu = document.getElementById("dropdownMenu");
+
+        dropdownToggle.addEventListener("click", function () {
+            dropdownMenu.classList.toggle("hidden");
+        });
+
+        // Menutup dropdown jika klik di luar elemen dropdown
+        document.addEventListener("click", function (event) {
+            if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add("hidden");
+            }
+        });
+    });
+</script>
+
