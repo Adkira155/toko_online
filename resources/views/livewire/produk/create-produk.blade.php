@@ -62,7 +62,7 @@
                         type="number"
                         class="mt-1 block w-full" 
                         required autocomplete="harga"
-                        placeholder="Harga Produk" />
+                        placeholder="Rp.XXXXXX" />
                     <x-input-error class="mt-2" :messages="$errors->get('harga')" />
                 </div>
             </div>

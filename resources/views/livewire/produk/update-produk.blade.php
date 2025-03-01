@@ -3,7 +3,7 @@
         Edit Produk
     </div>
     <hr />
-    <form wire:submit="create" enctype="multipart/form-data">
+    <form wire:submit="update" enctype="multipart/form-data">
         <div class="p-4 grid lg:grid-cols-2 gap-6">
             <!-- Kolom Kiri -->
             <div class="grid gap-4">
@@ -104,7 +104,7 @@
                 <div>
                     <x-input-label class="required mb-2" for="image" :value="__('Gambar Produk')" />
                     <x-text-input type="file" class="mt-1 block w-full"  type="file"
-                     wire:model="image" id="image" name="image" class="mt-1 block w-full py-2" required />
+                     wire:model="image" id="image" name="image" class="mt-1 block w-full py-2"/>
                     <x-input-error class="mt-2" :messages="$errors->get('image')" />
                 </div>
             </div>

@@ -55,7 +55,7 @@ class TabelProduk extends Component
             $query->where('status', $this->filterStatus);
         }
 
-        $produk = $query->orderBy('created_at', 'desc')->paginate(3);
+        $produk = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return view('livewire.admin.tabel-produk', compact('produk'));
     }
