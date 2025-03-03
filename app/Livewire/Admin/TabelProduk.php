@@ -11,7 +11,7 @@ class TabelProduk extends Component
 {
     use WithPagination;
 
-    public $search = ''; // Untuk pencarian
+    public $search = ''; 
     public $filterStatus = ''; // Untuk filter status
 
     public $tempSearch = ''; // Variabel sementara untuk pencarian

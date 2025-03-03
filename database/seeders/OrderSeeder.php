@@ -15,8 +15,8 @@ class OrderSeeder extends Seeder
     {
         DB::table('carts')->insert([     
             [
-                'id_user' => 2,
-                'id_produk' => 1,
+                'user_id' => 2,
+                'produk_id' => 1,
                 'quantity' => 2,
                 'subtotal_harga' => 25000,
                 'subtotal_berat' => 15, 
