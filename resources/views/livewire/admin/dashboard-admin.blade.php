@@ -12,12 +12,12 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="text-gray-600 font-medium">Penjualan</h3>
+                    <h3 class="text-gray-600 font-medium">Pesanan Terkirim Bulan Ini</h3>
                 </div>
             </div>
             <div class="flex items-baseline">
-                <p class="text-3xl font-bold text-gray-900">Rp 0</p>
-                <span class="ml-2 text-sm text-gray-500">this month</span>
+                <p class="text-3xl font-bold text-gray-900">{{ $totalPesananPerBulan }}</p>
+                <span class="ml-2 text-sm text-gray-500">Pesanan Untuk Bulan Ini</span>
             </div>
         </div>
 
@@ -35,21 +35,21 @@
                 </div>
             </div>
             <div class="flex items-baseline">
-                <p class="text-3xl font-bold text-gray-900">0</p>
+                <p class="text-3xl font-bold text-gray-900">{{ $totalPesanan }}</p>
                 <span class="ml-2 text-sm text-gray-500">pesanan</span>
             </div>
             <div class="mt-4 grid grid-cols-3 gap-4">
                 <div class="text-center p-2 bg-gray-50 rounded-lg">
                     <p class="text-sm text-gray-500">Pending</p>
-                    <p class="font-semibold text-gray-900">0</p>
+                    <p class="font-semibold text-gray-900">{{ $totalPending }}</p>
                 </div>
                 <div class="text-center p-2 bg-gray-50 rounded-lg">
                     <p class="text-sm text-gray-500">Proses</p>
-                    <p class="font-semibold text-gray-900">0</p>
+                    <p class="font-semibold text-gray-900">{{ $totalProses }}</p>
                 </div>
                 <div class="text-center p-2 bg-gray-50 rounded-lg">
                     <p class="text-sm text-gray-500">Selesai</p>
-                    <p class="font-semibold text-gray-900">0</p>
+                    <p class="font-semibold text-gray-900">{{ $totalSelesai }}</p>
                 </div>
             </div>
         </div>
