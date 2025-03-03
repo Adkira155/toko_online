@@ -73,8 +73,7 @@
             <div class="mt-6 flex gap-4 flex-col">
               
                 <!-- Keranjang Button -->
-
-                {{-- <a  wire:click="addToCart({{ $produk->id }})" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
+                {{-- <a  wire:click="addToCart({{ $data->id }})" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
                     Keranjang
                 </a> --}}
 
