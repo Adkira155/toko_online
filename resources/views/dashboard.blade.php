@@ -35,6 +35,9 @@
         @elseif (Auth::user()->role === 'user')
         <livewire:layout.hero />
         <livewire:layout.card-info />
+        <livewire:layout.about />
+
+        <center><h1 class="text-4xl text-softoren">Selamat Berbelanja! ^^</h1></center>
         {{-- <livewire:layout.shop-category />
         <livewire:layout.produk-random /> --}}
         @endif

@@ -70,15 +70,15 @@
             </div>
             {{ $slot }}
         </div>
-        <div class="flex-1 bg-[#ffb28b] text-center hidden lg:flex">
-            <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat">
-              {{-- <img src="{{asset('img/coding.png')}}" alt="login"> --}}
+        <div class="flex-1 bg-white text-center hidden lg:flex justify-center">
+            <div class="m-12 xl:m-16 w-full max-w-md bg-contain bg-center bg-no-repeat">
+              <img src="{{asset('img/login.png')}}" alt="login">
             </div>
         </div>
     </div>
 
     
-</div>
+</di
 
 </body>
 </html>

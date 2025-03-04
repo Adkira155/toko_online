@@ -28,7 +28,7 @@ new #[Layout('layouts.guest')] class extends Component
 <div>
     <div class="max-w-xs mx-auto">
         <!-- Google Login -->
-        <a href="{{ url('auth/google') }}" class="flex items-center justify-center w-full bg-[#ffefda] text-gray-800 font-bold rounded-lg py-3 shadow-sm transition-all duration-300 hover:bg-[#d0f0eb]">
+        <a href="{{ url('auth/google') }}" class="flex items-center justify-center w-full bg-[#ffefda] text-gray-800 font-bold rounded-lg py-3 shadow-sm transition-all duration-300 hover:bg-hvoren">
             <svg class="w-5 h-5 mr-2" viewBox="0 0 533.5 544.3">
                 <path d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z" fill="#4285f4"/>
                 <path d="M272.1 544.3c73.4 0 135.3-24.1 180.4-65.7l-87.7-68c-24.4 16.6-55.9 26-92.6 26-71 0-131.2-47.9-152.8-112.3H28.9v70.1c46.2 91.9 140.3 149.9 243.2 149.9z" fill="#34a853"/>

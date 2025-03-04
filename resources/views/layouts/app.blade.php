@@ -25,11 +25,11 @@
                     @if (Auth::user()->role === 'admin')
                         <!-- Sidebar untuk Admin -->
                         <div class="flex">
-                           
+                            
                             <livewire:layout.sidebar />
                             {{-- <livewire:layout.navbar /> --}}
                             <div class="flex-1">
-                                <div class="flex-1 flex flex-col">
+                                {{-- <div class="flex-1 flex flex-col">
                                     <!-- Header Konten -->
                                     <header class="bg-white shadow-md p-3 flex items-center justify-between md:pl-8">
                                         <!-- Tombol Burger di Mobile -->
@@ -43,7 +43,8 @@
                                         
                             
                                     </header>
-                                </div>
+                                </div> --}}
+                                <livewire:layout.navbar />
                                 <!-- Konten Halaman -->
                                 <main class="p-6">
                                     {{ $slot }}
