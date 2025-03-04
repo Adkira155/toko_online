@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <!-- Product Image Section -->
         <div class="flex justify-center items-center">
-            <img src="{{$data->image}}" alt="product" class="w-[600px] h-auto rounded-lg shadow-lg object-cover">
+            <img src="{{ asset('storage/' . $data->image) }}" alt="product" class="w-[600px] h-auto rounded-lg shadow-lg object-cover">
         </div>
 
         <!-- Product Details Section -->
@@ -11,14 +11,8 @@
             <div>
                 <h2 class="text-4xl font-semibold text-gray-800 mb-2">{{$data->nama_produk}}</h2>
                 <div class="flex items-center mb-4">
-                    <div class="flex gap-1 text-sm text-yellow-400">
-                        <span><i class="fa-solid fa-star"></i></span>
-                        <span><i class="fa-solid fa-star"></i></span>
-                        <span><i class="fa-solid fa-star"></i></span>
-                        <span><i class="fa-solid fa-star"></i></span>
-                        <span><i class="fa-solid fa-star"></i></span>
-                    </div>
-                    <div class="text-xs text-gray-500 ml-3">tersisa {{$data->stok}} produk</div>
+                    
+                    <div class="text-xs text-gray-500">tersisa {{$data->stok}} produk</div>
                 </div>
             </div>
 
@@ -77,15 +71,80 @@
                     Keranjang
                 </a> --}}
 
-                <a href="{{ route('review.create', $data->id) }}" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
-                    beri review
+                <a href="" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
+                    <x-cart-logo class="sm" /> Masukkan Keranjang 
                 </a>
                 
 
             </div>
         </div>
     </div>
-    <div class="mt-10">
-        <livewire:layout.produk-random />
+
+ 
+    <div class="bg-gray-100 py-10 flex justify-center mt-16">
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
+            <h2 class="text-xl font-semibold mb-4 text-center">Review Pengguna</h2>
+    
+            <div class="space-y-4">
+                <div class="p-6 border rounded-lg bg-white shadow-lg flex items-center space-x-6 relative">
+                    <img class="w-14 h-14 rounded-full" src="{{ asset('img/akira.png') }}" alt="Profile picture">
+                    <div class="flex-1">
+                        <p class="font-bold text-gray-900">Akira <span class="text-sm text-gray-500">{{ now()->format('d M Y') }}</span></p>
+                        <p class="text-gray-700 mt-1">Produknya bagus bgt omg</p>
+                    </div>
+                </div>
+    
+                <div class="p-6 border rounded-lg bg-white shadow-lg flex items-center space-x-6 relative">
+                    <img class="w-14 h-14 rounded-full" src="{{ asset('img/user2.png') }}" alt="Profile picture">
+                    <div class="flex-1">
+                        <p class="font-bold text-gray-900">User2 <span class="text-sm text-gray-500">{{ now()->format('d M Y') }}</span></p>
+                        <p class="text-gray-700 mt-1">Pengirimannya cepat dan barang sesuai deskripsi.</p>
+                    </div>
+                </div>
+    
+                <!-- Tombol Beri Review di kanan bawah -->
+                <div class="flex justify-end">
+                    <a href="{{ route('review.create', $data->id) }}" 
+                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center space-x-2 shadow-md hover:bg-gray-300 transition duration-300 ease-in-out">
+                        <span class="text-lg font-bold">+</span>
+                        <span class="font-semibold">Beri Review</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
+    
+    
+    
+    
+  
+    {{-- <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    
+        <h2 class="text-xl font-semibold mb-4">Review Pengguna</h2>
+        
+        <div class="space-y-4">
+            <div class="p-4 border rounded-lg bg-white shadow-md flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+                    <span class="text-gray-600 text-sm">U1</span>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-900">User1</p>
+                    <p class="text-gray-700">Produk ini sangat bagus! Saya sangat puas.</p>
+                </div>
+            </div>
+            <div class="p-4 border rounded-lg bg-white shadow-md flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+                    <span class="text-gray-600 text-sm">U2</span>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-900">User2</p>
+                    <p class="text-gray-700">Kualitasnya sesuai dengan harga, pengiriman cepat.</p>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div> --}}
+    
 </div>
