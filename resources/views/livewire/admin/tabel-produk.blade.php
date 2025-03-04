@@ -78,7 +78,7 @@
                     </span>
                 </td>
                 <td class="px-6 py-4">
-                    {{ $item->berat }} Gram
+                    {{ $item->berat ? $item->berat . ' Gram' : '0 Gram' }}
                 </td>
                 <td class="px-6 py-4">
                     <img class="size-12 lg:size-20" src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->image }}">
@@ -101,8 +101,15 @@
                     Detail
                     </button>
                     <x-primary-button>
-                        <a href="{{ route('produk.update', $item->id) }}"">Edit</a>
+                        <a href="{{ route('produk.update', $item->id) }}">Edit</a>
                     </x-primary-button>
+
+                    {{-- detail --}}
+                    <x-primary-button wire:click="loadModal({{ $item->id }})">
+                        Detail
+                    </x-primary-button>
+                    
+                    {{-- hapus --}}
                     <x-danger-button>
                         <a wire:click="hapusProduk({{ $item->id }})">Hapus</a>
                     </x-danger-button>
@@ -112,8 +119,36 @@
         </tbody>
     </table>
 </div>
+    
+    <!-- Pagination -->
+    <div class="mt-4">
+        {{ $produk->links() }}
+    </div>
+</div>
 
-    {{-- <div class="overflow-x-auto">
+{{-- <!-- Modal -->
+@if($showModal)
+<div class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-lg font-semibold mb-4">Detail Produk</h2>
+
+        @if($selectedProduk)
+        <p><strong>Nama:</strong> {{ $selectedProduk->nama_produk }}</p>
+        <p><strong>Harga:</strong> Rp {{ number_format($selectedProduk->harga, 0, ',', '.') }}</p>
+        <p><strong>Stok:</strong> {{ $selectedProduk->stok }}</p>
+        <p><strong>Berat:</strong> {{ $selectedProduk->berat }} Gram</p>
+        <img src="{{ asset('storage/' . $selectedProduk->image) }}" class="w-full h-40 object-cover mt-2 rounded-lg">
+        @endif
+
+        <button wire:click="closeModal" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">
+            Tutup
+        </button>
+    </div>
+</div>
+@endif
+</div> --}}
+
+  {{-- <div class="overflow-x-auto">
         <table class="w-full border-collapse border border-gray-300">
             <thead class="bg-gray-200">
                 <tr>
@@ -257,5 +292,4 @@
                 .responsive.recalc();
         });
     </script>
-@endscript
-</div>
+    @endscript
