@@ -1,8 +1,10 @@
+<div>
 <div class="bg-white p-6 shadow-md rounded-lg">
     <h2 class="text-lg font-semibold mb-4">Daftar Produk</h2>
 
     <!-- tambah data -->
     <x-primary-button>
+    <span class="text-lg font-bold">+</span>
     <a href="{{ route('produk.create') }}">Tambah Produk</a>
     </x-primary-button>
 
@@ -96,17 +98,13 @@
                 </td>
 
                 <td class="px-6 py-4 text-right">
-                    <!-- Modal toggle -->
-                    <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
-                    Detail
-                    </button>
+                    
+                    <x-secondary-button data-modal-target="default-modal" data-modal-toggle="default-modal">
+                        Detail
+                    </x-secondary-button>
+
                     <x-primary-button>
                         <a href="{{ route('produk.update', $item->id) }}">Edit</a>
-                    </x-primary-button>
-
-                    {{-- detail --}}
-                    <x-primary-button wire:click="loadModal({{ $item->id }})">
-                        Detail
                     </x-primary-button>
                     
                     {{-- hapus --}}
@@ -262,12 +260,6 @@
                         
             
                         <div class="mt-6 flex gap-4 flex-col">
-                          
-                            <!-- Keranjang Button -->
-            
-                            {{-- <a  wire:click="addToCart({{ $produk->id }})" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
-                                Keranjang
-                            </a> --}}
             
                             <a href="" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
                                 review
@@ -293,3 +285,5 @@
         });
     </script>
     @endscript
+
+</div>
