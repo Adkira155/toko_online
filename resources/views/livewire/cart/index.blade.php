@@ -1,8 +1,10 @@
 <div class="">
-@auth
-    <div id="userData" data-name="{{ auth()->user()->name }}" data-phone="{{ auth()->user()->nomor }}"
-        data-address="{{ auth()->user()->alamat }}" class="hidden">
-    </div>
+    @auth
+    @if(auth()->user())
+        <div id="userData" data-name="{{ auth()->user()->name }}" data-phone="{{ auth()->user()->nomor }}"
+            data-address="{{ auth()->user()->alamat }}" class="hidden">
+        </div>
+    @endif
 @endauth
 
 <div class="py-12">
@@ -100,5 +102,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>

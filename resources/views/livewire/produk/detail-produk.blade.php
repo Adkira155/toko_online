@@ -76,21 +76,24 @@
                     <span>Masukkan Keranjang</span>
                 </a>
                 
-                
-                
-                
-
             </div>
         </div>
     </div>
 
- 
- <livewire:layout.review-pengguna />
-    
-    
-    
-    
+ <livewire:layout.review-pengguna :id="$id" />
   
+ <div class="flex justify-end">
+    <a href="{{ route('review.create', $data->id) }}" 
+        class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+       
+        <span class="font-semibold">Tambah Review</span>
+    </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
     {{-- <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
     
         <h2 class="text-xl font-semibold mb-4">Review Pengguna</h2>
