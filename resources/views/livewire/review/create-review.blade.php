@@ -1,12 +1,16 @@
 <div>
-    <div class="bg-gray-100 py-10 px-4">
+    <div class="bg-gray-100 rounded-md py-10 px-4">
     <div class="lg:col-span-4 col-span-1">
-          <h2 class="text-2xl font-semibold text-gray-700 mb-4 ml-14">
+          <h2 class="text-2xl font-semibold text-gray-700 mb-4">
             Tambahkan review
           </h2>
         
-
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-xl ml-16">
+          @if (session()->has('success'))
+          <div id="notification" class="bg-green-500 text-white px-4 py-2 rounded-lg mb-4 shadow-md">
+              {{ session('success') }}
+          </div>
+      @endif
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-xl">
     @guest
     <p>Silakan <a href="{{ route('login') }}">login</a> untuk memberikan review.</p>
 @else
@@ -32,41 +36,61 @@
 </div>
     
 
-    <hr>
-
-    <h4>Komentar</h4>
-    @foreach ($reviews as $review)
-        <div class="border p-2 mb-2">
-            <strong>{{ $review->username }}</strong> 
-            <small class="text-muted">{{ $review->created_at->format('d M Y H:i') }}</small>
-            <p>{{ $review->comment }}</p>
-
-            @if (Auth::check() && Auth::user()->role === 'admin')
-                <button class="btn btn-link btn-sm" wire:click="reply({{ $review->id }})">Balas</button>
-            @endif
-
-            {{-- Tampilkan Form Balasan Jika Komentar Ini yang Dipilih --}}
-            @if (Auth::check() && $parent_id === $review->id)
-                <div class="ms-4 p-2">
-                    <input type="text" wire:model="replyUsername" class="form-control" placeholder="Nama Anda">
-                    @error('replyUsername') <span class="text-danger">{{ $message }}</span> @enderror
-
-                    <textarea wire:model="replyComment" class="form-control mt-2" placeholder="Tulis balasan..."></textarea>
-                    @error('replyComment') <span class="text-danger">{{ $message }}</span> @enderror
-
-                    <button wire:click="submitReply" class="btn btn-primary btn-sm mt-2">Kirim Balasan</button>
-                    <button wire:click="resetReply" class="btn btn-secondary btn-sm mt-2">Batal</button>
-                </div>
-            @endif
-
-            {{-- Menampilkan Balasan --}}
-            @foreach ($review->replies as $reply)
-                <div class="ms-4 p-2 border-start">
-                    <strong>{{ $reply->username }}</strong>
-                    <small class="text-muted">{{ $reply->created_at->format('d M Y H:i') }}</small>
-                    <p>{{ $reply->comment }}</p>
-                </div>
-            @endforeach
+@foreach ($reviews as $review)
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4 border border-gray-200 mt-8">
+        <div class="flex justify-between items-center">
+            <strong class="text-blue-600">{{ $review->username }}</strong>
+            <small class="text-gray-500">{{ $review->created_at->format('d M Y H:i') }}</small>
         </div>
-    @endforeach
+        <p class="text-gray-700 mt-2">{{ $review->comment }}</p>
+
+        {{-- Tombol Balas (hanya admin) --}}
+        @if (Auth::check() && Auth::user()->role === 'admin')
+            <button class="text-sm text-blue-500 hover:underline mt-2" wire:click="reply({{ $review->id }})">Balas</button>
+        @endif
+
+        {{-- Form Balasan Jika Komentar Ini Dipilih --}}
+        @if (Auth::check() && $parent_id === $review->id)
+            <div class="bg-gray-50 p-3 rounded-lg mt-2">
+                <input type="text" wire:model="replyUsername" class="w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:outline-none" placeholder="Nama Anda">
+                @error('replyUsername') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+
+                <textarea wire:model="replyComment" class="w-full mt-2 px-3 py-2 border rounded-lg focus:ring-blue-500 focus:outline-none" placeholder="Tulis balasan..."></textarea>
+                @error('replyComment') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+
+                <div class="flex space-x-2 mt-2">
+                    <button wire:click="submitReply" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Kirim</button>
+                    <button wire:click="resetReply" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">Batal</button>
+                </div>
+            </div>
+        @endif
+
+        {{-- Menampilkan Balasan --}}
+        @foreach ($review->replies as $reply)
+            <div class="ml-6 mt-3 border-l-4 border-blue-400 pl-4 bg-gray-100 rounded-lg p-3">
+                <div class="flex justify-between items-center">
+                    <strong class="text-gray-800">{{ $reply->username }}</strong>
+                    <small class="text-gray-500">{{ $reply->created_at->format('d M Y H:i') }}</small>
+                </div>
+                <p class="text-gray-700 mt-2">{{ $reply->comment }}</p>
+            </div>
+        @endforeach
+    </div>
+@endforeach
+
+<script>
+    document.addEventListener('livewire:load', function () {
+        Livewire.on('notify', message => {
+            let notif = document.getElementById('notification');
+            notif.textContent = message;
+            notif.classList.remove('hidden');
+
+            // Notifikasi hilang otomatis setelah 3 detik
+            setTimeout(() => {
+                notif.classList.add('hidden');
+            }, 3000);
+        });
+    });
+</script>
+
 </div>

@@ -131,7 +131,7 @@
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
             <h2 class="text-lg font-semibold mb-4">Detail Produk</h2>
 
-            <img class="w-full h-40 object-cover rounded" 
+            <img class="w-full h-auto object-cover rounded" 
                  src="{{ asset('storage/' . $selectedProduk->image) }}" 
                  alt="{{ $selectedProduk->nama_produk }}">
 
@@ -153,7 +153,7 @@
             </button>
             <a href="{{ route('review.create', $selectedProduk->id) }}" 
                 class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-                <span class="text-lg font-bold">+</span>
+               
                 <span class="font-semibold">Lihat Review</span>
             </a>
         </div>
