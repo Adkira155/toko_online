@@ -57,10 +57,10 @@ Route::middleware(['auth'])->group(function () {
         Route::view('/dashboard-admin', 'admin.dashboard-admin')->name('admin.dashboard');
 
          // ==== User ADMIN CRUD ==== //
-         Route::view('/tabel-user', 'admin.tabel-user')->name('user.tabel');
-         Route::view('/create-user', 'admin.user.create-user')->name('user.create');
-         Route::view('/detail-user', 'admin.user.detail-user')->name('user.detail');
-         Route::view('/user-update/{id}', 'admin.user.update-user')->name('user.update');
+        //  Route::view('/tabel-user', 'admin.tabel-user')->name('user.tabel');
+        //  Route::view('/create-user', 'admin.user.create-user')->name('user.create');
+        //  Route::view('/detail-user', 'admin.user.detail-user')->name('user.detail');
+        //  Route::view('/user-update/{id}', 'admin.user.update-user')->name('user.update');
 
         // ==== Kategori ADMIN CU ==== //
         Route::view('/create-kategori', 'admin.kategori.create-kategori')->name('kategori.create');
