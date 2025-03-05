@@ -1,8 +1,10 @@
+<div>
 <div class="bg-white p-6 shadow-md rounded-lg">
     <h2 class="text-lg font-semibold mb-4">Daftar Produk</h2>
 
     <!-- tambah data -->
     <x-primary-button>
+    <span class="text-lg font-bold">+</span>
     <a href="{{ route('produk.create') }}">Tambah Produk</a>
     </x-primary-button>
 
@@ -173,3 +175,5 @@
         });
     </script>
     @endscript
+
+</div>
