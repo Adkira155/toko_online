@@ -71,7 +71,7 @@
                     Keranjang
                 </a> --}}
 
-                <a href="" class="inline-flex max-w-max bg-gray-200 text-gray-700 px-5 py-2 rounded-lg items-center space-x-2 hover:bg-gray-300 transition duration-300">
+                <a wire:click="addToCart({{ $data->id }})" class="inline-flex max-w-max bg-gray-200 text-gray-700 px-5 py-2 rounded-lg items-center space-x-2 hover:bg-gray-300 transition duration-300">
                     <x-cart-logo class="w-5 h-5" /> 
                     <span>Masukkan Keranjang</span>
                 </a>

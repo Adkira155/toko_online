@@ -9,8 +9,23 @@ class Cart extends Model
 {
     protected $table = 'carts';
     protected $guarded = ['id'];
+    protected $fillable = [
+        'user_id',
+        'produk_id',
+        'quantity',
+        'subtotal_harga',
+        'subtotal_berat',
+        'is_active',
+        'session_id',
+    ];
 
-    public function produks(){
-        return $this->belongsTo(Produk::class, 'produk_id', 'id');
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class, 'id_produk'); 
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

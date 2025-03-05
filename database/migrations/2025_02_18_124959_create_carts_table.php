@@ -16,11 +16,11 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id')->cascadeOnDelete();
             $table->integer('produk_id')->cascadeOnDelete();
-           // $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->integer('quantity');
             $table->integer('subtotal_harga');
             $table->integer('subtotal_berat');
             $table->boolean('is_active')->default(true);
+            $table->string('session_id')->nullable();
             $table->timestamps();
         });
     }

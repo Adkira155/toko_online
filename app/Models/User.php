@@ -55,6 +55,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Cart::class)->where('produk_id', $produk_id)->first();
     }
 
+    public function AllCart(){
+        return $this->hasMany(Cart::class);
+    }
+
     // public function reviews()
     // {
     //     return $this->hasMany(Review::class,'id_review');
