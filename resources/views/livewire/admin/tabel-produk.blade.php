@@ -4,7 +4,7 @@
 
     <!-- tambah data -->
     <x-primary-button>
-    <span class="text-lg font-bold">+</span>
+    <span class="font-bold">+</span>
     <a href="{{ route('produk.create') }}">Tambah Produk</a>
     </x-primary-button>
 
@@ -87,22 +87,29 @@
                 </td>
 
                 <td>
-                    <label class="inline-flex items-center cursor-pointer">
+                    {{-- <label class="inline-flex items-center cursor-pointer">
                         <input type="checkbox" wire:click="toggleStatus({{ $item->id }})"
                                class="sr-only peer" 
                                @checked($item->status === 'aktif')>
                         <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600">
                             <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition peer-checked:translate-x-5"></div>
                         </div>
-                    </label>
+                    </label> --}}
+
+                    <label class="relative inline-flex cursor-pointer items-center">
+                        <input id="switch" type="checkbox" class="peer sr-only" wire:click="toggleStatus({{ $item->id }})" @checked($item->status === 'aktif') />
+                        
+                        <label for="switch" class="hidden"></label>
+                        <div class="peer h-6 w-11 rounded-full border bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-slate-800 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-green-300"></div>
+                      </label>
                 </td>
 
                 <td class="px-6 py-4 text-right">
                     <!-- Detail -->
-                    <button wire:click="showProduct({{ $item->id }})"
+                    <x-secondary-button wire:click="showProduct({{ $item->id }})"
                         class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                     Lihat Detail
-                </button>
+                </x-secondary-button>
 
                     {{-- edit --}}
                     <x-primary-button>
