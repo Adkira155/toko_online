@@ -71,26 +71,29 @@
                     Keranjang
                 </a> --}}
 
-                <a href="" class="inline-flex max-w-max bg-gray-200 text-gray-700 px-5 py-2 rounded-lg items-center space-x-2 hover:bg-gray-300 transition duration-300">
+                <a wire:click="addToCart({{ $data->id }})" class="inline-flex max-w-max bg-gray-200 text-gray-700 px-5 py-2 rounded-lg items-center space-x-2 hover:bg-gray-300 transition duration-300">
                     <x-cart-logo class="w-5 h-5" /> 
                     <span>Masukkan Keranjang</span>
                 </a>
                 
-                
-                
-                
-
             </div>
         </div>
     </div>
 
- 
- <livewire:layout.review-pengguna />
-    
-    
-    
-    
+ <livewire:layout.review-pengguna :id="$id" />
   
+ <div class="flex justify-end">
+    <a href="{{ route('review.create', $data->id) }}" 
+        class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+       
+        <span class="font-semibold">Tambah Review</span>
+    </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
     {{-- <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
     
         <h2 class="text-xl font-semibold mb-4">Review Pengguna</h2>

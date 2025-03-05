@@ -4,19 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class produk extends Model
+class Produk extends Model
 {
     protected $table = 'produks';
-    protected $fillable = ['nama_produk', 'harga', 'deskripsi', 'stok', 'berat', 'image', 'id_kategori'];
     protected $guarded = ['id'];
+    protected $fillable = [
+        'nama_produk',
+        'slug',
+        'id_kategori',
+        'deskripsi',
+        'harga',
+        'berat',
+        'stok',
+        'image',
+        'status',
+    ];
 
-    public function kategoris()
+    // Cart
+    public function carts()
     {
-        return $this->belongsTo(Kategori::class,'id_kategori');
+        return $this->hasMany(Cart::class, 'produk_id');
     }
-    
-    public function reviews()
+
+    // Kategori
+    public function kategori()
     {
-        return $this->hasMany(Review::class, 'produk_id')->whereNull('parent_id');
+        return $this->belongsTo(Kategori::class, 'id_kategori');
     }
 }

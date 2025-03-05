@@ -23,12 +23,12 @@ class ProdukPage extends Component
     public function mount()
     {
         $this->kategori = Kategori::all();
-        $this->produk = Produk::all(); // Menampilkan semua produk awalnya
+        $this->produk = Produk::inRandomOrder()->get(); // Menampilkan semua prodk
     }
 
     public function applyFilter()
     {
-        $this->searchProduk(); //Penerapan pencarian dan filter
+        $this->searchProduk(); //pencarian dan filter
     }
 
     public function searchProduk()

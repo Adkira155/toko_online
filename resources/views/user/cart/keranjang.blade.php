@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:cart.create-cart />
+    <livewire:cart.index />
 </x-app-layout>
