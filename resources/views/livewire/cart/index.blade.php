@@ -100,8 +100,6 @@
         </div>
     </div>
 </div> --}}
-
-<div class="">
 {{-- @auth
 @if(auth()->user())
     <div id="userData" data-name="{{ auth()->user()->name }}" data-phone="{{ auth()->user()->nomor }}"
@@ -110,6 +108,7 @@
 @endif
 @endauth --}}
 
+<div class="">
     <div class="bg-gray-100 min-h-screen">
         <div class="container mx-auto py-10 px-4">
             <div class="flex justify-between items-center mb-8">

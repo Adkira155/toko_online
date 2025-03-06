@@ -22,7 +22,7 @@ class ProdukPage extends Component
 
     public function mount()
     {
-        $this->kategori = Kategori::all();
+        $this->kategori = Kategori::all(); //menampilkan semua kategoro
         $this->produk = Produk::inRandomOrder()->get(); // Menampilkan semua prodk
     }
 

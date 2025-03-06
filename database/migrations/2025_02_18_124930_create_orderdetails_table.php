@@ -13,10 +13,9 @@ return new class extends Migration
     {
         if (!Schema::hasTable('detailorders')) {
         Schema::create('detailorders', function (Blueprint $table) {
-       
             $table->id();
-            $table->unsignedBigInteger('id_produk');
-          //$table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->foreignId('id_produk');
+            $table->foreignId('id_order');
             $table->integer('subtotal_harga_item');
             $table->integer('subtotal_berat_item');
             $table->timestamps();

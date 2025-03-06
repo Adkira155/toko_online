@@ -16,7 +16,6 @@ return new class extends Migration
                 $table->id();
                 $table->foreignId('id_user');
                 $table->foreignId('id_detailorder');
-            //   $table->foreignId('detailorder_id')->constrained('detailorders')->cascadeOnDelete();
                 $table->decimal('total_weight', 15, 2);
                 $table->decimal('total_price', 15, 2);
                 $table->enum('status', [

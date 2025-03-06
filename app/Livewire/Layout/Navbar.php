@@ -5,7 +5,7 @@ namespace App\Livewire\Layout;
 use App\Livewire\Actions\Logout;
 use App\Models\Kategori;
 use Livewire\Component;
-use Livewire\Volt\Compilers\Mount;
+
 
 class Navbar extends Component
 {
@@ -24,7 +24,6 @@ class Navbar extends Component
     public function logout(Logout $logout): void
     {
         $logout();
-
         $this->redirect('/', navigate: true);
     }
 }

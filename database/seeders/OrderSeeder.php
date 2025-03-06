@@ -36,6 +36,7 @@ class OrderSeeder extends Seeder
         DB::table('detailorders')->insert([     
             [
                 'id_produk' => 1,
+                'id_order' => 1,
                 'subtotal_harga_item' => 25000,
                 'subtotal_berat_item' => 15,
                 'created_at' => now(),
