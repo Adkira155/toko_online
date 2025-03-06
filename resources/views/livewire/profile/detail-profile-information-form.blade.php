@@ -79,7 +79,7 @@ new class extends Component
         </p>
     </header>
 
-    <form wire:submit="updateInfoProfileInformation" class="mt-6 space-y-6">
+    {{-- <form wire:submit="updateInfoProfileInformation" class="mt-6 space-y-6">
         <div>
             <x-input-label for="nomor" :value="__('Nomor Telpon/WA')" />
             <x-text-input wire:model.live.lazy="nomor" id="nomor" type="text" class="mt-1 block w-full" required autofocus autocomplete="nomor" />
@@ -109,5 +109,46 @@ new class extends Component
                 {{ __('Saved.') }}
             </x-action-message>
         </div>
+    </form> --}}
+    <form wire:submit="updateInfoProfileInformation" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+        <!-- Avatar di kiri -->
+        <div class="flex flex-col items-center space-y-3">
+            @if ($previewAvatar)
+                <img src="{{ $previewAvatar }}" class="w-32 h-32 rounded-full shadow-lg border-2 border-gray-300">
+            @else
+                <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+                    No Image
+                </div>
+            @endif
+
+            <input type="file" wire:model="avatar" id="avatar" class="w-full text-sm text-gray-700 border border-gray-300 rounded p-1">
+            <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+        </div>
+
+        <!-- Data di kanan -->
+        <div class="md:col-span-2 space-y-4">
+            <div>
+                <x-input-label for="nomor" :value="__('Nomor Telpon/WA')" />
+                <x-text-input wire:model.live.lazy="nomor" id="nomor" type="text" class="mt-1 block w-full" required autofocus autocomplete="nomor" />
+                <x-input-error class="mt-2" :messages="$errors->get('nomor')" />
+            </div>
+
+            <div>
+                <x-input-label for="alamat" :value="__('Detail Alamat')" />
+                <textarea wire:model="alamat" id="alamat"
+                    class="mt-3 block w-full h-32 resize-none focus:ring focus:border-[#fc942c] focus:ring-[#fc942c] rounded-md shadow-md border border-gray-300 p-4"
+                    required></textarea>
+                <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
+            </div>
+            
+
+            <div class="flex items-center gap-4">
+                <x-primary-button>{{ __('Save') }}</x-primary-button>
+                <x-action-message class="me-3" on="profile-updated">
+                    {{ __('Saved.') }}
+                </x-action-message>
+            </div>
+        </div>
     </form>
+
 </section>
