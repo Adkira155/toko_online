@@ -94,13 +94,6 @@
         </div>
     </div>
 
-    <!-- Charts Section -->
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
-        <!-- Sales Chart -->
-
-        <!-- Top Products -->
-        
-    </div>
 
     <!-- Recent Orders Table -->
     {{-- <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
@@ -151,7 +144,6 @@
             </table>
         </div>
     </div> --}}
-
 {{-- @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>

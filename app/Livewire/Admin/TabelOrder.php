@@ -12,37 +12,32 @@ class TabelOrder extends Component
     use WithPagination;
 
     public $data;
-    public $orders;
-    public $search = ''; 
+    public $order;
+    public $search = '';
     protected $paginationTheme = 'paginate';
 
     public function render()
     {
-        $order = Order::where('id_user', 'like', '%' . $this->search . '%')
-        ->orderBy('created_at', 'desc')
-        ->paginate(10);
-    
-        return view('livewire.admin.tabel-order', compact('order'));
+        $orders = Order::where('id_user', 'like', '%' . $this->search . '%')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('livewire.admin.tabel-order', [
+            'orders' => $orders,
+        ]);
     }
 
     public function mount(): void
     {
-      
     }
 
-    public function hapusOrder($id): void
+    public function hapusOrder($id)
     {
         $order = Order::findOrFail($id);
 
         $order->delete();
 
-        // Kirim notifikasi ke pengguna
-        $this->dispatchBrowserEvent('alert-success', ['message' => 'Order berhasil dihapus.']);
-    }   
+        $this->dispatch('alert-success', message: 'Data Pesanan berhasil dihapus.');
+        $this->dispatch('refreshTable');
+    }
 }
-
-//     public function render()
-//     {
-//         return view('livewire.admin.tabel-order');
-//     }
-// }

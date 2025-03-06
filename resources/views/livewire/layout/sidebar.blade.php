@@ -31,7 +31,7 @@
                     </div>
                     <div class="mt-4">
                         <p class="px-3 text-xs font-semibold uppercase text-gray-500">Manajemen Pesanan</p>
-                        <a href="" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
+                        <a href="{{ route('tabel.order') }}" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('tabel.order') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
                             <span>Pesanan</span>
                         </a>
                         <a href="" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">

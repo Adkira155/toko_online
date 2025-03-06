@@ -186,6 +186,9 @@
                     @endif
                 </div>
             </div>
+
+                <livewire:cart.checkout />
+                
         </div>
-    </div>
+    </div>  
 </div>

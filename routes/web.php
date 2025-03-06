@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
         Route::view('/home', 'admin.home')->name('admin.home');
         Route::view('/dashboard-admin', 'admin.dashboard-admin')->name('admin.dashboard');
 
-         // ==== User ADMIN CRUD ==== //
+        //  ==== User ADMIN CRUD ==== //
         //  Route::view('/tabel-user', 'admin.tabel-user')->name('user.tabel');
         //  Route::view('/create-user', 'admin.user.create-user')->name('user.create');
         //  Route::view('/detail-user', 'admin.user.detail-user')->name('user.detail');
@@ -74,9 +74,6 @@ Route::middleware(['auth'])->group(function () {
          // ==== Order ADMIN RUD ==== //\
          Route::view('/tabel-order', 'admin.tabel-order')->name('tabel.order');
          Route::view('/update-order', 'admin.order.update-order')->name('update.order');
-
-         // ==== DetailOrder ADMIN RUD ==== //
-         Route::view('/update-detailorder', 'admin.detailorder.update-detailorder')->name('update.detail-order');
 
          // ==== Review ADMIN Reply ==== //
         //  Route::view('/data-review', 'admin.review.data-review')->name('review.data');
