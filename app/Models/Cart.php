@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Livewire\Layout\Produk;
+// use App\Livewire\Layout\Produk;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
@@ -19,12 +19,13 @@ class Cart extends Model
         'session_id',
     ];
 
+
     public function produk()
     {
-        return $this->belongsTo(Produk::class, 'id_produk'); 
+        return $this->belongsTo(Produk::class, 'produk_id');
     }
-
-    public function user()
+    
+    public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
     }

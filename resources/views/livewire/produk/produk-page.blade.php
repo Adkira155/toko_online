@@ -56,8 +56,7 @@
                 @foreach ($produk as $r)
                 <div class="bg-white border border-gray-300 shadow-md rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
                     <a href="{{ url('/produk-detail/' . $r->id) }}" class="block">
-                        <img src="{{ $r->image ? asset($r->image) : asset('images/default.png') }}" 
-                            alt="Product Image" 
+                        <img src="{{ $r->image ? url('storage/' . $r->image) : asset('images/default.png') }}" alt="{{ $r->nama_produk }}"
                             class="h-48 w-full object-cover rounded-t-xl" />
                         <div class="p-4">
                             <h2 class="text-lg font-bold text-gray-800 truncate">{{ $r->nama_produk }}</h2>

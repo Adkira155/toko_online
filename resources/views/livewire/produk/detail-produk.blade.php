@@ -24,7 +24,7 @@
                 </p>
                 <p class="text-gray-800 font-semibold">
                     <span>Kategori:</span>
-                    <span class="text-gray-600">{{$data->id_kategori}}</span>
+                    <span class="text-gray-600">{{$data->kategoris->nama ?? 'Tidak ada kategori'}}</span>
                 </p>
             </div>
 
@@ -38,7 +38,7 @@
             <p class="mt-4 text-gray-600 text-lg">{{$data->deskripsi}}</p>
 
             <!-- Quantity Selection -->
-            <div class="mt-6">
+            {{-- <div class="mt-6">
                 <h3 class="text-sm text-gray-800 uppercase mb-2 font-semibold">Quantity</h3>
                 <div class="flex items-center border border-gray-300 rounded-lg w-max" x-data="{ 
                     quantity: 1, 
@@ -61,22 +61,53 @@
                         +
                     </button>
                 </div>
+            </div> --}}
+
+            <div class="mt-6">
+                <h3 class="text-sm text-gray-800 uppercase mb-2 font-semibold">Quantity</h3>
+                <div class="flex items-center border border-gray-300 rounded-lg w-max">
+                    <!-- Decrease Button -->
+                    <button wire:click="decreaseQuantity" 
+                        class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none bg-gray-200 hover:bg-gray-300 rounded-l-lg">
+                        -
+                    </button>
+                
+                    <!-- Quantity Display -->
+                    <div class="h-8 w-16 text-base flex items-center justify-center bg-white border-x border-gray-300">
+                        {{ $quantityCount }}
+                    </div>
+                
+                    <!-- Increase Button -->
+                    <button wire:click="increaseQuantity" 
+                        class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none bg-gray-200 hover:bg-gray-300 rounded-r-lg">
+                        +
+                    </button>
+                </div>
             </div>
             
 
             <div class="mt-6 flex gap-4 flex-col">
-              
-                <!-- Keranjang Button -->
-                {{-- <a  wire:click="addToCart({{ $data->id }})" class="w-full bg-gray-200 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-300 transition duration-300">
-                    Keranjang
-                </a> --}}
-
-                <a wire:click="addToCart({{ $data->id }})" class="inline-flex max-w-max bg-gray-200 text-gray-700 px-5 py-2 rounded-lg items-center space-x-2 hover:bg-gray-300 transition duration-300">
+                <button wire:click="addToCart({{ $data->id }})" 
+                    class="inline-flex max-w-max bg-gray-200 text-gray-700 px-5 py-2 rounded-lg items-center space-x-2 hover:bg-gray-300 transition duration-300">
                     <x-cart-logo class="w-5 h-5" /> 
                     <span>Masukkan Keranjang</span>
-                </a>
-                
+                </button>
+
+                <!-- Menampilkan pesan error jika ada -->
+                @if ($errorMessage)
+                    <div class="bg-red-500 text-white px-4 py-2 rounded-md mb-3">
+                        {{ $errorMessage }}
+                    </div>
+                @endif
+
+                <!-- Menampilkan pesan sukses jika ada -->
+                @if ($successMessage)
+                    <div class="bg-green-500 text-white px-4 py-2 rounded-md mb-3">
+                        {{ $successMessage }}
+                    </div>
+                @endif
             </div>
+
         </div>
     </div>
 
