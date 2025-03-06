@@ -44,6 +44,20 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'junta',
+                'email' => 'user2@gmail.com',
+                'password' => Hash::make('user1234'), // Gunakan Hash untuk mengenkripsi password
+                'role' => 'user', // Set role ke admin
+                'alamat' => '-',
+                'nomor' => 0,
+                'email_verified_at' => now(),
+                'social_id' => null,
+                'social_type' => null,
+                'remember_token' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }
