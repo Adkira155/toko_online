@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('role')->default('user');
 
-            $table->bigInteger('nomor')->nullable();
+            $table->string('nomor')->nullable();
             $table->string('avatar')->nullable();
             $table->text('alamat')->nullable();
 
