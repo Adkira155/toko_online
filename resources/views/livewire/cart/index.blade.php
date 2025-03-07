@@ -127,8 +127,9 @@
                         <p class="text-center text-gray-600 py-10">Keranjang Kosong.</p>
                     @else
                         @foreach ($cartItems as $item)
-                            <div class="flex items-start mb-6"> <div class="w-24 h-24 mr-4">
-                                <img src="{{ $item->produk->image ? url('storage/' . $item->produk->image) : asset('images/default.png') }}" alt="{{ $item->produk->nama_produk }}" class="w-full h-full object-cover rounded">
+                            <div class="flex items-start mb-6">
+                                <div class="w-24 h-24 mr-4">
+                                    <img src="{{ $item->produk->image ? url('storage/' . $item->produk->image) : asset('images/default.png') }}" alt="{{ $item->produk->nama_produk }}" class="w-full h-full object-cover rounded">
                                 </div>
                                 <div class="flex-1">
                                     <h2 class="text-lg font-semibold text-gray-800">{{ $item->produk->nama_produk }}</h2>
@@ -160,12 +161,22 @@
 
                 <div class="w-full lg:w-96 bg-white rounded-lg shadow p-6">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Order Summary</h2>
+
+                    @foreach ($cartItems as $item)
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-600">{{ $item->produk->nama_produk }} ({{ $item->quantity }}x)</span>
+                            <span class="font-semibold">Rp {{ number_format($item->produk->harga * $item->quantity, 0, ',', '.') }}</span>
+                        </div>
+                    @endforeach
+
+                    <hr class="my-4">
+
                     <div class="flex justify-between mb-2">
                         <span class="text-gray-600">Subtotal</span>
                         <span class="font-semibold">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between mb-2">
-                        <span class="text-gray-600">Shipping</span>
+                        <span class="text-gray-600">Admin</span>
                         <span class="font-semibold">Rp {{ number_format($shipping, 0, ',', '.') }}</span>
                     </div>
                     <hr class="my-4">
@@ -173,22 +184,24 @@
                         <span class="text-lg font-semibold text-gray-800">Total</span>
                         <span class="text-lg font-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
                     </div>
-                    @if (auth()->check())
-                        <button data-action="checkout"
-                            class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
-                            Proceed to Checkout
-                        </button>
-                    @else
-                        <a href="{{ route('login') }}"
-                            class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-center block">
-                            Login to Checkout
-                        </a>
-                    @endif
+
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        @if (auth()->check())
+                            <button wire:click="showCheckoutForm" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                                Proceed to Checkout
+                            </button>
+                        @else
+                            <a href="{{ route('login') }}" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-center block">
+                                Login to Checkout
+                            </a>
+                        @endif
+                    </div>
                 </div>
             </div>
 
+            @if ($showCheckout)
                 <livewire:cart.checkout />
-                
+            @endif
         </div>
-    </div>  
+    </div>
 </div>
