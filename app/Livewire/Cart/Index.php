@@ -3,6 +3,7 @@
 namespace App\Livewire\Cart;
 
 use App\Models\Cart;
+use App\Models\Produk;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
@@ -73,8 +74,13 @@ class Index extends Component
     {
         $cartItem = Cart::find($cartId);
         if ($cartItem) {
+            $produk = $cartItem->produk;
             if ($action === 'increase') {
-                $cartItem->quantity++;
+                if ($cartItem->quantity < $produk->stok) { // Cek stok sebelum menambah
+                    $cartItem->quantity++;
+                } else {
+                    session()->flash('error', 'Stok tidak mencukupi.');
+                }
             } elseif ($action === 'decrease' && $cartItem->quantity > 1) {
                 $cartItem->quantity--;
             }

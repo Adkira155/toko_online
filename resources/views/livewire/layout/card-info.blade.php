@@ -11,10 +11,10 @@
                     class="w-full sm:w-auto px-4 py-2 border border-gray-200 rounded-lg 
                            focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
                 
-                <x-primary-button wire:click="applySearch" 
-                    class="w-full sm:w-auto px-4 py-2 text-center">
-                    Search
-                </x-primary-button>
+                    <button wire:click="applySearch" 
+                        class="ml-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                           Cari
+                    </button>
             </div>
         </div>
         
@@ -23,22 +23,25 @@
         @if ($produk && $produk->count() > 0)
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($produk as $p)
-                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
-
+                <div class="product-card bg-white overflow-hidden shadow-sm rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                    <a href="{{ url('/produk-detail/' . $p->id) }}" class="block">
                         <img src="{{ asset('storage/' . $p->image) }}" alt="Product" class="w-full h-40 sm:h-48 md:h-56 object-cover rounded-t-lg">
                         <div class="p-4">
-                            <h3 class="product-name text-lg font-medium text-gray-900">{{ $p->nama_produk }}</h3>
-                            <p class="text-lg font-semibold text-[#fb9229]">{{ number_format($p->harga, 2, '.', ',') }}</p>
+                            <h3 class="product-name text-lg font-bold text-gray-900">{{ $p->nama_produk }}</h3>
+                            <span class="bg-softoren text-white text-xs uppercase px-2 py-1 rounded">
+                                {{ $p->kategoris->nama ?? '-' }}
+                            </span>
+                           
+
+                            <p class="text-gray-500 text-sm mt-2 truncate">{{ $p->deskripsi }}</p>
+                            <p class="text-lg font-semibold text-gray-900 mt-3">Rp. {{ number_format($p->harga, 0, ',', '.') }}</p>
                             <div class="mt-4 flex items-center justify-between">
                                 <button class="text-lg font-semibold text-[#fb9229]">
                                     <a href="{{ route('produk.detail', ['id' => $p->id]) }}">lihat detail</a>
                                 </button>
-                                
-                                <button class="add-to-cart px-4 py-2 bg-[#FF8201] text-white rounded-lg hover:bg-[#FF8201] transition-colors">
-                                    <x-cart-logo />
-                                </button>
                             </div>
                         </div>
+                    </a>
                     </div>
                 @endforeach
             </div>
@@ -53,8 +56,8 @@
             </div>
         @else
             <div id="noResults" class="text-center py-12">
-                <h3 class="text-lg font-medium text-gray-900">No products found</h3>
-                <p class="mt-2 text-gray-500">Try adjusting your search terms</p>
+                <h3 class="text-lg font-medium text-gray-900">Produk tidak ditemukan</h3>
+                <p class="mt-2 text-gray-500">Coba lagi dengan kata kunci lain</p>
             </div>
         @endif
     </div>

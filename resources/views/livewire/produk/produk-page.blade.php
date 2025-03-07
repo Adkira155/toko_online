@@ -41,27 +41,28 @@
                 </ul>
             </div>
 
-            <button wire:click="applyFilter" class="px-4 py-2 bg-blue-500 text-white rounded-lg mt-3 w-full">
+            <button wire:click="applyFilter" class="px-4 py-2 bg-softoren text-white rounded-lg mt-3 w-full active:scale-95 transition-transform duration-200">
                 Terapkan Filter
             </button>
-
-            <button wire:click="resetFilters" class="px-4 py-2 bg-red-500 text-white rounded-lg mt-3 w-full">
+            
+            <button wire:click="resetFilters" class="px-4 py-2 bg-softred text-white rounded-lg mt-3 w-full active:scale-95 transition-transform duration-200">
                 Reset Filter
             </button>
+            
         </aside>
 
         <!-- Products Grid -->
         <div class="col-span-3">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 @foreach ($produk as $r)
-                <div class="bg-white border border-gray-300 shadow-md rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div class="product-card bg-white overflow-hidden shadow-sm rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
                     <a href="{{ url('/produk-detail/' . $r->id) }}" class="block">
                         <img src="{{ $r->image ? asset('storage/' . $r->image) : asset('images/default.png') }}" alt="{{ $r->nama_produk }}"
-                            class="h-48 w-full object-cover rounded-t-xl" />
+                            class="w-full h-40 sm:h-48 md:h-56 object-cover rounded-t-lg" />
                         <div class="p-4">
                             <h2 class="text-lg font-bold text-gray-800 truncate">{{ $r->nama_produk }}</h2>
 
-                            <span class="bg-blue-200 text-blue-600 text-xs uppercase px-2 py-1 rounded">
+                            <span class="bg-softoren text-white text-xs uppercase px-2 py-1 rounded">
                                 {{ $r->kategoris->nama ?? '-' }}
                             </span>
 

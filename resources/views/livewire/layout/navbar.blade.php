@@ -2,7 +2,7 @@
     <nav class="bg-white border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-around mx-auto p-4">
                 <!-- Logo -->
-                <a href="">
+                <a href="/">
                     <x-application-logo/>
                     </a>
  
@@ -79,9 +79,6 @@
                             <x-dropdown-link href="{{ route('produk.create') }}">{{ $k->nama }}</x-dropdown-link>
                             @endforeach
                         </x-dropdown> --}}
-                       
-
-
 
                         <!-- User Menu -->
                         @if (Auth::user()->role === 'user')
@@ -91,14 +88,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#produk-section" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0 cursor-pointer">
+                            <a href="{{ route('produk.page') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0 cursor-pointer">
                                 Produk
                             </a>
                         </li>
                         
                         <li>
-                            <a href="#about-section" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
-                                About Us
+                            <a wire:navigate href="{{route('tentang')}}" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                                Tentang
                             </a>
                         </li>
                         <li>
@@ -124,7 +121,7 @@
                         </li>
                         <li>
                             <x-nav-link href="#about-section" :active="request()->routeIs('about')">
-                                About Us
+                                Tentang
                             </x-nav-link>
                         </li>
                     </ul>
@@ -150,7 +147,7 @@
 @else
     <x-dropdown>
         <x-slot:trigger>
-            <button class="block py-2 px-3 w-28 h-8 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">
+            <button class="block py-2 px-3 w-28 h-8 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-softoren md:p-0">
                 <span class="hidden lg:inline-block">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 256 256">
                         <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
