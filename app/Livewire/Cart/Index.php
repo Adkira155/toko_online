@@ -97,4 +97,11 @@ class Index extends Component
             $this->loadCartItems();
         }
     }
+
+    public $showCheckout = false;
+
+    public function showCheckoutForm()
+    {
+        $this->showCheckout = true;
+    }
 }
