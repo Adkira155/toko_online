@@ -15,7 +15,7 @@ return new class extends Migration
             Schema::create('orders', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('id_user');
-                $table->foreignId('id_detailorder');
+               $table->foreignId('id_detailorder');
                 $table->decimal('total_weight', 15, 2);
                 $table->decimal('total_price', 15, 2);
                 $table->enum('status', [

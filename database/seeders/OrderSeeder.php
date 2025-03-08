@@ -22,17 +22,6 @@ class OrderSeeder extends Seeder
                 'subtotal_berat' => 15, 
             ],
         ]);  
-        DB::table('orders')->insert([
-            [
-                'id_user' => 2,
-                'id_detailorder' => 1,
-                'total_weight' => 30,
-                'total_price' => 50000,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-           
-        ]);  
         DB::table('detailorders')->insert([     
             [
                 'id_produk' => 1,
@@ -43,5 +32,16 @@ class OrderSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);  
+        DB::table('orders')->insert([
+            [
+                'id_user' => 2,
+                'id_detailorder' => 1,
+                'total_weight' => 30,
+                'total_price' => 50000,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+           
+        ]); 
     }
 }
