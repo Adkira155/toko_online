@@ -110,19 +110,19 @@
                     @guest
                     <ul class="md:flex md:justify-center md:w-full lg:space-x-6">
                         <li>
-                            <x-nav-link href="/" :active="request()->routeIs('home')">
+                            <a href="/" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
                                 Home
-                            </x-nav-link>
+                            </a>
                         </li>
                         <li>
-                            <x-nav-link href="#produk-section" :active="request()->routeIs('produk')">
+                            <a href="{{ route('produk.page') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0 cursor-pointer">
                                 Produk
-                            </x-nav-link>
+                            </a>
                         </li>
                         <li>
-                            <x-nav-link href="#about-section" :active="request()->routeIs('about')">
+                            <a wire:navigate href="{{route('tentang')}}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
                                 Tentang
-                            </x-nav-link>
+                            </a>
                         </li>
                     </ul>
                     
@@ -170,4 +170,11 @@
             </div>
         </div>
     </nav>
+
+    <script>
+        Livewire.on('forceRefresh', () => {
+            location.reload();
+        });
+    </script>
+    
 </div>

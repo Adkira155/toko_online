@@ -7,6 +7,7 @@ use App\Models\Kategori;
 use Livewire\Component;
 
 
+
 class Navbar extends Component
 {
     public $kategori;
@@ -25,5 +26,12 @@ class Navbar extends Component
     {
         $logout();
         $this->redirect('/', navigate: true);
+
+        // Invalidasi session dan regenerasi token untuk mencegah cache
+    session()->invalidate();
+    session()->regenerateToken();
+
+    // Paksa halaman untuk refresh jika logout tidak langsung berlaku
+    $this->dispatch('forceRefresh');
     }
 }
