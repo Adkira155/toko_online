@@ -10,13 +10,15 @@ class TabelOrder extends Component
 {
     use WithPagination;
 
-    public $data;
-    public $order;
     public $search = '';
-    protected $paginationTheme = 'paginate';
-
+    public $statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+    
     public $selectedOrder;
+    public $orderId;
+    public $status;
+    public $showModal = false;
 
+    protected $paginationTheme = 'bootstrap';
 
     public function render()
     {
@@ -35,30 +37,46 @@ class TabelOrder extends Component
         ]);
     }
 
-    public function mount(): void
-    {
-    }
-
     public function hapusOrder($id)
     {
-        $order = Order::findOrFail($id);
-
-        $order->delete();
-
-        $this->dispatch('alert-success', message: 'Data Pesanan berhasil dihapus.');
+        Order::findOrFail($id)->delete();
+        session()->flash('message', 'Data Pesanan berhasil dihapus.');
         $this->dispatch('refreshTable');
     }
 
     public function showOrders($id)
     {
         $this->selectedOrder = Order::with(['user', 'orderdetail.produk'])->findOrFail($id);
-    
-    //    dd($this->selectedOrder->toArray());
     }
 
     public function closeModal()
     {
         $this->selectedOrder = null;
+        $this->showModal = false;
     }
 
+    public function openModal($orderId)
+    {
+        $this->orderId = $orderId;
+        $order = Order::findOrFail($orderId);
+        $this->status = $order->status;
+        $this->showModal = true;
+    }
+
+    public function updateStatus()
+    {
+        if (!in_array($this->status, ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])) {
+            session()->flash('error', 'Status tidak valid.');
+            return;
+        }
+    
+        Order::where('id', $this->orderId)->update([
+            'status' => $this->status,
+        ]);
+    
+        $this->showModal = false;
+        session()->flash('message', 'Status berhasil diperbarui.');
+        $this->dispatch('refreshTable');
+    }
+    
 }
