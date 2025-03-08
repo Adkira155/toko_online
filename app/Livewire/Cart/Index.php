@@ -4,10 +4,11 @@ namespace App\Livewire\Cart;
 
 use App\Models\Cart;
 use App\Models\Produk;
+use Livewire\Component;
+use App\Services\BinderbyteService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Log;
-use Livewire\Component;
 
 class Index extends Component
 {
@@ -16,10 +17,40 @@ class Index extends Component
     public $total = 0;
     public $shipping = 2000; // Biaya pengiriman
 
+    public $namaPenerima;
+    public $nomorTelepon;
+    public $alamat;
+    public $catatan;
+    public $provinces;
+    public $cities;
+    public $id_provinsi;
+    public $id_kota;
+    public $nama_kota;
+
     public function mount()
     {
         $this->loadCartItems();
+
+        $user = Auth::user();
+        if ($user) {
+            $this->namaPenerima = $user->name;
+            $this->nomorTelepon = $user->nomor;
+            $this->alamat = $user->alamat;
+            $this->id_provinsi = $user->id_provinsi;
+            $this->id_kota = $user->id_kota;
+            $this->nama_kota = $user->nama_kota;
+
+            $binderbyteService = app(BinderbyteService::class);
+            $this->provinces = $binderbyteService->getProvinces();
+            // Ambil data kota jika id_provinsi tersedia
+            if ($this->id_provinsi) {
+                $binderbyteService = app(BinderbyteService::class);
+               
+              $this->cities = $binderbyteService->getCities($this->id_provinsi);
+            }
+        }
     }
+
 
     public function render()
     {
@@ -104,4 +135,5 @@ class Index extends Component
     {
         $this->showCheckout = true;
     }
+
 }
