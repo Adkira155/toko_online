@@ -26,6 +26,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'social_id',
         'social_type',
+        'id_provinsi',
+        'id_kota',
     ];
 
     /**
@@ -55,6 +57,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Cart::class)->where('produk_id', $produk_id)->first();
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class,'id_order');
+    }
     // public function reviews()
     // {
     //     return $this->hasMany(Review::class,'id_review');

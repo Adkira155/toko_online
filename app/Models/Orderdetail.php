@@ -3,15 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Orderdetail extends Model
 {
-    protected $table = 'orderdetails';
+    protected $table = 'detailorders';
     protected $guarded = ['id'];
 
-    
-    public function orders()
+    public function produk(): BelongsTo
     {
-        return $this->belongsTo(Order::class,'id_order');
+        return $this->belongsTo(Produk::class, 'id_produk');
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class, 'id_order');
     }
 }
