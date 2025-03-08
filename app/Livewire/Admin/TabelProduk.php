@@ -17,8 +17,16 @@ class TabelProduk extends Component
     public $tempFilterStatus = '';
     public $selectedProduk = null;
 
-    protected $listeners = ['refreshTable' => '$refresh'];
-
+    protected $listeners = [
+        'refreshTable' => '$refresh',
+        'konfirmasiHapus' => 'hapusProduk'
+    ];
+    
+    
+    public function showSwal($data)
+{
+    $this->dispatch('swal', $data);
+}
 
     public function showProduct($id)
     {
@@ -46,6 +54,7 @@ class TabelProduk extends Component
         $this->dispatch('alert-success', message: 'Status produk diperbarui.');
         $this->dispatch('refreshTable');
     }
+    
 
     public function hapusProduk($id)
     {
@@ -57,8 +66,16 @@ class TabelProduk extends Component
 
         $produk->delete();
 
-        $this->dispatch('alert-success', message: 'Produk berhasil dihapus.');
         $this->dispatch('refreshTable');
+
+        // Tampilkan notifikasi sukses dengan SweetAlert
+        $this->dispatch('swal', [
+            'title' => 'Berhasil!',
+            'text' => 'Produk berhasil dihapus.',
+            'icon' => 'success',
+            'timer' => 10000
+        ]);
+       
     }
 
     public function render()

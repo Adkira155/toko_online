@@ -5,7 +5,7 @@
             class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
 
         <button wire:click="searchProduk" 
-            class="ml-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+            class="ml-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
             Cari
         </button>
     </div>

@@ -16,6 +16,8 @@ class CreateProduk extends Component
     public $nama_produk, $harga, $deskripsi,$berat, $stok, $image, $kategori;
     public $id_kategori;
 
+    protected $listeners = ['refreshPage' => '$refresh'];
+
     public function mount()
     {
         // Mengambil semua kategori untuk dropdown
@@ -52,10 +54,17 @@ class CreateProduk extends Component
             'id_kategori' => $this->kategori,
         ]);
 
+
+         // Reset form setelah submit
+         $this->reset(['nama_produk', 'harga', 'deskripsi', 'stok', 'berat', 'image', 'kategori']);
+         $this->resetValidation();
+
+         
+         $this->dispatch('refreshPage');
+
         // Notifikasi sukses
-        $this->dispatch('alert-success', message: 'Berhasil Menambahkan Produk Anda !!!');
-        // Reset form setelah submit
-        $this->reset(['nama_produk', 'harga', 'deskripsi', 'stok', 'berat', 'image', 'kategori']);
+        session()->flash('message', 'Berhasil Menambahkan Produk Anda !!!');
+        
     }
 
     public function back()

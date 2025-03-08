@@ -1,4 +1,13 @@
 <div class="bg-white border border-slate-200 shadow-lg rounded-sm">
+    @if (session()->has('message'))
+    <div x-data="{ show: true }" 
+        x-init="setTimeout(() => show = false, 50000)" 
+        x-show="show"
+        class="p-4 mb-4 text-sm text-white bg-green-500 rounded-lg shadow-md">
+        {{ session('message') }}
+    </div>
+@endif
+
     <div class="text-slate-700 py-4 px-4">
         Buat Produk
     </div>
@@ -124,5 +133,4 @@
             <x-primary-button wire:click="back()">{{ __('Kembali') }}</x-primary-button>
         </div>
     </form>
-    
 </div>

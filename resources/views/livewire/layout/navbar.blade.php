@@ -83,7 +83,7 @@
                         <!-- User Menu -->
                         @if (Auth::user()->role === 'user')
                         <li>
-                            <a href="/" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                            <a href="/" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
                                 Home
                             </a>
                         </li>
@@ -94,7 +94,7 @@
                         </li>
                         
                         <li>
-                            <a wire:navigate href="{{route('tentang')}}" class="scroll-link block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
+                            <a wire:navigate href="{{route('tentang')}}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-hvoren md:p-0">
                                 Tentang
                             </a>
                         </li>
