@@ -127,7 +127,8 @@
                         <p class="text-center text-gray-600 py-10">Keranjang Kosong.</p>
                     @else
                         @foreach ($cartItems as $item)
-                            <div class="flex items-start mb-6">
+                        <div class="">
+                            <div class="flex items-start mb-6 ">
                                 <div class="w-24 h-24 mr-4">
                                     <img src="{{ $item->produk->image ? url('storage/' . $item->produk->image) : asset('images/default.png') }}" alt="{{ $item->produk->nama_produk }}" class="w-full h-full object-cover rounded">
                                 </div>
@@ -139,7 +140,6 @@
                                     <span class="text-lg font-semibold text-gray-800">Rp {{ number_format($item->produk->harga * $item->quantity, 0, ',', '.') }}</span>
                                 </div>
                             </div>
-
                             <div class="flex justify-between items-center mb-6">
                                 <div class="flex items-center">
                                     <button wire:click="updateQuantity({{ $item->id }}, 'decrease')" class="px-3 py-1 bg-gray-200 rounded mr-2">-</button>
@@ -152,6 +152,7 @@
                                     </svg>
                                 </button>
                             </div>
+                        </div>
                             @if (!$loop->last)
                                 <hr class="my-4">
                             @endif
@@ -200,7 +201,62 @@
             </div>
 
             @if ($showCheckout)
-                <livewire:cart.checkout />
+                {{-- <livewire:cart.checkout /> --}}
+                <div class="mt-10 bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Shipping</h2>
+                  
+                    {{-- bawaan data user --}}
+                    <div class="mb-2">
+                        <p> <span class="font-semibold">Nomor Telpon/WA:</span> {{ $nomorTelepon }}</p>
+                        <p><span class="font-semibold">Alamat Lengkap:</span>  {{ $alamat }}</p>
+                  
+
+                        @if ($id_provinsi)
+                        <p><span class="font-semibold">Provinsi:</span> 
+                            {{ collect($provinces)->where('id', $id_provinsi)->first()['name'] ?? 'Tidak Diketahui' }}
+                        </p>
+                        @else
+                            <p class="text-red-500 text-sm">⚠ Provinsi harus diisi.</p>
+                        @endif
+                        @if ($id_kota)
+                            <p><span class="font-semibold">Kota:</span> 
+                                {{ collect($cities)->where('id', $id_kota)->first()['name'] ?? 'Tidak Diketahui' }}
+                            </p>
+                        @else
+                            <p class="text-red-500 text-sm">⚠ Kota harus diisi.</p>
+                        @endif                    
+                        </div>
+                  
+                    {{-- input data  --}}
+                  
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Isi Data Berikut</h2>
+                  
+                    <div class="mb-4">
+                        <x-input-label for="namaPenerima" :value="__('Nama Penerima')" />
+                        <x-text-input
+                            id="namaPenerima"
+                            wire:model="namaPenerima"
+                            class="mt-1 block w-full"
+                            type="text"
+                            required
+                        />
+                    </div>
+                  
+                    <div class="mb-4">
+                        <x-input-label for="catatan" :value="__('Catatan Untuk Kurir')" />
+                        <textarea
+                            id="catatan"
+                            wire:model="catatan"
+                            class="block mt-1 w-full p-2 shadow-lg rounded-md border border-gray-300 appearance-none resize-y"
+                            rows="3"
+                        ></textarea>
+                    </div>
+                  
+                    <p class="text-sm text-gray-500 mt-4">
+                        *Pastikan data pengiriman sudah benar, jika ingin melakukan perubahan,
+                        <a href="/profile" class="text-blue-600">klik di sini</a>
+                    </p>
+                  </div>
             @endif
         </div>
     </div>
