@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\admin;
+use App\Livewire\Layout\About;
 use App\Http\Middleware\pengunjung;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::view('profile', 'profile')
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('callback/google', [GoogleController::class, 'handleCallback']);  
 Route::view('/', 'dashboard');
+
+Route::view('/tentang', 'tentang')->name('tentang');
 
 Route::view('/produk', 'data-produk')->name('produk.data');
 Route::view('/produk-page', 'user.produk-page')->name('produk.page');
