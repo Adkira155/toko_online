@@ -12,7 +12,7 @@
                            focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
                 
                     <button wire:click="applySearch" 
-                        class="ml-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                        class="ml-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
                            Cari
                     </button>
             </div>

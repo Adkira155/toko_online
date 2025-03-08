@@ -8,6 +8,17 @@
     <a href="{{ route('produk.create') }}">Tambah Produk</a>
     </x-primary-button>
 
+    @if (session()->has('message'))
+    <div x-data="{ show: true }"
+        x-init="setTimeout(() => show = false, 50000)"
+        x-show="show"
+        class="p-4 mb-4 text-sm text-white bg-red-500 rounded-lg shadow-md">
+        {{ session('message') }}
+    </div>
+@endif
+
+
+
      <!-- Pencarian & Filter -->
     <div class="flex flex-col md:flex-row md:justify-between md:items-center mt-4 space-y-2 md:space-y-0">
         <!-- Input Pencarian -->
@@ -117,9 +128,25 @@
                     </x-primary-button>
                     
                     {{-- hapus --}}
-                    <x-danger-button>
-                        <a wire:click="hapusProduk({{ $item->id }})">Hapus</a>
-                    </x-danger-button>
+                <x-danger-button x-data
+                    @click="Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                     text: 'Produk akan dihapus secara permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, Hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('konfirmasiHapus', [{{ $item->id }}]);
+                    }
+                    })">
+                    Hapus
+                </x-danger-button>
+
+                
+                
                 </td>
             </tr>
             @endforeach
@@ -171,16 +198,30 @@
 </div>
 </div>
 
-    @script
-    <script>
-        $(document).ready(function() {
-            var table = $('.dat-table').DataTable({
-                    responsive: true
-                })
-                .columns.adjust()
-                .responsive.recalc();
+   <!-- DataTable -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var table = $('.dat-table').DataTable({
+            responsive: true
+        }).columns.adjust().responsive.recalc();
+    });
+</script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    window.addEventListener('swal', function(e) {
+        Swal.fire({
+            title: e.detail.title || 'Berhasil!',
+            text: e.detail.text || 'Produk berhasil dihapus.',
+            icon: e.detail.icon || 'success',
+            timer: e.detail.timer || 3000
         });
-    </script>
-    @endscript
+    });
+</script>
+
+<!-- Pastikan Alpine.js sudah dimuat -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 
 </div>
