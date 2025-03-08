@@ -1,12 +1,16 @@
 <div class="bg-white border border-slate-200 shadow-lg rounded-sm">
-    @if (session()->has('message'))
-    <div x-data="{ show: true }" 
-        x-init="setTimeout(() => show = false, 50000)" 
-        x-show="show"
-        class="p-4 mb-4 text-sm text-white bg-green-500 rounded-lg shadow-md">
-        {{ session('message') }}
-    </div>
-@endif
+
+    @if ($showNotif)
+    <div class="p-4 mb-4 text-sm text-white bg-green-500 rounded-lg shadow-md">
+            Berhasil Menambahkan Produk Anda !!!
+            <!-- Tombol Tutup -->
+            <button wire:click="closeNotif"
+                    class="ml-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800">
+                Tutup
+            </button>
+        </div>
+    @endif
+
 
     <div class="text-slate-700 py-4 px-4">
         Buat Produk

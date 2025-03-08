@@ -2,19 +2,18 @@
 
 namespace App\Livewire\Produk;
 
-use App\Models\produk;
+use App\Models\Produk;
 use Livewire\Component;
 use App\Models\Kategori;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\Validate;
-
 
 class CreateProduk extends Component
 {
     use WithFileUploads;
 
-    public $nama_produk, $harga, $deskripsi,$berat, $stok, $image, $kategori;
+    public $nama_produk, $harga, $deskripsi, $berat, $stok, $image, $kategori;
     public $id_kategori;
+    public $showNotif = false; // Menyimpan status notifikasi
 
     protected $listeners = ['refreshPage' => '$refresh'];
 
@@ -35,14 +34,9 @@ class CreateProduk extends Component
             'kategori' => ['required'],
         ]);
 
-        // dd($this->all());
         // Simpan gambar jika diunggah
-        if ($this->image) {
-            $imageName = $this->image->store('images', 'public');
-        } else {
-            $imageName = null;
-        }
-        
+        $imageName = $this->image ? $this->image->store('images', 'public') : null;
+
         // Simpan produk
         Produk::create([
             'nama_produk' => $this->nama_produk,
@@ -50,21 +44,21 @@ class CreateProduk extends Component
             'deskripsi' => $this->deskripsi,
             'stok' => $this->stok,
             'berat' => $this->berat,
-           'image' => $imageName,
+            'image' => $imageName,
             'id_kategori' => $this->kategori,
         ]);
 
+        // Reset form setelah submit
+        $this->reset(['nama_produk', 'harga', 'deskripsi', 'stok', 'berat', 'image', 'kategori']);
+        $this->resetValidation();
 
-         // Reset form setelah submit
-         $this->reset(['nama_produk', 'harga', 'deskripsi', 'stok', 'berat', 'image', 'kategori']);
-         $this->resetValidation();
+        // Tampilkan notifikasi
+        $this->showNotif = true;
+    }
 
-         
-         $this->dispatch('refreshPage');
-
-        // Notifikasi sukses
-        session()->flash('message', 'Berhasil Menambahkan Produk Anda !!!');
-        
+    public function closeNotif()
+    {
+        return redirect()->route('produk.create');
     }
 
     public function back()
