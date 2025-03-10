@@ -49,8 +49,8 @@
                                     Lihat Detail
                                 </x-secondary-button>
 
-                                {{-- hapus --}}
-                                    <x-danger-button wire:click="hapusOrder({{ $order->id }})" class="ml-2 px-4 py-2">Hapus</x-danger-button>
+                                {{-- hapus
+                                    <x-danger-button wire:click="hapusOrder({{ $order->id }})" class="ml-2 px-4 py-2">Hapus</x-danger-button> --}}
                             </td>
                         </tr>
                     @endforeach

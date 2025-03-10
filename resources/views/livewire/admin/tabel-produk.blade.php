@@ -118,17 +118,18 @@
                 <td class="px-6 py-4 text-right">
                     <!-- Detail -->
                     <x-secondary-button wire:click="showProduct({{ $item->id }})"
-                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        class="px-4 py-2 font-bold bg-blue-500 text-white rounded hover:bg-blue-600">
                     Lihat Detail
                 </x-secondary-button>
 
                     {{-- edit --}}
                     <x-primary-button>
-                        <a href="{{ route('produk.update', $item->id) }}">Edit</a>
+                        <a href="{{ route('produk.update', $item->id) }}" class="px-5 font-bold">Edit</a>
                     </x-primary-button>
                     
                     {{-- hapus --}}
-                <x-danger-button x-data
+                <x-danger-button class="px-6 py-2"
+                    x-data
                     @click="Swal.fire({
                     title: 'Apakah Anda Yakin?',
                      text: 'Produk akan dihapus secara permanen!',
