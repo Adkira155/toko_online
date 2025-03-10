@@ -18,17 +18,21 @@
             <!-- Navigasi -->
             <nav class="flex-grow px-3 py-4 overflow-auto">
                 <div class="flex flex-col gap-1">
+                    {{-- dashboard --}}
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('dashboard') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
                         <i class="bi bi-grid-1x2-fill"></i>
                         <span>Dashboard</span>
                     </a>
 
+                    {{-- CRUD Produk --}}
                     <div class="mt-4">
                         <p class="px-3 text-xs font-semibold uppercase text-gray-500">Manajemen Katalog</p>
                         <a href="{{ route('tabel.produk') }}" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('tabel.produk') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
                             <span>Produk</span>
                         </a>
                     </div>
+
+                    {{-- Order dan Detail --}}
                     <div class="mt-4">
                         <p class="px-3 text-xs font-semibold uppercase text-gray-500">Manajemen Pesanan</p>
                         <a href="{{ route('tabel.order') }}" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors {{ request()->routeIs('tabel.order') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">

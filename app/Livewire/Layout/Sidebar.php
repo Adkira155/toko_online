@@ -13,5 +13,4 @@ class sidebar extends Component
         return view('livewire.layout.sidebar');
     }
 
-
 }

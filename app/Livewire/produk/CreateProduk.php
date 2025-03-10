@@ -48,17 +48,14 @@ class CreateProduk extends Component
             'id_kategori' => $this->kategori,
         ]);
 
-        // Reset form setelah submit
         $this->reset(['nama_produk', 'harga', 'deskripsi', 'stok', 'berat', 'image', 'kategori']);
         $this->resetValidation();
-
-        // Tampilkan notifikasi
         $this->showNotif = true;
     }
 
     public function closeNotif()
     {
-        return redirect()->route('produk.create');
+        $this->showNotif = false; 
     }
 
     public function back()
