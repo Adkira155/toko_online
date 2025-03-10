@@ -19,7 +19,9 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('subtotal_harga');
             $table->integer('subtotal_berat');
-            $table->boolean('is_active')->default(true);
+            $table->enum('status', [
+                'keranjang', 'checkout'
+            ])->default('keranjang');
             $table->string('session_id')->nullable();
             $table->timestamps();
         });

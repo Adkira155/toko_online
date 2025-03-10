@@ -122,6 +122,7 @@
             </div>
 
             <div class="flex flex-col lg:flex-row gap-8">
+                
                 <div class="flex-1 bg-white rounded-lg shadow p-6">
                     @if ($cartItems->isEmpty())
                         <p class="text-center text-gray-600 py-10">Keranjang Kosong.</p>
@@ -187,22 +188,29 @@
                     </div>
 
                     <div class="flex flex-col lg:flex-row gap-8">
-                        @if (auth()->check())
-                            <button wire:click="showCheckoutForm" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
-                                Proceed to Checkout
-                            </button>
+                        @if (count($cartItems) > 0)
+                            @if (auth()->check())
+                                <button wire:click="showCheckoutForm" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                                    Proceed to Checkout
+                                </button>
+                            @else
+                                <a href="{{ route('login') }}" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-center block">
+                                    Login to Checkout
+                                </a>
+                            @endif
                         @else
-                            <a href="{{ route('login') }}" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-center block">
-                                Login to Checkout
-                            </a>
+                            <p class="text-red-500">Keranjang Anda kosong.</p>
                         @endif
                     </div>
                 </div>
+
             </div>
 
+            {{-- modal --}}
             @if ($showCheckout)
-                {{-- <livewire:cart.checkout /> --}}
-                <div class="mt-10 bg-white rounded-lg shadow p-6">
+            <div class="mt-5 flex flex-col lg:flex-row gap-8">
+
+                <div class="flex-1 bg-white rounded-lg shadow p-6">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Shipping</h2>
                   
                     {{-- bawaan data user --}}
@@ -256,8 +264,76 @@
                         *Pastikan data pengiriman sudah benar, jika ingin melakukan perubahan,
                         <a href="/profile" class="text-blue-600">klik di sini</a>
                     </p>
-                  </div>
+                </div>
+
+                <div class="w-full lg:w-96 bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Finalisasi Data</h2>
+                
+                    {{-- Item List (Single Item) --}}
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-600">(produk keranjang)</span>
+                        <span class="font-semibold">(satuan harga)</span>
+                    </div>
+                
+                    <hr class="my-4">
+                
+                    {{-- Subtotal --}}
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-600">Subtotal</span>
+                        <span class="font-semibold">(subtotal harga)</span>
+                    </div>
+                
+                    {{-- Admin --}}
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-600">Admin</span>
+                        <span class="font-semibold">Rp 2.000</span>
+                    </div>
+
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-600">Ongkir</span>
+                        <span class="font-semibold">(ongkir)</span>
+                    </div>
+                
+                    <hr class="my-4">
+                
+                    {{-- Total --}}
+                    <div class="flex justify-between mb-4">
+                        <span class="text-lg font-semibold text-gray-800">Total</span>
+                        <span class="text-lg font-semibold">(total harga)</span>
+                    </div>
+                
+                    {{-- Informasi Shipping --}}
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Shipping</h2>
+                
+                    <div class="mb-2">
+                        <p><span class="font-semibold">Nomor Telpon/WA:</span> 0</p>
+                        <p><span class="font-semibold">Provinsi:</span> -</p>
+                        <p><span class="font-semibold">Kota:</span> -</p>
+                        <p><span class="font-semibold">Alamat Lengkap:</span> -</p>
+                        <p><span class="font-semibold">Expedisi:</span> -</p>
+                        <hr class="my-4">
+                    </div>
+                
+                    {{-- Informasi Penerima --}}
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Penerima</h2>
+                
+                    <div class="mb-2">
+                        <p><span class="font-semibold">Nama Penerima:</span> juna</p>
+                        <p><span class="font-semibold">Catatan Untuk Kurir:</span> </p>
+                    </div>
+                
+                    {{-- Checkout Button menuju Midtrans --}}
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <button class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                          Pesan
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4">*Hati hati sama tombol ini sayang</p>
+                </div>
+
+            </div>
             @endif
+            
         </div>
     </div>
 </div>
