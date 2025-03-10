@@ -1,6 +1,7 @@
 <div class="bg-white px-5">
     <!-- 🔎 Search Bar -->
-    <div class="mb-6 flex justify-between items-center">
+    <div class="mb-6 flex items-center"> 
+        {{-- kalo mau tambah justify center buat tombol ama inputnya silahkan --}}
         <input type="text" wire:model.defer="search" placeholder="Cari produk..."
             class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
 
@@ -45,9 +46,11 @@
                 Terapkan Filter
             </button>
             
-            <button wire:click="resetFilters" class="px-4 py-2 bg-softred text-white rounded-lg mt-3 w-full active:scale-95 transition-transform duration-200">
-                Reset Filter
-            </button>
+            <button wire:click="resetFilters" 
+            class="px-4 py-2 bg-softred text-white rounded-lg mt-3 w-full active:scale-95 transition-transform duration-200"
+            id="resetFilterButton">
+        Reset Filter
+    </button>
             
         </aside>
 

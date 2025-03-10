@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use Livewire\Volt\Volt;
 
+
 Route::middleware('guest')->group(function () {
     Volt::route('register', 'pages.auth.register')
         ->name('register');
@@ -20,6 +21,7 @@ Route::middleware('guest')->group(function () {
 
         Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
         Route::get('callback/google', [GoogleController::class, 'handleCallback']);  
+        
 });
 
 Route::middleware('auth')->group(function () {
