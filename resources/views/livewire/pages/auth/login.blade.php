@@ -48,12 +48,53 @@ new #[Layout('layouts.guest')] class extends Component
             </div>
     
             <!-- Password -->
-            <div class="mt-4">
+            <div class="mt-4 relative">
                 <x-input-label for="password" :value="__('Password')" />
-                <x-text-input wire:model="form.password" id="password" class="block w-full px-4 py-3 mt-1 rounded-lg bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    type="password" name="password" placeholder="Masukkan Password" required autocomplete="current-password" />
+            
+                <div class="relative">
+                    <x-text-input 
+                        wire:model="form.password"
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="Masukkan Password"
+                        required
+                        autocomplete="current-password"
+                        class="block w-full px-4 py-3 mt-1 rounded-lg bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                    />
+            
+                    <!-- Tombol Toggle Mata -->
+                    <button 
+                        type="button"
+                        id="togglePassword"
+                        class="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500"
+                    >
+                        <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor" 
+                            class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" 
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" 
+                                d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
+                        </svg>
+            
+                        <svg id="eyeClosed" xmlns="http://www.w3.org/2000/svg" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor" 
+                            class="w-5 h-5 hidden">
+                            <path stroke-linecap="round" stroke-linejoin="round" 
+                                d="M3 3l18 18M10.5 10.5a3 3 0 004.5 4.5M15 12a3 3 0 01-3 3m3-3a3 3 0 00-3-3m0 0a3 3 0 00-3 3m3-3l10 10"/>
+                        </svg>
+                    </button>
+                </div>
+            
                 <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
             </div>
+            
+
     
             <!-- Remember Me -->
             <div class="flex justify-between mt-4">
@@ -91,6 +132,22 @@ new #[Layout('layouts.guest')] class extends Component
             </div>
         </form>
     </div>
+    
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const eyeOpen = document.getElementById('eyeOpen');
+            const eyeClosed = document.getElementById('eyeClosed');
+    
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+    
+            // Toggle ikon
+            eyeOpen.classList.toggle('hidden');
+            eyeClosed.classList.toggle('hidden');
+        });
+    </script>
+    
     
     
 </div>

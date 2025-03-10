@@ -12,6 +12,8 @@ class Navbar extends Component
 {
     public $kategori;
 
+    protected $listeners = ['logout', 'redirectTo', 'swal:success'];
+
     public function mount(): void {
         $this->kategori = Kategori::all();
     }
@@ -22,16 +24,26 @@ class Navbar extends Component
         ]);
     }
 
-    public function logout(Logout $logout): void
-    {
-        $logout();
-        $this->redirect('/', navigate: true);
 
-        // Invalidasi session dan regenerasi token untuk mencegah cache
-        session()->invalidate();
-        session()->regenerateToken();
+public function logout(Logout $logout): void
+{
+    $logout();
+    $this->redirect('/');
+    
+    $this->dispatch('swal:success', [
+        'title' => 'Logout Berhasil!',
+        'text' => 'Anda telah logout dan akan dialihkan ke halaman utama.'
+    ]);
+}
 
-        // Paksa halaman untuk refresh jika logout tidak langsung berlaku
-        $this->dispatch('forceRefresh');
-    }
+public function swalSuccess($message)
+{
+    $this->dispatch('swal:success', [
+        'title' => $message['title'],
+        'text' => $message['text']
+    ]);
+}
+
+
+
 }
