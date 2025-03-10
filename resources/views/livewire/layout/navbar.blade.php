@@ -162,7 +162,11 @@
                             <x-dropdown-link href="{{ route('profile') }}">Profile</x-dropdown-link>
                         @endif
 
-                        <x-dropdown-link wire:click="logout" class="cursor-pointer">Logout</x-dropdown-link>
+                        <x-dropdown-link 
+                        onclick="confirmLogout(event)" 
+                        class="cursor-pointer">
+                        Logout
+                        </x-dropdown-link>
                     </x-dropdown>
                     @endif
 
@@ -171,10 +175,49 @@
         </div>
     </nav>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-        Livewire.on('forceRefresh', () => {
-            location.reload();
+        function confirmLogout(event) {
+            event.preventDefault();
+    
+            Swal.fire({
+                title: 'Yakin ingin logout?',
+                text: "Anda akan keluar dari akun Anda.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, logout!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('logout'); // Kirim event logout
+                }
+            });
+            return false; // Mencegah redirect ke #
+        }
+    
+        document.addEventListener('livewire:load', function () {
+            // Event saat logout sukses
+            Livewire.on('swal:success', () => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Logout berhasil!',
+                    text: 'Anda akan dialihkan ke halaman utama.',
+                    timer: 2000,
+                    showConfirmButton: false
+                }) });
+
+             Livewire.on('redirectTo', (url) => {
+            window.location.href = url;
+                });
         });
     </script>
+    
+
+    
+    
+    
     
 </div>

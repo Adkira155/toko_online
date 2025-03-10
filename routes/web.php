@@ -6,6 +6,7 @@ use App\Http\Middleware\pengunjung;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 
 Route::view('dashboard', 'dashboard')
@@ -81,10 +82,11 @@ Route::middleware(['auth'])->group(function () {
          // ==== Review ADMIN Reply ==== //
         //  Route::view('/data-review', 'admin.review.data-review')->name('review.data');
 
-        Route::post('/logout', function () {
-            Auth::logout();
-            return redirect('/');
-        })->name('logout');
+        Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->middleware('auth')
+        ->name('logout');
+    
+
         
     });
 
