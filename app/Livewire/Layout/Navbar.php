@@ -28,10 +28,10 @@ class Navbar extends Component
         $this->redirect('/', navigate: true);
 
         // Invalidasi session dan regenerasi token untuk mencegah cache
-    session()->invalidate();
-    session()->regenerateToken();
+        session()->invalidate();
+        session()->regenerateToken();
 
-    // Paksa halaman untuk refresh jika logout tidak langsung berlaku
-    $this->dispatch('forceRefresh');
+        // Paksa halaman untuk refresh jika logout tidak langsung berlaku
+        $this->dispatch('forceRefresh');
     }
 }

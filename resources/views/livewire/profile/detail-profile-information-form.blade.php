@@ -22,29 +22,29 @@ new class extends Component
     public ?string $id_provinsi = null;
     public ?string $id_kota = null;
 
-    public function mount(): void
-{
-    $binderbyteService = app(BinderbyteService::class);
+        public function mount(): void
+    {
+        $binderbyteService = app(BinderbyteService::class);
 
-    $user = Auth::user();
-    $this->nomor = $user->nomor ?? '';
-    $this->alamat = $user->alamat ?? '';
-    $this->existingAvatar = $user->avatar ?? null;
-    $this->id_provinsi = $user->id_provinsi ? (string) $user->id_provinsi : null;
-    $this->id_kota = $user->id_kota ? (string) $user->id_kota : null;
+        $user = Auth::user();
+        $this->nomor = $user->nomor ?? '';
+        $this->alamat = $user->alamat ?? '';
+        $this->existingAvatar = $user->avatar ?? null;
+        $this->id_provinsi = $user->id_provinsi ? (string) $user->id_provinsi : null;
+        $this->id_kota = $user->id_kota ? (string) $user->id_kota : null;
 
-    if ($this->existingAvatar) {
-        $this->previewAvatar = asset('storage/' . $this->existingAvatar);
+        if ($this->existingAvatar) {
+            $this->previewAvatar = asset('storage/' . $this->existingAvatar);
+        }
+
+        $this->provinces = $binderbyteService->getProvinces();
+
+        if ($this->id_provinsi) {
+            $this->cities = $binderbyteService->getCities($this->id_provinsi);
+        }
+
+        // dd($this->all());
     }
-
-    $this->provinces = $binderbyteService->getProvinces();
-
-    if ($this->id_provinsi) {
-        $this->cities = $binderbyteService->getCities($this->id_provinsi);
-    }
-
-    // dd($this->all());
-}
 
 
     public function updateInfoProfileInformation(): void
@@ -77,7 +77,7 @@ new class extends Component
 
         $user->save();
 
-        // Refresh data agar kota yang dipilih muncul
+        // Refre agar kota yang dipilih muncul
         $this->mount();
         $this->dispatch('profile-updated')->self();
     }
@@ -94,15 +94,14 @@ new class extends Component
 
     public function updatedIdProvinsi()
     {
-        $binderbyteService = app(BinderbyteService::class);
+    $binderbyteService = app(BinderbyteService::class);
 
-        if ($this->id_provinsi) {
-            $this->cities = $binderbyteService->getCities($this->id_provinsi);
-            $this->id_kota = null;
-        } else {
-            $this->cities = [];
-            $this->id_kota = null;
-        }
+    if ($this->id_provinsi) {
+        $this->cities = $binderbyteService->getCities($this->id_provinsi);
+    } else {
+        $this->cities = [];
+        $this->id_kota = null;
+    }
     }
 };
 ?>
@@ -157,17 +156,19 @@ new class extends Component
             </div>
 
             @if ($id_provinsi)
-                <div>
-                    <x-input-label for="id_kota" :value="__('Kota')" />
-                    <select wire:model="id_kota" id="id_kota" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                        <option value="" disabled selected>{{ count($cities) ? 'Pilih Kota' : 'Tidak ada data kota' }}</option>
+            <div>
+                <x-input-label for="id_kota" :value="__('Kota')" />
+                <select wire:model="id_kota" id="id_kota" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <option value="" disabled selected>Pilih Kota</option> 
+                    @if ($cities) 
                         @foreach ($cities as $city)
                             <option value="{{ $city['id'] }}">{{ $city['name'] }}</option>
                         @endforeach
-                    </select>
-                    <x-input-error class="mt-2" :messages="$errors->get('id_kota')" />
-                </div>
-            @endif
+                    @endif
+                </select>
+                <x-input-error class="mt-2" :messages="$errors->get('id_kota')" />
+            </div>
+        @endif
 
             <div class="flex items-center gap-4">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
