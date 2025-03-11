@@ -1,9 +1,10 @@
 <?php
 namespace App\Livewire\Produk;
 
-use Livewire\Component;
 use App\Models\Produk;
+use Livewire\Component;
 use App\Models\Kategori;
+use Illuminate\Support\Facades\DB;
 
 class ProdukPage extends Component
 {
@@ -31,13 +32,20 @@ class ProdukPage extends Component
         $this->searchProduk(); //pencarian
     }
 
+    public function updatedSearch()
+    {
+        $this->searchProduk();
+    }
+
     public function searchProduk()
     {
         $query = Produk::query();
 
         // Filter Nama Produk
         if (!empty($this->search)) {
-            $query->where('nama_produk', 'like', '%' . $this->search . '%');
+            $search = trim($this->search);
+            $query->where(DB::raw('lower(nama_produk)'), 'like', '%' . strtolower($search) . '%')
+                  ->limit(10);
         }
 
         //kategori

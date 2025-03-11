@@ -43,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
 */
     Route::middleware([pengunjung::class])->group(function () {
 
-        Route::view('/keranjang', 'user.cart.keranjang')->name('user.keranjang');
+    Route::view('/keranjang', 'user.cart.keranjang')->name('user.keranjang');
       
         //Di Pengunjung punya halaman keranjang, create keranjang, lalu checkout
         //bayar, lihat status transaksi punya dia dan melihat detail transaksi, user bisa membuat review
