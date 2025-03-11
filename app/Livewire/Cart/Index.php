@@ -42,7 +42,7 @@ class Index extends Component
         $this->loadCartItems();
 
         // Ambil Provinsi dan Kota Admin
-        //    belum ada
+        // belum ada fungsinya
 
 
         $user = Auth::user();

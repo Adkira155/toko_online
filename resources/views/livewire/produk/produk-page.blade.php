@@ -71,7 +71,9 @@
                     </div>
                 @endforeach
             </div>
+            {{-- {{ $produk->links() }}  --}}
         </div>
+        
         
     </div>
     

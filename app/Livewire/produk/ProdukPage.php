@@ -45,7 +45,7 @@ class ProdukPage extends Component
         if (!empty($this->search)) {
             $search = trim($this->search);
             $query->where(DB::raw('lower(nama_produk)'), 'like', '%' . strtolower($search) . '%')
-                  ->limit(10);
+                  ->limit(12);
         }
 
         //kategori
