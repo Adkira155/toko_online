@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('social_type')->nullable();
 
             $table->unsignedBigInteger('id_provinsi')->nullable();
-            $table->unsignedBigInteger('id_kota')->nullable();
+            $table->decimal('id_kota')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

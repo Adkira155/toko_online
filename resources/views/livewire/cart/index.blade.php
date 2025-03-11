@@ -328,7 +328,7 @@
                           Pesan
                         </button>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">*Hati hati sama tombol ini sayang</p>
+                    <p class="text-sm text-gray-500 mt-4">*Hati hati saat menekan</p>
                 </div>
 
             </div>
