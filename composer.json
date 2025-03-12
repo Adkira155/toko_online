@@ -11,9 +11,9 @@
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
-        "livewire/volt": "^1.0"
-        "realrashid/sweet-alert": "*"
-        "midtrans/midtrans-php": "^2.6"
+        "livewire/volt": "^1.0",
+        "realrashid/sweet-alert": "*",
+        "yajra/laravel-datatables-oracle": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

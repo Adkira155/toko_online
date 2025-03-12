@@ -29,20 +29,17 @@ public function logout(Logout $logout): void
 {
     $logout();
     $this->redirect('/');
-    
-    $this->dispatch('swal:success', [
-        'title' => 'Logout Berhasil!',
-        'text' => 'Anda telah logout dan akan dialihkan ke halaman utama.'
-    ]);
+
+    $this->dispatch('swal:confirmLogout');
 }
 
-public function swalSuccess($message)
-{
-    $this->dispatch('swal:success', [
-        'title' => $message['title'],
-        'text' => $message['text']
-    ]);
-}
+// public function swalSuccess($message)
+// {
+//     $this->dispatch('swal:success', [
+//         'title' => $message['title'],
+//         'text' => $message['text']
+//     ]);
+// }
 
 
 

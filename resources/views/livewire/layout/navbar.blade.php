@@ -160,6 +160,7 @@
                         {{-- Cek apakah user adalah admin --}}
                         @if (Auth::user()->role === 'user')
                             <x-dropdown-link href="{{ route('profile') }}">Profile</x-dropdown-link>
+                            {{-- <x-dropdown-link href="/">Riwayat Pesanan</x-dropdown-link> --}}
                         @endif
 
                         <x-dropdown-link 
@@ -167,7 +168,8 @@
                         class="cursor-pointer">
                         Logout
                         </x-dropdown-link>
-                    </x-dropdown>
+                        
+                        </x-dropdown>
                     @endif
 
                 </ul>
@@ -198,21 +200,17 @@
             return false; // Mencegah redirect ke #
         }
     
-        document.addEventListener('livewire:load', function () {
-            // Event saat logout sukses
-            Livewire.on('swal:success', () => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Logout berhasil!',
-                    text: 'Anda akan dialihkan ke halaman utama.',
-                    timer: 2000,
-                    showConfirmButton: false
-                }) });
-
-             Livewire.on('redirectTo', (url) => {
-            window.location.href = url;
-                });
+        Livewire.on('swal:confirmLogout', () => {
+        Swal.fire({
+            title: 'Logout Berhasil!',
+            text: 'Anda akan dialihkan ke halaman utama.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+        }).then(() => {
+            window.location.href = "{{ route('logout') }}"; // Sesuaikan dengan route logout Anda
         });
+    });
     </script>
     
 

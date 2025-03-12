@@ -84,7 +84,7 @@ class TabelProduk extends Component
             ->when($this->search, fn($query) => $query->where('nama_produk', 'like', '%' . $this->search . '%'))
             ->when($this->filterStatus, fn($query) => $query->where('status', $this->filterStatus))
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(5);
 
         return view('livewire.admin.tabel-produk', compact('produk'));
     }
