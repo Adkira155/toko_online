@@ -73,8 +73,8 @@
                                 <dd class="text-sm font-medium text-gray-900" data-summary="subtotal">Rp {{ number_format($subtotal, 0, ',', '.') }}</dd>
                             </div>
                             <div class="flex items-center justify-between">
-                                <dt class="text-sm text-gray-600">Shipping</dt>
-                                <dd class="text-sm font-medium text-gray-900" data-summary="shipping">Rp {{ number_format($shipping, 0, ',', '.') }}</dd>
+                                <dt class="text-sm text-gray-600">admin</dt>
+                                <dd class="text-sm font-medium text-gray-900" data-summary="admin">Rp {{ number_format($admin, 0, ',', '.') }}</dd>
                             </div>
                             <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
                                 <dt class="text-base font-medium text-gray-900">Total</dt>
@@ -179,7 +179,7 @@
                     </div>
                     <div class="flex justify-between mb-2">
                         <span class="text-gray-600">Admin</span>
-                        <span class="font-semibold">Rp {{ number_format($shipping, 0, ',', '.') }}</span>
+                        <span class="font-semibold">Rp {{ number_format($admin, 0, ',', '.') }}</span>
                     </div>
                     <hr class="my-4">
                     <div class="flex justify-between mb-4">
@@ -191,7 +191,7 @@
                         @if (count($cartItems) > 0)
                             @if (auth()->check())
                                 <button wire:click="showCheckoutForm" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
-                                    Proceed to Checkout
+                                   Proses Ke Pemesanan
                                 </button>
                             @else
                                 <a href="{{ route('login') }}" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-center block">
@@ -207,9 +207,10 @@
             </div>
 
             {{-- modal --}}
-            @if ($showCheckout)
+          
             <div class="mt-5 flex flex-col lg:flex-row gap-8">
 
+                @if ($showCheckout)
                 <div class="flex-1 bg-white rounded-lg shadow p-6">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Shipping</h2>
                   
@@ -235,63 +236,73 @@
                         @endif                    
                         </div>
                   
-                    {{-- input data  --}}
+                        {{-- input data  --}}
                   
-                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Isi Data Berikut</h2>
-                  
-                    <div class="mb-4">
-                        <x-input-label for="namaPenerima" :value="__('Nama Penerima')" />
-                        <x-text-input
-                            id="namaPenerima"
-                            wire:model="namaPenerima"
-                            class="mt-1 block w-full"
-                            type="text"
-                            required
-                        />
-                    </div>
-                  
-                    <div class="mb-4">
-                        <x-input-label for="catatan" :value="__('Catatan Untuk Kurir')" />
-                        <textarea
-                            id="catatan"
-                            wire:model="catatan"
-                            class="block mt-1 w-full p-2 shadow-lg rounded-md border border-gray-300 appearance-none resize-y"
-                            rows="3"
-                        ></textarea>
-                    </div>
-                  
-                    <p class="text-sm text-gray-500 mt-4">
-                        *Pastikan data pengiriman sudah benar, jika ingin melakukan perubahan,
-                        <a href="/profile" class="text-blue-600">klik di sini</a>
-                    </p>
+                        <h2 class="text-lg font-semibold text-gray-800 mb-4">Isi Data Berikut</h2>
+                    
+                        <div class="mb-4">
+                            <x-input-label for="namaPenerima" :value="__('Nama Penerima')" />
+                            <x-text-input
+                                id="namaPenerima"
+                                wire:model="namaPenerima"
+                                class="mt-1 block w-full"
+                                type="text"
+                                required
+                            />
+                        </div>
+                    
+                        <div class="mb-4">
+                            <x-input-label for="catatan" :value="__('Catatan Untuk Kurir')" />
+                            <textarea
+                                id="catatan"
+                                wire:model="catatan"
+                                class="block mt-1 w-full p-2 shadow-lg rounded-md border border-gray-300 appearance-none resize-y"
+                                rows="3"
+                            ></textarea>
+                        </div>
+                    
+                        <button wire:click="submitData" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                            Submit Data
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">
+                            *Pastikan data pengiriman sudah benar, jika ingin melakukan perubahan,
+                            <a href="/profile" class="text-blue-600">klik di sini</a>
+                        </p>
                 </div>
+                @endif
 
+
+                {{-- Muncul ketika submit data admin --}}
+                @if ($showRingkasan)
                 <div class="w-full lg:w-96 bg-white rounded-lg shadow p-6">
-                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Finalisasi Data</h2>
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Ringkasan Pesanan</h2>
                 
-                    {{-- Item List (Single Item) --}}
-                    <div class="flex justify-between mb-2">
-                        <span class="text-gray-600">(produk keranjang)</span>
-                        <span class="font-semibold">(satuan harga)</span>
-                    </div>
+                    {{-- Daftar Item (Produk) --}}
+                    @foreach ($cartItems as $item)
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-600">{{ $item->produk->nama_produk }} ({{ $item->quantity }}x)</span>
+                            <span class="font-semibold">Rp {{ number_format($item->produk->harga * $item->quantity, 0, ',', '.') }}</span>
+                        </div>
+                    @endforeach
                 
                     <hr class="my-4">
                 
                     {{-- Subtotal --}}
-                    <div class="flex justify-between mb-2">
-                        <span class="text-gray-600">Subtotal</span>
-                        <span class="font-semibold">(subtotal harga)</span>
+                    <div class="flex justify-between mb-4">
+                        <span class="text-lg font-semibold text-gray-800">Total</span>
+                        <span class="text-lg font-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
                     </div>
                 
-                    {{-- Admin --}}
+                    {{-- Biaya Admin --}}
                     <div class="flex justify-between mb-2">
                         <span class="text-gray-600">Admin</span>
-                        <span class="font-semibold">Rp 2.000</span>
+                        <span class="font-semibold">Rp {{ number_format($admin, 0, ',', '.') }}</span>
                     </div>
-
+                
+                    {{-- Ongkos Kirim --}}
                     <div class="flex justify-between mb-2">
-                        <span class="text-gray-600">Ongkir</span>
-                        <span class="font-semibold">(ongkir)</span>
+                        <span class="text-gray-600">Ongkos Kirim</span>
+                        <span class="font-semibold">Rp (ongkir)</span>
                     </div>
                 
                     <hr class="my-4">
@@ -299,18 +310,31 @@
                     {{-- Total --}}
                     <div class="flex justify-between mb-4">
                         <span class="text-lg font-semibold text-gray-800">Total</span>
-                        <span class="text-lg font-semibold">(total harga)</span>
+                        <span class="text-lg font-semibold">Rp (total harga)</span>
+                    </div>
+
+                    <div class="flex justify-between mb-4">
+                        <span class="text-lg font-semibold text-gray-800">Total Berat</span>
+                        <span class="text-lg font-semibold">{{ $totalBerat }} Gram</span> 
                     </div>
                 
-                    {{-- Informasi Shipping --}}
-                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Shipping</h2>
+                    {{-- Informasi Pengiriman --}}
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Pengiriman</h2>
+                
+                    <div>
+                        <div class="mb-2">
+                            <p><span class="font-semibold">Provinsi Asal:</span> {{ $provinsiAsalName ?? 'Tidak Diketahui' }}</p>
+                            <p><span class="font-semibold">Kota Asal:</span> {{ $kotaAsalName ?? 'Tidak Diketahui' }}</p>
+                            <hr class="my-4">
+                        </div>
+                    </div>
                 
                     <div class="mb-2">
-                        <p><span class="font-semibold">Nomor Telpon/WA:</span> 0</p>
-                        <p><span class="font-semibold">Provinsi:</span> -</p>
-                        <p><span class="font-semibold">Kota:</span> -</p>
-                        <p><span class="font-semibold">Alamat Lengkap:</span> -</p>
-                        <p><span class="font-semibold">Expedisi:</span> -</p>
+                        <p><span class="font-semibold">Nomor Telepon/WhatsApp:</span>{{ $nomorTelepon }}</p>
+                        <p><span class="font-semibold">Provinsi Tujuan:</span>{{ collect($provinces)->where('id', $id_provinsi)->first()['name'] ?? 'Tidak Diketahui' }}</p>
+                        <p><span class="font-semibold">Kota Tujuan:</span>{{ collect($cities)->where('id', $id_kota)->first()['name'] ?? 'Tidak Diketahui' }}</p>
+                        <p><span class="font-semibold">Alamat Lengkap:</span>{{ $alamat }}</p>
+                        <p><span class="font-semibold">Ekspedisi:</span></p>
                         <hr class="my-4">
                     </div>
                 
@@ -318,21 +342,22 @@
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Penerima</h2>
                 
                     <div class="mb-2">
-                        <p><span class="font-semibold">Nama Penerima:</span> juna</p>
-                        <p><span class="font-semibold">Catatan Untuk Kurir:</span> </p>
+                        <p><span class="font-semibold">Nama Penerima:</span>{{ $namaPenerima }}</p>
+                        <p><span class="font-semibold">Catatan untuk Kurir:</span>{{ $catatan }}</p>
                     </div>
                 
-                    {{-- Checkout Button menuju Midtrans --}}
+                    {{-- Tombol Checkout menuju Midtrans --}}
                     <div class="flex flex-col lg:flex-row gap-8">
                         <button class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
-                          Pesan
+                           Pesan Produk
                         </button>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">*Hati hati sama tombol ini sayang</p>
+                    <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
                 </div>
+                @endif
 
             </div>
-            @endif
+          
             
         </div>
     </div>

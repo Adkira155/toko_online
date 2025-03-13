@@ -43,7 +43,7 @@ new class extends Component
             $this->cities = $binderbyteService->getCities($this->id_provinsi);
         }
 
-        // dd($this->all());
+   //    dd($this->all());
     }
 
 
@@ -53,10 +53,19 @@ new class extends Component
 
         $validated = $this->validate([
             'nomor' => ['required', 'string', 'max:20', 'regex:/^[0-9\-\+]+$/'],
-            'alamat' => ['required', 'string', 'max:255'],
             'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:5120', 'dimensions:min_width=100,min_height=100'],
             'id_provinsi' => ['required', Rule::in(array_map(fn($p) => (string) $p['id'], $this->provinces))],
             'id_kota' => ['required', Rule::in(array_map(fn($c) => (string) $c['id'], $this->cities))],
+            'alamat' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    function ($attribute, $value, $fail) {
+                        if (!preg_match('/\b(rt|rw)\b/i', $value)) {
+                            $fail('Alamat harus menyertakan RT, RW dan Nomor Rumah ');
+                        }
+                    },
+                ],
         ]);
 
         $user = Auth::user();
