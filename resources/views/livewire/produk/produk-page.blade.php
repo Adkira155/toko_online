@@ -71,6 +71,11 @@
                     </div>
                 @endforeach
             </div>
+
+            <div class="mt-4 text-gray-700">
+                <p>Total Produk: {{ $totalProduk }}</p>
+            </div>
+            
             {{-- {{ $produk->links() }}  --}}
         </div>
         

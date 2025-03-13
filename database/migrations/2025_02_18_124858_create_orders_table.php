@@ -16,18 +16,22 @@ return new class extends Migration
                 $table->id();
                 $table->foreignId('id_user');
                $table->foreignId('id_detailorder');
+
                 $table->decimal('total_weight', 15, 2);
                 $table->decimal('total_price', 15, 2);
+
                 $table->enum('status', [
-                    'pending', 'processing', 'shipped', 'delivered', 'cancelled'
+                    'pending', 'processing', 'shipped', 'delivered', 'Completed', 'cancelled'
                 ])->default('pending');
+
                 $table->string('nama_penerima')->nullable();
                 $table->string('catatan')->nullable();
-                $table->string('alamat_detail')->nullable();
-                $table->string('no_resi')->nullable();
+                
                 $table->string('metode_pembayaran')->nullable();
                 $table->integer('ongkir')->nullable();
                 $table->text('shipping_address')->nullable();
+                $table->string('alamat_detail')->nullable();
+
                 $table->string('midtrans_transaction_id')->nullable();
                 $table->string('midtrans_payment_type')->nullable();
                 $table->string('snap_token')->nullable();
