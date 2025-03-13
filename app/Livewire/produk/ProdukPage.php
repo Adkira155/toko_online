@@ -13,6 +13,7 @@ class ProdukPage extends Component
     public $kategoriInputs = [];
     public $hargainputs = [];
     public $search = '';
+    public $totalProduk;
 
     public $hargaOptions = [
         'under_25000' => 'Dibawah 25.000',
@@ -25,6 +26,8 @@ class ProdukPage extends Component
     {
         $this->kategori = Kategori::all(); //menampilkan semua kategori
         $this->produk = Produk::inRandomOrder()->get(); // Menampilkan semua prodk
+
+        $this->totalProduk = Produk::count();
     }
 
     public function applyFilter()
@@ -71,6 +74,9 @@ class ProdukPage extends Component
         }
 
         $this->produk = $query->get();
+
+        // Hitung jumlah produk setelah filter
+        $this->totalProduk = $query->count();
     }
 
     public function resetFilters()
@@ -79,6 +85,7 @@ class ProdukPage extends Component
         $this->kategoriInputs = [];
         $this->hargainputs = [];
         $this->produk = Produk::all();
+        $this->totalProduk = Produk::count(); 
     }
 
     public function render()
