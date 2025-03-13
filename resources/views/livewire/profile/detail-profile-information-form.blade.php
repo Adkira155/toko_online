@@ -161,23 +161,24 @@ new class extends Component
                         <option value="{{ $province['id'] ?? '' }}">{{ $province['name'] ?? 'Tidak Diketahui' }}</option>
                     @endforeach
                 </select>
+                <div wire:loading wire:target="id_provinsi" class="text-sm text-gray-500">Memuat Kota...</div>
                 <x-input-error class="mt-2" :messages="$errors->get('id_provinsi')" />
+            
+                @if ($id_provinsi)
+                    <div class="mt-4">
+                        <x-input-label for="id_kota" :value="__('Kota')" />
+                        <select wire:model="id_kota" id="id_kota" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <option value="" disabled selected>Pilih Kota</option>
+                            @if ($cities)
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city['id'] ?? '' }}">{{ $city['name'] ?? 'Tidak Diketahui' }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        <x-input-error class="mt-2" :messages="$errors->get('id_kota')" />
+                    </div>
+                @endif
             </div>
-
-            @if ($id_provinsi)
-            <div>
-                <x-input-label for="id_kota" :value="__('Kota')" />
-                <select wire:model="id_kota" id="id_kota" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    <option value="" disabled selected>Pilih Kota</option> 
-                    @if ($cities) 
-                        @foreach ($cities as $city)
-                            <option value="{{ $city['id'] }}">{{ $city['name'] }}</option>
-                        @endforeach
-                    @endif
-                </select>
-                <x-input-error class="mt-2" :messages="$errors->get('id_kota')" />
-            </div>
-        @endif
 
             <div class="flex items-center gap-4">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
