@@ -322,10 +322,12 @@
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Pengiriman</h2>
                 
                     <div>
-                        <div class="mb-2">
-                            <p><span class="font-semibold">Provinsi Asal:</span> {{ $provinsiAsalName ?? 'Tidak Diketahui' }}</p>
-                            <p><span class="font-semibold">Kota Asal:</span> {{ $kotaAsalName ?? 'Tidak Diketahui' }}</p>
-                            <hr class="my-4">
+                        <div>
+                            <div class="mb-2">
+                                <p><span class="font-semibold">Provinsi Asal:</span> {{ $provinsiAsalName ?? 'Tidak Diketahui' }}</p>
+                                <p><span class="font-semibold">Kota Asal:</span> {{ $kotaAsalName ?? 'Tidak Diketahui' }}</p>
+                                <hr class="my-4">
+                            </div>
                         </div>
                     </div>
                 

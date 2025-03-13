@@ -33,7 +33,10 @@ class Index extends Component
     public $cities;
     public $id_provinsi;
     public $id_kota;
-    public $nama_kota;
+    // public $nama_kota;
+
+    public $provinsiAsalName;
+    public $kotaAsalName;
 
     public $showCheckout = false;
 
@@ -42,8 +45,10 @@ class Index extends Component
         $this->loadCartItems();
 
         // Ambil Provinsi dan Kota Admin
-        // belum ada fungsinya
+        $this->loadAdminLocation();
 
+        // Ambil Provinsi dan Kota default kaloa admin kdd kota dan provinsi
+        // $this->loadDefaultLocation();
 
         $user = Auth::user();
         if ($user) {
@@ -66,6 +71,63 @@ class Index extends Component
               $this->cities = $binderbyteService->getCities($this->id_provinsi);
             }
         }
+        // dd($this->all());
+    }
+
+    // public function loadDefaultLocation()
+    // {
+    //     $binderbyteService = app(BinderbyteService::class);
+    //     $this->provinces = $binderbyteService->getProvinces();
+
+    //     // Cari ID provinsi Kalimantan Selatan
+    //     $kalimantanSelatan = collect($this->provinces)->firstWhere('name', 'KALIMANTAN SELATAN');
+
+    //     if ($kalimantanSelatan) {
+    //         $this->id_provinsi = $kalimantanSelatan['id'];
+    //         $this->cities = $binderbyteService->getCities($this->id_provinsi);
+
+    //         // Cari ID kota Banjarmasin
+    //         $banjarmasin = collect($this->cities)->firstWhere('name', 'KOTA BANJARMASIN');
+
+    //         if ($banjarmasin) {
+    //             $this->id_kota = $banjarmasin['id'];
+
+    //             // Isi nama provinsi dan kota
+    //             $this->provinsiAsalName = $kalimantanSelatan['name'];
+    //             $this->kotaAsalName = $banjarmasin['name'];
+    //         }
+    //     }
+    // }
+    
+    public function loadAdminLocation()
+{
+    $adminUser = User::where('id', 1)->where('role', 'admin')->first();
+
+    if ($adminUser) {
+        $this->id_provinsi = $adminUser->id_provinsi;
+        $this->id_kota = $adminUser->id_kota;
+
+        Log::info('Admin User ID Provinsi: ' . $this->id_provinsi);
+        Log::info('Admin User ID Kota: ' . $this->id_kota);
+
+        $binderbyteService = app(BinderbyteService::class);
+        $this->provinces = $binderbyteService->getProvinces();
+        Log::info('Provinces: ' . json_encode($this->provinces));
+
+        if ($this->id_provinsi) {
+            $this->cities = $binderbyteService->getCities($this->id_provinsi);
+            Log::info('Cities: ' . json_encode($this->cities));
+
+            $provinsi = collect($this->provinces)->firstWhere('id', $this->id_provinsi);
+            $kota = collect($this->cities)->firstWhere('id', $this->id_kota);
+
+            Log::info('Provinsi Data: ' . json_encode($provinsi));
+            Log::info('Kota Data: ' . json_encode($kota));
+
+            $this->provinsiAsalName = $provinsi['name'] ?? 'Tidak Diketahui';
+            $this->kotaAsalName = $kota['name'] ?? 'Tidak Diketahui';
+        }
+    }
     }
 
     // render

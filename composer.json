@@ -13,7 +13,7 @@
         "livewire/livewire": "^3.5",
         "livewire/volt": "^1.0",
         "realrashid/sweet-alert": "*",
-        "yajra/laravel-datatables-oracle": "*"
+        "yajra/laravel-datatables-oracle": "^11.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
