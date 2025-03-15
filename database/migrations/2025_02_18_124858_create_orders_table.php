@@ -21,13 +21,14 @@ return new class extends Migration
                 $table->decimal('total_price', 15, 2);
 
                 $table->enum('status', [
-                    'pending', 'processing', 'shipped', 'delivered', 'Completed', 'cancelled'
+                    'pending', 'processing', 'shipped', 'delivered', 'completed', 'cancelled'
                 ])->default('pending');
 
                 $table->string('nama_penerima')->nullable();
                 $table->string('catatan')->nullable();
                 
                 $table->string('metode_pembayaran')->nullable();
+                $table->string('courier')->nullable();
                 $table->integer('ongkir')->nullable();
                 $table->text('shipping_address')->nullable();
                 $table->string('alamat_detail')->nullable();

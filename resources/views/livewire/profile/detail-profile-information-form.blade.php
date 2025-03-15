@@ -43,7 +43,7 @@ new class extends Component
             $this->cities = $binderbyteService->getCities($this->id_provinsi);
         }
 
-   //    dd($this->all());
+    //   dd($this->all());
     }
 
 
@@ -141,17 +141,6 @@ new class extends Component
         </div>
 
         <div class="md:col-span-2 space-y-4">
-            <div>
-                <x-input-label for="nomor" :value="__('Nomor Telpon/WA')" />
-                <x-text-input wire:model.live.lazy="nomor" id="nomor" type="text" class="mt-1 block w-full" required autofocus autocomplete="nomor" />
-                <x-input-error class="mt-2" :messages="$errors->get('nomor')" />
-            </div>
-
-            <div>
-                <x-input-label for="alamat" :value="__('Detail Alamat')" />
-                <textarea wire:model="alamat" id="alamat" class="mt-3 block w-full h-32 resize-none rounded-md shadow-md border border-gray-300 p-4" required></textarea>
-                <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
-            </div>
 
             <div>
                 <x-input-label for="id_provinsi" :value="__('Provinsi')" />
@@ -179,7 +168,19 @@ new class extends Component
                     </div>
                 @endif
             </div>
+            
+            <div>
+                <x-input-label for="alamat" :value="__('Detail Alamat')" />
+                <textarea wire:model="alamat" id="alamat" class="mt-3 block w-full h-32 resize-none rounded-md shadow-md border border-gray-300 p-4" required></textarea>
+                <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
+            </div>
 
+            <div>
+                <x-input-label for="nomor" :value="__('Nomor Telpon/WA')" />
+                <x-text-input wire:model.live.lazy="nomor" id="nomor" type="text" class="mt-1 block w-full" required autofocus autocomplete="nomor" />
+                <x-input-error class="mt-2" :messages="$errors->get('nomor')" />
+            </div>
+         
             <div class="flex items-center gap-4">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
                 <x-action-message class="me-3" on="profile-updated">

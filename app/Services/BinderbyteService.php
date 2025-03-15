@@ -11,6 +11,7 @@ class BinderbyteService
 {
     protected $client;
     protected $apiKey;
+    protected $cekOngkir;
 
     public function __construct()
     {
@@ -20,6 +21,11 @@ class BinderbyteService
             'base_uri' => 'https://api.binderbyte.com/wilayah/',
             'timeout'  => 10.0,
         ]);
+
+        // $this->client = new Client([
+        //     'base_uri' => 'https://api.binderbyte.com/v1/',
+        //     'timeout'  => 10.0,
+        // ]);
     }
 
     public function getProvinces()
@@ -81,5 +87,31 @@ class BinderbyteService
             }
         });
     }
+
+    public function cekOngkir($originCityId, $destinationCityId, $weight, $courier)
+    {
+        try {
+            $response = $this->client->get('cost', [
+                'query' => [
+                    'api_key'     => $this->apiKey,
+                    'origin'      => $originCityId,
+                    'destination' => $destinationCityId,
+                    'weight'      => $weight,
+                    'courier'     => $courier,
+                ],
+            ]);
+   
+            $responseData = json_decode($response->getBody(), true);
     
+            if (!isset($responseData['status']) || $responseData['status'] !== 200) {
+                Log::error('Gagal mengambil ongkir', ['response' => $responseData]);
+                return null;
+            }
+    
+            return $responseData['results'] ?? null;
+        } catch (\Exception $e) {
+            Log::error('Kesalahan saat cek ongkir: ' . $e->getMessage());
+            return null;
+        }
+    }
 }

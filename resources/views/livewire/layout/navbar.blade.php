@@ -1,3 +1,4 @@
+
 <div>
     <nav class="bg-white border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -9,7 +10,7 @@
             </div>
 
             <!-- Dropdown Admin + Tombol Burger -->
-            <div class="flex items-center space-x-4 ml-auto">
+            <div class="flex items-center space-x-4 ml-auto lg:hidden">
                 @auth
                     @if (Auth::user()->role === 'admin')
                         <div>
@@ -117,6 +118,7 @@
 
                     @endguest
 
+                    <!-- Authentication Links -->
                     @if (!Auth::check())
                         <li class="flex space-x-2 justify-end">
                             <x-primary-button onclick="window.location='{{ route('login') }}'">
@@ -126,6 +128,32 @@
                                 Register
                             </x-primary-button>
                         </li>
+                    @else
+                        <x-dropdown>
+                            <x-slot:trigger>
+                                <button class="block py-2 px-3 w-28 h-8 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-softoren md:p-0">
+                                    <span class="hidden lg:inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 256 256">
+                                            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="text-base font-medium truncate max-w-[100px]">
+                                        {{ Str::limit(Auth::user()->name, 15) }}
+                                    </span>
+                                </button>
+                            </x-slot:trigger>
+
+                            @if (Auth::user()->role === 'user')
+                                <x-dropdown-link href="{{ route('profile') }}">Profile</x-dropdown-link>
+                                <x-dropdown-link href="{{ route('status') }}">Riwayat Pemesanan</x-dropdown-link>
+                            @endif
+
+                            <x-dropdown-link 
+                                onclick="confirmLogout(event)" 
+                                class="cursor-pointer">
+                                Logout
+                            </x-dropdown-link>
+                        </x-dropdown>
                     @endif
                 </ul>
             </div>
@@ -149,22 +177,10 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.dispatch('logout'); // Kirim event logout
+                    Livewire.dispatch('logout');
                 }
             });
-            return false; // Mencegah redirect ke #
+            return false;
         }
-
-        Livewire.on('swal:confirmLogout', () => {
-            Swal.fire({
-                title: 'Logout Berhasil!',
-                text: 'Anda akan dialihkan ke halaman utama.',
-                icon: 'success',
-                timer: 2000,
-                showConfirmButton: false
-            }).then(() => {
-                window.location.href = "{{ route('logout') }}"; // Sesuaikan dengan route logout Anda
-            });
-        });
     </script>
 </div>
