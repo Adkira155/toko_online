@@ -3,7 +3,7 @@
     <input type="checkbox" id="sidebar-toggle" class="hidden peer">
 
     <label for="sidebar-toggle" 
-        class="fixed top-4 left-4 z-50 p-2 text-gray-600 bg-white rounded-md shadow-md cursor-pointer">
+        class="fixed top-4 left-4 z-50 p-2 text-gray-600 bg-white rounded-md  cursor-pointer">
         ☰
     </label>
 

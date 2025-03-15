@@ -34,7 +34,8 @@
                                    {{ $order->status === 'processing' ? 'bg-blue-500' : '' }}
                                    {{ $order->status === 'shipped' ? 'bg-purple-500' : '' }}
                                    {{ $order->status === 'delivered' ? 'bg-green-500' : '' }}
-                                   {{ $order->status === 'cancelled' ? 'bg-red-500' : '' }}">
+                                   {{ $order->status === 'cancelled' ? 'bg-red-500' : '' }}
+                                   {{ $order->status === 'completed' ? 'bg-orange-500' : '' }}">
                                     {{ ucfirst($order->status) }}
                                 </a>
                             </td>
