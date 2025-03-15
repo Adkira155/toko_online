@@ -17,7 +17,8 @@ class Index extends Component
     public $cartItems = [];
     public $subtotal = 0;
     public $total = 0;
-    public $admin = 2000; // Biaya pengiriman
+    public $admin = 2000; // Biaya Admin
+    public $ongkir= 50000; //Biaya Ongkir
 
     public $totalHarga = 0; 
     public $totalBerat = 0; 
@@ -40,10 +41,6 @@ class Index extends Component
     public $kotaAsalId;
 
     public $showCheckout = false;
-
-    public $ongkosKirim = 0;
-    public $totalHargaDenganOngkir = 0;
-    public $courier;
 
     public function mount()
     {
@@ -161,9 +158,21 @@ class Index extends Component
            }
    
            $this->calculateTotals();
-           $this->calculateTotalBerat(); // Hitung total berat setelah memuat item
+           $this->hitungTotalHarga(); // Total Harga
+           $this->calculateTotalBerat(); // Total Berat
        }
    
+        // ngitung subtotal berdasar kuantitas dan harga
+        public function calculateTotals()
+        {
+             $this->subtotal = 0;
+             foreach ($this->cartItems as $item) {
+                 $this->subtotal += $item->produk->harga * $item->quantity;
+             }
+     
+             $this->total = $this->subtotal + $this->admin;
+        }
+
        // hitung Berat total
        public function calculateTotalBerat()
        {
@@ -175,17 +184,12 @@ class Index extends Component
                }
            }
        }
-   
-       // ngitung subtotal berdasar kuantitas dan harga
-       public function calculateTotals()
-       {
-           $this->subtotal = 0;
-           foreach ($this->cartItems as $item) {
-               $this->subtotal += $item->produk->harga * $item->quantity;
-           }
-   
-           $this->total = $this->subtotal + $this->admin;
-       }
+
+        // Total harga
+       public function hitungTotalHarga()
+        {
+            $this->totalHarga = $this->subtotal + $this->admin + $this->ongkir;
+        }
 
        public function incrementQuantity($cartId)
        {
@@ -225,100 +229,11 @@ class Index extends Component
            $cartItem = Cart::find($cartId);
            if ($cartItem) {
                $cartItem->delete();
+            
                $this->loadCartItems();
+               $this->hitungTotalHarga(); 
            }
        }
-
-       public function hitungOngkosKirim()
-       {
-           $binderbyteService = app(BinderbyteService::class);
-       
-           // Pastikan semua data yang dibutuhkan tersedia
-           if (empty($this->id_kota) || empty($this->kotaAsalId)) {
-               session()->flash('error', 'Provinsi, kota tujuan, atau kota asal tidak valid.');
-               Log::error('Provinsi, kota tujuan, atau kota asal tidak valid.');
-               return;
-           }
-       
-           // Validasi berat
-           if (!is_numeric($this->totalBerat) || $this->totalBerat <= 0) {
-               session()->flash('error', 'Berat barang tidak valid.');
-               Log::error('Total berat tidak valid: ' . $this->totalBerat);
-               return;
-           }
-       
-           // Validasi courier
-           if (empty($this->courier)) {
-               session()->flash('error', 'Kurir harus dipilih.');
-               Log::error('Kurir tidak dipilih.');
-               return;
-           }
-       
-           // Log informasi sebelum API call
-           Log::info('Menghitung ongkos kirim: Asal=' . $this->kotaAsalId . ', Tujuan=' . $this->id_kota . ', Berat=' . $this->totalBerat . ', Courier=' . $this->courier);
-       
-           // Panggil API cek ongkir
-           $this->ongkosKirim = $binderbyteService->cekOngkir(
-               $this->kotaAsalId,  // Kota asal dari admin/default
-               $this->id_kota,     // Kota tujuan dari user
-               $this->totalBerat,  // Berat total produk di keranjang
-               $this->courier      // Kurir yang dipilih
-           );
-       
-           // Pastikan ongkos kirim valid
-           if ($this->ongkosKirim !== null && is_numeric($this->ongkosKirim)) {
-               $this->totalHargaDenganOngkir = $this->total + $this->ongkosKirim;
-               Log::info('Ongkos kirim berhasil dihitung: ' . $this->ongkosKirim);
-           } else {
-               session()->flash('error', 'Gagal menghitung ongkos kirim.');
-               Log::error('Gagal menghitung ongkos kirim.');
-           }
-       }
-
-    // public function hitungOngkosKirim()
-    // {
-    //     $binderbyteService = app(BinderbyteService::class);
-    
-    //     if (empty($this->id_kota) || empty($this->kotaAsalId)) {
-    //         session()->flash('error', 'Provinsi, kota tujuan, atau kota asal tidak valid.');
-    //         Log::error('Provinsi, kota tujuan, atau kota asal tidak valid.');
-    //         return;
-    //     }
-    
-    //     if (!is_numeric($this->totalBerat) || $this->totalBerat <= 0) {
-    //         session()->flash('error', 'Berat barang tidak valid.');
-    //         Log::error('Total berat tidak valid: ' . $this->totalBerat);
-    //         return;
-    //     }
-    
-    //     if (empty($this->courier)) {
-    //         session()->flash('error', 'Kurir harus dipilih.');
-    //         Log::error('Kurir tidak dipilih.');
-    //         return;
-    //     }
-    
-    //     Log::info("Menghitung ongkos kirim: Asal={$this->kotaAsalId}, Tujuan={$this->id_kota}, Berat={$this->totalBerat}, Courier={$this->courier}");
-    
-    //     try {
-    //         $response = $binderbyteService->cekOngkir(
-    //             $this->kotaAsalId,
-    //             $this->id_kota,
-    //             $this->totalBerat,
-    //             $this->courier
-    //         );
-    
-    //         if (!empty($response) && isset($response[0]['costs'][0]['cost'][0]['value'])) {
-    //             $this->ongkosKirim = $response[0]['costs'][0]['cost'][0]['value'];
-    //             $this->hitungTotalHarga(); // Perbarui total harga dengan ongkir
-    //             Log::info('Ongkos kirim berhasil dihitung: ' . $this->ongkosKirim);
-    //         } else {
-    //             throw new \Exception('Response API tidak valid');
-    //         }
-    //     } catch (\Exception $e) {
-    //         session()->flash('error', 'Gagal menghitung ongkos kirim.');
-    //         Log::error('Gagal menghitung ongkos kirim: ' . $e->getMessage());
-    //     }
-    // }
        
     // rincian
     public function submitData()
@@ -327,11 +242,12 @@ class Index extends Component
         $this->validate([
             'namaPenerima' => 'required',
             'catatan' => 'nullable',
-            'courier' => 'required',
+            // 'courier' => 'required',
         ]);
     
         $this->showRingkasan = true;
-        $this->hitungOngkosKirim(); // Hitung ongkos kirim
+        $this->ongkir();
+        $this->hitungTotalHarga();
     }
 
     // checkout form 
