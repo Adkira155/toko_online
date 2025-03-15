@@ -145,6 +145,7 @@
 
                             @if (Auth::user()->role === 'user')
                                 <x-dropdown-link href="{{ route('profile') }}">Profile</x-dropdown-link>
+                                <x-dropdown-link href="{{ route('status') }}">Riwayat Pemesanan</x-dropdown-link>
                             @endif
 
                             <x-dropdown-link 
