@@ -42,8 +42,8 @@
     </div>
     
     <!-- Tabel Produk -->
-<div class="relative overflow-x-auto mt-5 shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dat-table">
+<div class="hidden md:block overflow-x-auto w-full mt-5">
+    <table class="w-full text-xs md:text-sm text-left text-gray-500 whitespace-nowrap">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -94,10 +94,8 @@
                     {{ $item->berat ? $item->berat . ' Gram' : '0 Gram' }}
                 </td>
                 <td class="px-6 py-4">
-                    <img class="size-12 lg:size-20" src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->image }}">
+                    <img class="max-w-[60px] h-auto rounded-md" src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->image }}">
                 </td>
-
-                <td>
                     {{-- <label class="inline-flex items-center cursor-pointer">
                         <input type="checkbox" wire:click="toggleStatus({{ $item->id }})"
                                class="sr-only peer" 
@@ -107,13 +105,29 @@
                         </div>
                     </label> --}}
 
-                    <label class="relative inline-flex cursor-pointer items-center">
+                    {{-- <label class="relative inline-flex cursor-pointer items-center">
                         <input id="switch" type="checkbox" class="peer sr-only" wire:click="toggleStatus({{ $item->id }})" @checked($item->status === 'aktif') />
                         
                         <label for="switch" class="hidden"></label>
                         <div class="peer h-6 w-11 rounded-full border bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-slate-800 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-green-300"></div>
-                      </label>
-                </td>
+                      </label> --}}
+
+                      <td class="px-6 py-4 text-center">
+                        <label class="relative inline-flex cursor-pointer items-center">
+                            <input id="switch" type="checkbox" class="peer sr-only" 
+                                wire:click="toggleStatus({{ $item->id }})" 
+                                @checked($item->status === 'aktif') />
+                            
+                            <label for="switch" class="hidden"></label>
+                            <div class="peer h-5 w-9 rounded-full border bg-slate-200 
+                                after:absolute after:left-[2px] after:top-0.5 
+                                after:h-4 after:w-4 after:rounded-full after:border 
+                                after:border-gray-300 after:bg-white after:transition-all 
+                                after:content-[''] peer-checked:bg-green-500 
+                                peer-checked:after:translate-x-4 peer-checked:after:border-white">
+                            </div>
+                        </label>
+                    </td>
 
                 <td class="px-6 py-4 text-right">
                     <!-- Detail -->
@@ -155,6 +169,66 @@
     </table>
 </div>
 
+<!-- Tampilan Kartu untuk Mobile -->
+<div class="block md:hidden space-y-4">
+    @foreach($produk as $item)
+    <div class="bg-white shadow-md rounded-lg p-4">
+        <h3 class="text-lg font-semibold">{{ $item->nama_produk }}</h3>
+        <p>Harga: Rp {{ number_format($item->harga, 0, ',', '.') }}</p>
+        <p>Stok: {{ $item->stok }}</p>
+        <p>Berat: {{ $item->berat }} Gram</p>
+        <p class="flex items-center gap-2">Status: 
+            <td class="px-6 py-4 text-center">
+                <label class="relative inline-flex cursor-pointer items-center">
+                    <input id="switch-{{ $item->id }}" type="checkbox" class="peer sr-only"
+                        wire:click="toggleStatus({{ $item->id }})"
+                        @checked($item->status === 'aktif') />
+                    
+                    <label for="switch-{{ $item->id }}" class="hidden"></label>
+                    <div class="peer h-5 w-9 rounded-full border bg-slate-200 
+                    relative after:absolute after:left-[2px] after:top-0.5 
+                    after:h-4 after:w-4 after:rounded-full after:border 
+                    after:border-gray-300 after:bg-white after:transition-all 
+                    after:content-[''] peer-checked:bg-green-500 
+                    peer-checked:after:translate-x-4 peer-checked:after:border-white">
+                    </div>
+
+                </label>
+            </td>
+        </p>
+        <img class="max-w-[100px] h-auto rounded-md mt-2" 
+             src="{{ asset('storage/' . $item->image) }}" 
+             alt="{{ $item->image }}">
+        <div class="mt-2">
+            <x-secondary-button wire:click="showProduct({{ $item->id }})"
+                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-2">
+                Lihat Detail
+            </x-secondary-button>            
+            <x-primary-button>
+                <a href="{{ route('produk.update', $item->id) }}" class="px-5 font-bold">Edit</a>
+            </x-primary-button>
+            <x-danger-button class="px-6 py-2"
+                    x-data
+                    @click="Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                     text: 'Produk akan dihapus secara permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, Hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('konfirmasiHapus', [{{ $item->id }}]);
+                    }
+                    })">
+                    Hapus
+                </x-danger-button>
+        </div>
+    </div>
+    @endforeach
+</div>
+
     <!-- Pagination -->
     <div class="mt-4">
         {{ $produk->links() }}
@@ -162,50 +236,88 @@
 
     <!-- Main modal -->
     @if ($selectedProduk)
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl max-h-[90vh]">
             <h2 class="text-lg font-semibold mb-4">Detail Produk</h2>
-
-            <img class="w-full h-auto object-cover rounded" 
-                 src="{{ asset('storage/' . $selectedProduk->image) }}" 
-                 alt="{{ $selectedProduk->nama_produk }}">
-
-            <h3 class="text-xl font-bold mt-2">{{ $selectedProduk->nama_produk }}</h3>
-            <h3 class="text-gray-600">{{ $selectedProduk->deskripsi }}</h3>
-            <p class="text-gray-600">Harga: Rp {{ number_format($selectedProduk->harga, 0, ',', '.') }}</p>
-            <p class="text-gray-600">Berat: {{ $selectedProduk->berat ? $item->berat . ' Gram' : '0 Gram' }}</p>
-            <p class="text-gray-600">Stok: {{ $selectedProduk->stok }}</p>
-            <p class="text-gray-600">Status: 
-                <span class="{{ $selectedProduk->status == 'aktif' ? 'text-green-600' : 'text-red-600' }}">
-                    {{ ucfirst($selectedProduk->status) }}
-                </span>
-            </p>
-
-            <!-- Tombol Tutup -->
-            <button wire:click="closeModal"
-                    class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-                Tutup
-            </button>
-            <a href="{{ route('review.create', $selectedProduk->id) }}" 
-                class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-               
-                <span class="font-semibold">Lihat Review</span>
-            </a>
+    
+            <div class="grid grid-cols-2 gap-4">
+                <img class="w-full h-auto object-cover rounded" 
+                     src="{{ asset('storage/' . $selectedProduk->image) }}" 
+                     alt="{{ $selectedProduk->nama_produk }}">
+    
+                <div class="space-y-2">
+                    <h3 class="text-xl font-bold">{{ $selectedProduk->nama_produk }}</h3>
+                    <p class="text-gray-600 truncate" title="{{ $selectedProduk->deskripsi }}">
+                        {{ Str::limit($selectedProduk->deskripsi, 150, '...') }}
+                    </p>
+                    <p class="text-gray-600">Harga: Rp {{ number_format($selectedProduk->harga, 0, ',', '.') }}</p>
+                    <p class="text-gray-600">Berat: {{ $selectedProduk->berat ? $selectedProduk->berat . ' Gram' : '0 Gram' }}</p>
+                    <p class="text-gray-600">Stok: {{ $selectedProduk->stok }}</p>
+                    <p class="text-gray-600">Status: 
+                        <span class="{{ $selectedProduk->status == 'aktif' ? 'text-green-600' : 'text-red-600' }}">
+                            {{ ucfirst($selectedProduk->status) }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+    
+            <div class="flex justify-between mt-4">
+                <button wire:click="closeModal"
+                        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+                    Tutup
+                </button>
+                <a href="{{ route('review.create', $selectedProduk->id) }}" 
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Lihat Review
+                </a>
+            </div>
         </div>
     </div>
+    
 @endif
-
-
 </div>
 </div>
 
    <!-- DataTable -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var table = $('.dat-table').DataTable({
-            responsive: true
-        }).columns.adjust().responsive.recalc();
-    });
+ document.addEventListener("DOMContentLoaded", function() {
+    var table = $('.dat-table').DataTable({
+        responsive: true,
+        scrollX: true, // Tambahkan scrollbar horizontal jika tabel lebar
+        autoWidth: false,
+        columnDefs: [
+            { targets: [5, 6, 7], orderable: false }, // Nonaktifkan sorting pada kolom tertentu
+            { targets: '_all', className: 'text-left' } // Pastikan teks tetap rata kiri
+        ],
+        language: {
+            "lengthMenu": "Tampilkan _MENU_ data per halaman",
+            "zeroRecords": "Tidak ditemukan data yang sesuai",
+            "info": "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
+            "infoEmpty": "Tidak ada data yang tersedia",
+            "infoFiltered": "(Difilter dari _MAX_ total data)",
+            "search": "Cari:",
+            "paginate": {
+                "first": "Awal",
+                "last": "Akhir",
+                "next": "Berikutnya",
+                "previous": "Sebelumnya"
+            }
+        }
+    }).columns.adjust().responsive.recalc();
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    var table = $('.dat-table').DataTable({
+        responsive: true,
+        scrollX: false, // Hapus scrollbar jika layout card lebih baik
+        autoWidth: false,
+        columnDefs: [
+            { targets: [4, 5, 6], visible: false }, // Sembunyikan kolom yang tidak terlalu penting di mobile
+            { targets: '_all', className: 'text-left' }
+        ]
+    }).columns.adjust().responsive.recalc();
+});
+
 </script>
 
 <!-- SweetAlert2 -->
