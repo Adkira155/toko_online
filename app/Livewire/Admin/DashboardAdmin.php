@@ -30,9 +30,9 @@ class DashboardAdmin extends Component
 
         $this->totalPending = Order::where('status', 'pending')->count();
         $this->totalProses = Order::where('status', 'processing')->count();
-        $this->totalSelesai = Order::where('status', 'delivered')->count();
+        $this->totalSelesai = Order::where('status', 'completed')->count();
 
-        $this->totalPesananPerBulan = Order::where('status', 'delivered')
+        $this->totalPesananPerBulan = Order::where('status', 'completed')
         ->whereMonth('created_at', Carbon::now()->month)
         ->whereYear('created_at', Carbon::now()->year)
         ->count();

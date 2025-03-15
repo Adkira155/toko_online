@@ -1,3 +1,4 @@
+
 <div>
     <nav class="bg-white border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -144,6 +145,7 @@
 
                             @if (Auth::user()->role === 'user')
                                 <x-dropdown-link href="{{ route('profile') }}">Profile</x-dropdown-link>
+                                <x-dropdown-link href="{{ route('status') }}">Riwayat Pemesanan</x-dropdown-link>
                             @endif
 
                             <x-dropdown-link 

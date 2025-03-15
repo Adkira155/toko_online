@@ -20,9 +20,9 @@
                     <a href="#produk-section" class="block text-gray-500 hover:text-softoren">Products</a>
                     <a href="#about-section" class="block text-gray-500 hover:text-softoren">About Us</a>
 
-                    {{-- <a wire:click="logout" class="block text-gray-500 hover:text-softoren cursor-pointer">
+                    <a wire:click="logout" class="block text-gray-500 hover:text-softoren cursor-pointer">
                         Logout
-                    </a> --}}
+                    </a>
                     
                 </div>
             </div>
