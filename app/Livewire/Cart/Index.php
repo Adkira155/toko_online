@@ -18,7 +18,7 @@ class Index extends Component
     public $subtotal = 0;
     public $total = 0;
     public $admin = 2000; // Biaya Admin
-    public $ongkir= 50000; //Biaya Ongkir
+    public $ongkir; //Biaya Ongkir
 
     public $totalHarga = 0; 
     public $totalBerat = 0; 
@@ -160,6 +160,10 @@ class Index extends Component
            $this->calculateTotals();
            $this->hitungTotalHarga(); // Total Harga
            $this->calculateTotalBerat(); // Total Berat
+       }
+
+       public function ongkir(){
+        $this->ongkir = 50000;
        }
    
         // ngitung subtotal berdasar kuantitas dan harga
