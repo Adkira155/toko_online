@@ -160,11 +160,11 @@
                                   
                                     {{-- <option value="">Pilih Kurir</option> --}}
 
-                                    <option value="lion">Lion Parcel</option>
+                                    <option value="">Pilih Expedisi</option>
                                     <option value="jne">JNE</option>
                                     <option value="pos">POS Indonesia</option>
-                                    <option value="sicepat">SiCepat</option>
-                                    <option value="anteraja">AnterAja</option>
+                                    <option value="tiki">TiKi</option>
+                                   
                                   
 
                                     {{-- <option value="spx">Shopee Express</option>
@@ -197,96 +197,96 @@
                 </div>
                 @endif
 
-
                 {{-- Muncul ketika submit data admin --}}
                 @if ($showRingkasan)
-                <div class="w-full lg:w-96 bg-white rounded-lg shadow p-6">
-                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Ringkasan Pesanan</h2>
-                
-                    {{-- Daftar Item (Produk) --}}
-                    @foreach ($cartItems as $item)
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-600">{{ $item->produk->nama_produk }} ({{ $item->quantity }}x)</span>
-                            <span class="font-semibold">Rp {{ number_format($item->produk->harga * $item->quantity, 0, ',', '.') }}</span>
+                <form wire:submit="checkout">
+                    <div class="w-full lg:w-96 bg-white rounded-lg shadow p-6">
+                        <h2 class="text-lg font-semibold text-gray-800 mb-4">Ringkasan Pesanan</h2>
+                    
+                        {{-- Daftar Item (Produk) --}}
+                        @foreach ($cartItems as $item)
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">{{ $item->produk->nama_produk }} ({{ $item->quantity }}x)</span>
+                                <span class="font-semibold">Rp {{ number_format($item->produk->harga * $item->quantity, 0, ',', '.') }}</span>
+                            </div>
+                        @endforeach
+                    
+                        <hr class="my-4">
+                    
+                        {{-- Subtotal --}}
+                        <div class="flex justify-between mb-4">
+                            <span class="text-lg font-semibold text-gray-800">Total</span>
+                            <span class="text-lg font-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
                         </div>
-                    @endforeach
-                
-                    <hr class="my-4">
-                
-                    {{-- Subtotal --}}
-                    <div class="flex justify-between mb-4">
-                        <span class="text-lg font-semibold text-gray-800">Total</span>
-                        <span class="text-lg font-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
-                    </div>
-                
-                    {{-- Biaya Admin --}}
-                    <div class="flex justify-between mb-2">
-                        <span class="text-gray-600">Admin</span>
-                        <span class="font-semibold">Rp {{ number_format($admin, 0, ',', '.') }}</span>
-                    </div>
-                
-                    {{-- Ongkos Kirim --}}
-                    <div class="flex justify-between mb-2">
-                        <span class="text-gray-600">Ongkos Kirim</span>
-                        <span class="font-semibold">
-                            Rp {{ isset($ongkosKirim) ? number_format($ongkosKirim, 0, ',', '.') : 'Belum dihitung' }}
-                        </span>
-                    </div>
-                
-                    <hr class="my-4">
-                
-                    {{-- Total --}}
-                    <div class="flex justify-between mb-4">
-                        <span class="text-lg font-semibold text-gray-800">Total</span>
-                        <span class="text-lg font-semibold">
-                            Rp {{ isset($totalHarga) ? number_format($totalHarga, 0, ',', '.') : 'Belum dihitung' }}
-                        </span>
-                    </div>
+                    
+                        {{-- Biaya Admin --}}
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-600">Admin</span>
+                            <span class="font-semibold">Rp {{ number_format($admin, 0, ',', '.') }}</span>
+                        </div>
+                    
+                        {{-- Ongkos Kirim --}}
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-600">Ongkos Kirim</span>
+                            <span class="font-semibold">
+                                Rp {{ isset($ongkosKirim) ? number_format($ongkosKirim, 0, ',', '.') : 'Belum dihitung' }}
+                            </span>
+                        </div>
+                    
+                        <hr class="my-4">
+                    
+                        {{-- Total --}}
+                        <div class="flex justify-between mb-4">
+                            <span class="text-lg font-semibold text-gray-800">Total</span>
+                            <span class="text-lg font-semibold">
+                                Rp {{ isset($totalHarga) ? number_format($totalHarga, 0, ',', '.') : 'Belum dihitung' }}
+                            </span>
+                        </div>
 
-                    <div class="flex justify-between mb-4">
-                        <span class="text-lg font-semibold text-gray-800">Total Berat</span>
-                        <span class="text-lg font-semibold">{{ $totalBerat }} Gram</span> 
-                    </div>
-                
-                    {{-- Informasi Pengiriman --}}
-                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Pengiriman</h2>
-                
-                    <div>
+                        <div class="flex justify-between mb-4">
+                            <span class="text-lg font-semibold text-gray-800">Total Berat</span>
+                            <span class="text-lg font-semibold">{{ $totalBerat }} Gram</span> 
+                        </div>
+                    
+                        {{-- Informasi Pengiriman --}}
+                        <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Pengiriman</h2>
+                    
                         <div>
-                            <div class="mb-2">
-                                <p><span class="font-semibold">Provinsi Asal:</span> {{ $provinsiAsalName ?? 'Tidak Diketahui' }}</p>
-                                <p><span class="font-semibold">Kota Asal:</span> {{ $kotaAsalName ?? 'Tidak Diketahui' }}</p>
-                                <hr class="my-4">
+                            <div>
+                                <div class="mb-2">
+                                    <p><span class="font-semibold">Provinsi Asal:</span> {{ $provinsiAsalName ?? 'Tidak Diketahui' }}</p>
+                                    <p><span class="font-semibold">Kota Asal:</span> {{ $kotaAsalName ?? 'Tidak Diketahui' }}</p>
+                                    <hr class="my-4">
+                                </div>
                             </div>
                         </div>
+                    
+                        <div class="mb-2">
+                            <p><span class="font-semibold">Nomor Telepon/WhatsApp:</span>{{ $nomorTelepon }}</p>
+                            <p><span class="font-semibold">Provinsi Tujuan:</span>{{ collect($provinces)->where('id', $id_provinsi)->first()['name'] ?? 'Tidak Diketahui' }}</p>
+                            <p><span class="font-semibold">Kota Tujuan:</span>{{ collect($cities)->where('id', $id_kota)->first()['name'] ?? 'Tidak Diketahui' }}</p>
+                            <p><span class="font-semibold">Alamat Lengkap:</span>{{ $alamat }}</p>
+                            <p><span class="font-semibold">Ekspedisi:</span>{{$courier}}</p>
+                            <hr class="my-4">
+                        </div>
+                    
+                        {{-- Informasi Penerima --}}
+                        <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Penerima</h2>
+                    
+                        <div class="mb-2">
+                            <p><span class="font-semibold">Nama Penerima:</span>{{ $namaPenerima }}</p>
+                            <p><span class="font-semibold">Catatan untuk Kurir:</span>{{ $catatan }}</p>
+                        </div>
+                    
+                        {{-- Tombol Checkout menuju Midtrans --}}
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            <button class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                                Checkout Sekarang
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
                     </div>
-                
-                    <div class="mb-2">
-                        <p><span class="font-semibold">Nomor Telepon/WhatsApp:</span>{{ $nomorTelepon }}</p>
-                        <p><span class="font-semibold">Provinsi Tujuan:</span>{{ collect($provinces)->where('id', $id_provinsi)->first()['name'] ?? 'Tidak Diketahui' }}</p>
-                        <p><span class="font-semibold">Kota Tujuan:</span>{{ collect($cities)->where('id', $id_kota)->first()['name'] ?? 'Tidak Diketahui' }}</p>
-                        <p><span class="font-semibold">Alamat Lengkap:</span>{{ $alamat }}</p>
-                        <p><span class="font-semibold">Ekspedisi:</span>{{$courier}}</p>
-                        <hr class="my-4">
-                    </div>
-                
-                    {{-- Informasi Penerima --}}
-                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Penerima</h2>
-                
-                    <div class="mb-2">
-                        <p><span class="font-semibold">Nama Penerima:</span>{{ $namaPenerima }}</p>
-                        <p><span class="font-semibold">Catatan untuk Kurir:</span>{{ $catatan }}</p>
-                    </div>
-                
-                  {{-- Tombol Checkout menuju Midtrans --}}
-                    <div class="flex flex-col lg:flex-row gap-8">
-                        <button wire:click="checkout" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
-                            Checkout Sekarang
-                        </button>
-                    </div>
-
-                    <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
-                </div>
+                </form>
                 @endif
 
             </div>

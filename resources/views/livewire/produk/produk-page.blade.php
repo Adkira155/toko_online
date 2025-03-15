@@ -52,7 +52,7 @@
     
         <div class="col-span-3">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                @foreach ($produk as $r)
+                @foreach ($produk->where('status', 'aktif') as $r)
                     <div class="product-card bg-white overflow-hidden shadow-sm rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg" wire:key="product-{{ $r->id }}">
                         <a href="{{ url('/produk-detail/' . $r->id) }}" class="block">
                             <img src="{{ $r->image ? asset('storage/' . $r->image) : asset('images/default.png') }}" alt="{{ $r->nama_produk }}"

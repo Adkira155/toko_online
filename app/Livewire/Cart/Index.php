@@ -229,96 +229,96 @@ class Index extends Component
            }
        }
 
-    //    public function hitungOngkosKirim()
-    //    {
-    //        $binderbyteService = app(BinderbyteService::class);
+       public function hitungOngkosKirim()
+       {
+           $binderbyteService = app(BinderbyteService::class);
        
-    //        // Pastikan semua data yang dibutuhkan tersedia
-    //        if (empty($this->id_kota) || empty($this->kotaAsalId)) {
-    //            session()->flash('error', 'Provinsi, kota tujuan, atau kota asal tidak valid.');
-    //            Log::error('Provinsi, kota tujuan, atau kota asal tidak valid.');
-    //            return;
-    //        }
+           // Pastikan semua data yang dibutuhkan tersedia
+           if (empty($this->id_kota) || empty($this->kotaAsalId)) {
+               session()->flash('error', 'Provinsi, kota tujuan, atau kota asal tidak valid.');
+               Log::error('Provinsi, kota tujuan, atau kota asal tidak valid.');
+               return;
+           }
        
-    //        // Validasi berat
-    //        if (!is_numeric($this->totalBerat) || $this->totalBerat <= 0) {
-    //            session()->flash('error', 'Berat barang tidak valid.');
-    //            Log::error('Total berat tidak valid: ' . $this->totalBerat);
-    //            return;
-    //        }
+           // Validasi berat
+           if (!is_numeric($this->totalBerat) || $this->totalBerat <= 0) {
+               session()->flash('error', 'Berat barang tidak valid.');
+               Log::error('Total berat tidak valid: ' . $this->totalBerat);
+               return;
+           }
        
-    //        // Validasi courier
-    //        if (empty($this->courier)) {
-    //            session()->flash('error', 'Kurir harus dipilih.');
-    //            Log::error('Kurir tidak dipilih.');
-    //            return;
-    //        }
+           // Validasi courier
+           if (empty($this->courier)) {
+               session()->flash('error', 'Kurir harus dipilih.');
+               Log::error('Kurir tidak dipilih.');
+               return;
+           }
        
-    //        // Log informasi sebelum API call
-    //        Log::info('Menghitung ongkos kirim: Asal=' . $this->kotaAsalId . ', Tujuan=' . $this->id_kota . ', Berat=' . $this->totalBerat . ', Courier=' . $this->courier);
+           // Log informasi sebelum API call
+           Log::info('Menghitung ongkos kirim: Asal=' . $this->kotaAsalId . ', Tujuan=' . $this->id_kota . ', Berat=' . $this->totalBerat . ', Courier=' . $this->courier);
        
-    //        // Panggil API cek ongkir
-    //        $this->ongkosKirim = $binderbyteService->cekOngkir(
-    //            $this->kotaAsalId,  // Kota asal dari admin/default
-    //            $this->id_kota,     // Kota tujuan dari user
-    //            $this->totalBerat,  // Berat total produk di keranjang
-    //            $this->courier      // Kurir yang dipilih
-    //        );
+           // Panggil API cek ongkir
+           $this->ongkosKirim = $binderbyteService->cekOngkir(
+               $this->kotaAsalId,  // Kota asal dari admin/default
+               $this->id_kota,     // Kota tujuan dari user
+               $this->totalBerat,  // Berat total produk di keranjang
+               $this->courier      // Kurir yang dipilih
+           );
        
-    //        // Pastikan ongkos kirim valid
-    //        if ($this->ongkosKirim !== null && is_numeric($this->ongkosKirim)) {
-    //            $this->totalHargaDenganOngkir = $this->total + $this->ongkosKirim;
-    //            Log::info('Ongkos kirim berhasil dihitung: ' . $this->ongkosKirim);
-    //        } else {
-    //            session()->flash('error', 'Gagal menghitung ongkos kirim.');
-    //            Log::error('Gagal menghitung ongkos kirim.');
-    //        }
-    //    }
+           // Pastikan ongkos kirim valid
+           if ($this->ongkosKirim !== null && is_numeric($this->ongkosKirim)) {
+               $this->totalHargaDenganOngkir = $this->total + $this->ongkosKirim;
+               Log::info('Ongkos kirim berhasil dihitung: ' . $this->ongkosKirim);
+           } else {
+               session()->flash('error', 'Gagal menghitung ongkos kirim.');
+               Log::error('Gagal menghitung ongkos kirim.');
+           }
+       }
 
-    public function hitungOngkosKirim()
-    {
-        $binderbyteService = app(BinderbyteService::class);
+    // public function hitungOngkosKirim()
+    // {
+    //     $binderbyteService = app(BinderbyteService::class);
     
-        if (empty($this->id_kota) || empty($this->kotaAsalId)) {
-            session()->flash('error', 'Provinsi, kota tujuan, atau kota asal tidak valid.');
-            Log::error('Provinsi, kota tujuan, atau kota asal tidak valid.');
-            return;
-        }
+    //     if (empty($this->id_kota) || empty($this->kotaAsalId)) {
+    //         session()->flash('error', 'Provinsi, kota tujuan, atau kota asal tidak valid.');
+    //         Log::error('Provinsi, kota tujuan, atau kota asal tidak valid.');
+    //         return;
+    //     }
     
-        if (!is_numeric($this->totalBerat) || $this->totalBerat <= 0) {
-            session()->flash('error', 'Berat barang tidak valid.');
-            Log::error('Total berat tidak valid: ' . $this->totalBerat);
-            return;
-        }
+    //     if (!is_numeric($this->totalBerat) || $this->totalBerat <= 0) {
+    //         session()->flash('error', 'Berat barang tidak valid.');
+    //         Log::error('Total berat tidak valid: ' . $this->totalBerat);
+    //         return;
+    //     }
     
-        if (empty($this->courier)) {
-            session()->flash('error', 'Kurir harus dipilih.');
-            Log::error('Kurir tidak dipilih.');
-            return;
-        }
+    //     if (empty($this->courier)) {
+    //         session()->flash('error', 'Kurir harus dipilih.');
+    //         Log::error('Kurir tidak dipilih.');
+    //         return;
+    //     }
     
-        Log::info("Menghitung ongkos kirim: Asal={$this->kotaAsalId}, Tujuan={$this->id_kota}, Berat={$this->totalBerat}, Courier={$this->courier}");
+    //     Log::info("Menghitung ongkos kirim: Asal={$this->kotaAsalId}, Tujuan={$this->id_kota}, Berat={$this->totalBerat}, Courier={$this->courier}");
     
-        try {
-            $response = $binderbyteService->cekOngkir(
-                $this->kotaAsalId,
-                $this->id_kota,
-                $this->totalBerat,
-                $this->courier
-            );
+    //     try {
+    //         $response = $binderbyteService->cekOngkir(
+    //             $this->kotaAsalId,
+    //             $this->id_kota,
+    //             $this->totalBerat,
+    //             $this->courier
+    //         );
     
-            if (!empty($response) && isset($response[0]['costs'][0]['cost'][0]['value'])) {
-                $this->ongkosKirim = $response[0]['costs'][0]['cost'][0]['value'];
-                $this->hitungTotalHarga(); // Perbarui total harga dengan ongkir
-                Log::info('Ongkos kirim berhasil dihitung: ' . $this->ongkosKirim);
-            } else {
-                throw new \Exception('Response API tidak valid');
-            }
-        } catch (\Exception $e) {
-            session()->flash('error', 'Gagal menghitung ongkos kirim.');
-            Log::error('Gagal menghitung ongkos kirim: ' . $e->getMessage());
-        }
-    }
+    //         if (!empty($response) && isset($response[0]['costs'][0]['cost'][0]['value'])) {
+    //             $this->ongkosKirim = $response[0]['costs'][0]['cost'][0]['value'];
+    //             $this->hitungTotalHarga(); // Perbarui total harga dengan ongkir
+    //             Log::info('Ongkos kirim berhasil dihitung: ' . $this->ongkosKirim);
+    //         } else {
+    //             throw new \Exception('Response API tidak valid');
+    //         }
+    //     } catch (\Exception $e) {
+    //         session()->flash('error', 'Gagal menghitung ongkos kirim.');
+    //         Log::error('Gagal menghitung ongkos kirim: ' . $e->getMessage());
+    //     }
+    // }
        
     // rincian
     public function submitData()

@@ -205,7 +205,7 @@ class ProdukSeeder extends Seeder
                 'stok' => 15,
                 'berat' => 15,
                 'image' => 'img/akira.png',
-                'status' => 'aktif',
+                'status' => 'tidak aktif',
                 'id_kategori' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
