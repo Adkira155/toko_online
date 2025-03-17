@@ -76,8 +76,9 @@
             @foreach($produk as $item)
             <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                    {{ $loop->iteration }}
+                    {{ ($produk->currentPage() - 1) * $produk->perPage() + $loop->iteration }}
                 </td>
+                
                 <td class="px-6 py-4">
                     {{ $item->nama_produk }}
                 </td>
@@ -178,53 +179,50 @@
         <p>Stok: {{ $item->stok }}</p>
         <p>Berat: {{ $item->berat }} Gram</p>
         <p class="flex items-center gap-2">Status: 
-            <td class="px-6 py-4 text-center">
-                <label class="relative inline-flex cursor-pointer items-center">
-                    <input id="switch-{{ $item->id }}" type="checkbox" class="peer sr-only"
-                        wire:click="toggleStatus({{ $item->id }})"
-                        @checked($item->status === 'aktif') />
-                    
-                    <label for="switch-{{ $item->id }}" class="hidden"></label>
-                    <div class="peer h-5 w-9 rounded-full border bg-slate-200 
-                    relative after:absolute after:left-[2px] after:top-0.5 
-                    after:h-4 after:w-4 after:rounded-full after:border 
-                    after:border-gray-300 after:bg-white after:transition-all 
-                    after:content-[''] peer-checked:bg-green-500 
-                    peer-checked:after:translate-x-4 peer-checked:after:border-white">
-                    </div>
-
-                </label>
-            </td>
+            <div class="relative inline-flex cursor-pointer items-center">
+                <input id="switch-{{ $item->id }}" type="checkbox" 
+                       class="peer sr-only" 
+                       @checked($item->status === 'aktif') />
+            
+                <div wire:click="toggleStatus({{ $item->id }})"
+                     class="peer h-5 w-9 rounded-full border bg-slate-200 
+                            relative after:absolute after:left-[2px] after:top-0.5 
+                            after:h-4 after:w-4 after:rounded-full after:border 
+                            after:border-gray-300 after:bg-white after:transition-all 
+                            after:content-[''] peer-checked:bg-green-500 
+                            peer-checked:after:translate-x-4 peer-checked:after:border-white">
+                </div>
+            </div>
         </p>
         <img class="max-w-[100px] h-auto rounded-md mt-2" 
              src="{{ asset('storage/' . $item->image) }}" 
              alt="{{ $item->image }}">
-        <div class="mt-2">
-            <x-secondary-button wire:click="showProduct({{ $item->id }})"
-                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-2">
-                Lihat Detail
-            </x-secondary-button>            
-            <x-primary-button>
-                <a href="{{ route('produk.update', $item->id) }}" class="px-5 font-bold">Edit</a>
-            </x-primary-button>
-            <x-danger-button class="px-6 py-2"
+             <div class="mt-4 flex flex-wrap justify-between gap-2">
+                <x-secondary-button wire:click="showProduct({{ $item->id }})"
+                    class="flex-1 min-w-[100px] px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Lihat Detail
+                </x-secondary-button>            
+                <x-primary-button class="flex-1 min-w-[100px]">
+                    <a href="{{ route('produk.update', $item->id) }}" class="px-5 font-bold">Edit</a>
+                </x-primary-button>
+                <x-danger-button class="flex-1 min-w-[100px] px-6 py-2"
                     x-data
                     @click="Swal.fire({
-                    title: 'Apakah Anda Yakin?',
-                     text: 'Produk akan dihapus secara permanen!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Ya, Hapus!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.dispatch('konfirmasiHapus', [{{ $item->id }}]);
-                    }
+                        title: 'Apakah Anda Yakin?',
+                        text: 'Produk akan dihapus secara permanen!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, Hapus!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Livewire.dispatch('konfirmasiHapus', [{{ $item->id }}]);
+                        }
                     })">
                     Hapus
                 </x-danger-button>
-        </div>
+            </div>
     </div>
     @endforeach
 </div>

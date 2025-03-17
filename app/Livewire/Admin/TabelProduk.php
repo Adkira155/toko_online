@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\Produk;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class TabelProduk extends Component
@@ -47,6 +48,9 @@ class TabelProduk extends Component
 
     public function toggleStatus($id)
     {
+
+        Log::info("Toggle status diklik untuk ID: $id");
+
         $produk = Produk::findOrFail($id);
         $produk->status = $produk->status === 'aktif' ? 'tidak aktif' : 'aktif';
         $produk->save();

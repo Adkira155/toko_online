@@ -2,7 +2,7 @@
     <div class="bg-white p-6 shadow-md rounded-lg">
         <h2 class="text-lg font-semibold mb-4">Daftar Order</h2>
 
-        <div class="relative overflow-x-auto mt-5 shadow-md sm:rounded-lg">
+        <div class="relative overflow-x-auto mt-5 shadow-md sm:rounded-lg hidden sm:block">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dat-table">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
@@ -14,20 +14,20 @@
                         <th scope="col" class="px-6 py-3">Metode Pembayaran</th>
                         <th scope="col" class="px-6 py-3">Status</th>
                         <th scope="col" class="px-6 py-3">Tanggal Order</th>
-                        <th scope="col" class="px-6 py-3">Aksi</th>
+                        <th scope="col" class="px-6 py-3 whitespace-nowrap min-w-[150px]">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($orders as $order)
                         <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4">{{ $order->user->name }}</td>
-                            <td class="px-6 py-4">{{ $order->orderdetail->produk->nama_produk }}</td>
-                            <td class="px-6 py-4">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
-                            <td class="px-6 py-4">{{ $order->nama_penerima }}</td>
-                            <td class="px-6 py-4">{{ $order->metode_pembayaran }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->user->name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->orderdetail->produk->nama_produk }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->nama_penerima }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->metode_pembayaran }}</td>
 
-                            <td class="px-6 py-4 text-center">
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
                                 <a wire:click="openModal({{ $order->id }})" 
                                    class="px-3 py-1 rounded-lg text-white font-semibold text-sm cursor-pointer
                                    {{ $order->status === 'pending' ? 'bg-yellow-400' : '' }}
@@ -37,15 +37,15 @@
                                    {{ $order->status === 'cancelled' ? 'bg-red-500' : '' }}">
                                     {{ ucfirst($order->status) }}
                                 </a>
-                            </td>
+                 </td>
                             
                             
-                            <td class="px-6 py-4">{{ $order->created_at }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->created_at }}</td>
                             <td class="px-6 py-4 text-right">
 
                                 {{-- detail --}}
                                 <x-secondary-button wire:click="showOrders({{ $order->id }})"
-                                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                    class="px-4 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600">
                                     Lihat Detail
                                 </x-secondary-button>
 
@@ -57,6 +57,40 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Tampilan kartu untuk mobile -->
+    <div class="block sm:hidden">
+        @foreach($orders as $order)
+            <div class="bg-white p-4 rounded-lg shadow-md mb-4">
+                <p class="text-sm font-semibold">Pesanan Dari: {{ $order->user->name }}</p>
+                <p class="text-sm text-gray-600">Produk: {{ $order->orderdetail->produk->nama_produk }}</p>
+                <p class="text-sm text-gray-600">Total: Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
+                <p class="text-sm text-gray-600">Nama Penerima: {{ $order->nama_penerima }}</p>
+                <p class="text-sm text-gray-600">Metode: {{ $order->metode_pembayaran }}</p>
+                <p class="text-sm text-gray-600">Status:
+                    <span class="px-3 py-1 rounded-lg text-white text-sm font-semibold
+                        {{ $order->status === 'pending' ? 'bg-yellow-400' : '' }}
+                        {{ $order->status === 'processing' ? 'bg-blue-500' : '' }}
+                        {{ $order->status === 'shipped' ? 'bg-purple-500' : '' }}
+                        {{ $order->status === 'delivered' ? 'bg-green-500' : '' }}
+                        {{ $order->status === 'cancelled' ? 'bg-red-500' : '' }}">
+                        {{ ucfirst($order->status) }}
+                    </span>
+                </p>
+                <p class="text-sm text-gray-600">Tanggal: {{ $order->created_at }}</p>
+
+                <div class="mt-2 flex justify-between space-x-2">
+                    <x-primary-button wire:click="openModal({{ $order->id }})">
+                        Status
+                    </x-primary-button>
+                    <x-secondary-button wire:click="showOrders({{ $order->id }})"
+                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        Lihat Detail
+                    </x-secondary-button>
+                </div>
+            </div>
+        @endforeach
+    </div>
 
         <div class="mt-4">{{ $orders->links() }}</div>
     </div>
