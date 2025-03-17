@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
     <!-- Recent Orders Table -->
     {{-- <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
@@ -203,4 +203,3 @@
     </script>
 @endpush --}}
 
-</div>

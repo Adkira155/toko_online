@@ -27,11 +27,17 @@
                     @if (Auth::user()->role === 'admin')
                         <!-- Sidebar untuk Admin -->
                         <div class="flex">
-                            
                             <livewire:layout.sidebar />
-                            {{-- <livewire:layout.navbar /> --}}
+
                             <div class="flex-1">
-                                {{-- <div class="flex-1 flex flex-col">
+                                <livewire:layout.navbar />
+                                <!-- Konten Halaman -->
+
+                                <main class="p-2">
+                                    {{ $slot }}
+                                </main>
+                                
+                                  {{-- <div class="flex-1 flex flex-col">
                                     <!-- Header Konten -->
                                     <header class="bg-white shadow-md p-3 flex items-center justify-between md:pl-8">
                                         <!-- Tombol Burger di Mobile -->
@@ -46,38 +52,44 @@
                             
                                     </header>
                                 </div> --}}
-                                <livewire:layout.navbar />
-                                <!-- Konten Halaman -->
-                                <main class="p-6">
-                                    {{ $slot }}
-                                </main>
                             </div>
                         </div>
                     @else
+
                         <!-- Navbar untuk User -->
                         <livewire:layout.navbar />
-                        {{-- <header class="p-4 bg-gray-100 shadow">
-                            {{ $header ?? '' }}
-                        </header> --}}
+
                         <main class="p-6">
                             {{ $slot }}
                         </main>
+
                         <livewire:layout.footer />
+
+                        {{-- <header class="p-4 bg-gray-100 shadow">
+                            {{ $header ?? '' }}
+                        </header> --}}
+
                     @endif
-                @else
-                    <!-- Guest -->
-                    <livewire:layout.navbar />
-                    {{-- <header class="p-4 bg-gray-100 shadow">
-                        {{ $header ?? '' }}
-                    </header> --}}
-                    <main class="p-6">
-                        {{ $slot }}
-                    </main>
-                    <livewire:layout.footer />
-                @endauth
+                    @else
+                        <!-- Guest -->
+                        
+                        <livewire:layout.navbar />
+
+                        <main class="p-6">
+                            {{ $slot }}
+                        </main>
+
+                        <livewire:layout.footer />
+
+                        {{-- <header class="p-4 bg-gray-100 shadow">
+                            {{ $header ?? '' }}
+                        </header> --}}
+                       
+                    @endauth
             </div>
-            
+
             {{-- Jika pengguna adalah guest (tidak login) --}}
+            
         </div>
 
         @livewireScripts
