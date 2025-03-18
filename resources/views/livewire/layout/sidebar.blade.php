@@ -44,6 +44,12 @@
                            {{ request()->routeIs('tabel.order') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
                             <span>Pesanan</span>
                         </a>
+
+                        <a href="{{ route('tabel.riwayat') }}" 
+                        class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors 
+                        {{ request()->routeIs('tabel.riwayat') ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
+                         <span>Riwayat Pemesanan</span>
+                     </a>
                     </div>
                 </div>
             </nav>

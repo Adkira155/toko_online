@@ -39,6 +39,7 @@ class Index extends Component
     public $kotaAsalName;
     public $provinsiAsalId;
     public $kotaAsalId;
+    public $courier;
 
     public $showCheckout = false;
 
@@ -246,7 +247,7 @@ class Index extends Component
         $this->validate([
             'namaPenerima' => 'required',
             'catatan' => 'nullable',
-            // 'courier' => 'required',
+            'courier' => 'required',
         ]);
     
         $this->showRingkasan = true;

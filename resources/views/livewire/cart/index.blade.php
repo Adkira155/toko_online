@@ -152,17 +152,15 @@
                         </div>
 
                         {{-- Form Pilih Ekspedisi --}}
-                        {{-- <div class="mb-4">
+                        <div class="mb-4">
                             <x-input-label for="courier" :value="__('Pilih Ekspedisi')" />
                             <div class="relative">
-                                <select class="mt-1 mb-3 block w-full p-2 shadow-lg rounded-md border border-gray-200 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-4 py-2 appearance-none bg-white">
-                                  
-                                    <option value="">Pilih Kurir</option>
+                                <select wire:model="courier" class="mt-1 mb-3 block w-full p-2 shadow-lg rounded-md border border-gray-200 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-4 py-2 appearance-none bg-white">
+                                
                                     <option value="">Pilih Expedisi</option>
                                     <option value="jne">JNE</option>
                                     <option value="pos">POS Indonesia</option>
                                     <option value="tiki">TiKi</option>
-
                                     <option value="spx">Shopee Express</option>
                                     <option value="jne">JNE</option>
                                     <option value="pos">POS Indonesia</option>
@@ -178,11 +176,11 @@
 
                                 <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                                     <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7-7-7-7"></path>
                                     </svg>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                         
                         <button wire:click="submitData" class="mt-1 w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
                             Submit Data
@@ -263,8 +261,8 @@
                             <p><span class="font-semibold">Provinsi Tujuan:</span>{{ collect($provinces)->where('id', $id_provinsi)->first()['name'] ?? 'Tidak Diketahui' }}</p>
                             <p><span class="font-semibold">Kota Tujuan:</span>{{ collect($cities)->where('id', $id_kota)->first()['name'] ?? 'Tidak Diketahui' }}</p>
                             <p><span class="font-semibold">Alamat Lengkap:</span>{{ $alamat }}</p>
+                            <p><span class="font-semibold">Ekspedisi:</span>{{$courier}}</p>
                             <hr class="my-4">
-                            {{-- <p><span class="font-semibold">Ekspedisi:</span>{{$courier}}</p> --}}
                         </div>
                     
                         {{-- Informasi Penerima --}}

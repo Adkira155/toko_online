@@ -38,7 +38,7 @@
                                    {{ $order->status === 'completed' ? 'bg-orange-500' : '' }}">
                                     {{ ucfirst($order->status) }}
                                 </a>
-                 </td>
+                            </td>
                             
                             
                             <td class="px-6 py-4 whitespace-nowrap">{{ $order->created_at }}</td>

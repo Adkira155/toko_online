@@ -79,6 +79,7 @@ Route::middleware(['auth'])->group(function () {
      
          // ==== Order ADMIN RUD ==== //\
          Route::view('/tabel-order', 'admin.tabel-order')->name('tabel.order');
+         Route::view('/tabel-riwayat', 'admin.tabel-riwayat')->name('tabel.riwayat');
          Route::view('/update-order', 'admin.order.update-order')->name('update.order');
 
          // ==== Review ADMIN Reply ==== //

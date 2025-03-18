@@ -27,12 +27,12 @@ return new class extends Migration
                 $table->string('nama_penerima')->nullable();
                 $table->string('catatan')->nullable();
                 
-                $table->string('metode_pembayaran')->nullable();
                 $table->string('courier')->nullable();
-                $table->integer('ongkir')->nullable();
-                $table->text('shipping_address')->nullable();
-                $table->string('alamat_detail')->nullable();
+                // $table->integer('ongkir')->nullable();
+                // $table->text('shipping_address')->nullable();
+                // $table->string('alamat_detail')->nullable();
 
+                $table->string('metode_pembayaran')->nullable();
                 $table->string('midtrans_transaction_id')->nullable();
                 $table->string('midtrans_payment_type')->nullable();
                 $table->string('snap_token')->nullable();
