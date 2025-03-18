@@ -63,22 +63,23 @@
     <div class="block sm:hidden">
         @foreach($orders as $order)
             <div class="bg-white p-4 rounded-lg shadow-md mb-4">
-                <p class="text-sm font-semibold">Pesanan Dari: {{ $order->user->name }}</p>
-                <p class="text-sm text-gray-600">Produk: {{ $order->orderdetail->produk->nama_produk }}</p>
-                <p class="text-sm text-gray-600">Total: Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
-                <p class="text-sm text-gray-600">Nama Penerima: {{ $order->nama_penerima }}</p>
-                <p class="text-sm text-gray-600">Metode: {{ $order->metode_pembayaran }}</p>
-                <p class="text-sm text-gray-600">Status:
+                <p class="mt-2 text-sm font-semibold">Pesanan Dari: {{ $order->user->name }}</p>
+                <p class="mt-2 text-sm text-gray-600">Produk: {{ $order->orderdetail->produk->nama_produk }}</p>
+                <p class="mt-2 text-sm text-gray-600">Total: Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-gray-600">Nama Penerima: {{ $order->nama_penerima }}</p>
+                <p class="mt-2 text-sm text-gray-600">Metode: {{ $order->metode_pembayaran }}</p>
+                <p class="mt-2 text-sm text-gray-600">Status:
                     <span class="px-3 py-1 rounded-lg text-white text-sm font-semibold
                         {{ $order->status === 'pending' ? 'bg-yellow-400' : '' }}
                         {{ $order->status === 'processing' ? 'bg-blue-500' : '' }}
                         {{ $order->status === 'shipped' ? 'bg-purple-500' : '' }}
                         {{ $order->status === 'delivered' ? 'bg-green-500' : '' }}
-                        {{ $order->status === 'cancelled' ? 'bg-red-500' : '' }}">
+                        {{ $order->status === 'cancelled' ? 'bg-red-500' : '' }}
+                        {{ $order->status === 'completed' ? 'bg-orange-500' : '' }}">
                         {{ ucfirst($order->status) }}
                     </span>
                 </p>
-                <p class="text-sm text-gray-600">Tanggal: {{ $order->created_at }}</p>
+                <p class="mt-2 text-sm text-gray-600">Tanggal: {{ $order->created_at }}</p>
 
                 <div class="mt-2 flex justify-between space-x-2">
                     <x-primary-button wire:click="openModal({{ $order->id }})">
