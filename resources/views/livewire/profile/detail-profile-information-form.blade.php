@@ -54,8 +54,8 @@ new class extends Component
         $validated = $this->validate([
             'nomor' => ['required', 'string', 'max:20', 'regex:/^[0-9\-\+]+$/'],
             'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:5120', 'dimensions:min_width=100,min_height=100'],
-            'id_provinsi' => ['required', Rule::in(array_map(fn($p) => (string) $p['id'], $this->provinces))],
-            'id_kota' => ['required', Rule::in(array_map(fn($c) => (string) $c['id'], $this->cities))],
+            'id_provinsi' => ['nullable', Rule::in(array_map(fn($p) => (string) $p['id'], $this->provinces))],
+            'id_kota' => ['nullable', Rule::in(array_map(fn($c) => (string) $c['id'], $this->cities))],
             'alamat' => [
                     'required',
                     'string',
