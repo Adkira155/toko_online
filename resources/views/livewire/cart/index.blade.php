@@ -267,14 +267,15 @@
                             <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
                                 Checkout Sekarang
                             </button>
-                            {{-- notif --}}
-                            @if ($pesanSukses)
-                                <div class="bg-green-500 text-white px-4 py-2 rounded-md mb-3">
-                                    {{ $pesanSukses }}
-                                </div>
-                            @endif
                         </div>
                         <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
+
+                         {{-- notif --}}
+                         @if ($pesanSukses)
+                         <div class="bg-green-500 text-white px-4 py-2 rounded-md mb-3">
+                             {{ $pesanSukses }}
+                         </div>
+                     @endif
                     </div>
                 </form>
                 @endif
