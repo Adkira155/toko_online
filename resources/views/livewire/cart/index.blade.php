@@ -103,101 +103,88 @@
                 @if ($showCheckout)
                 <div class="flex-1 bg-white rounded-lg shadow p-6">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Shipping</h2>
-                  
+            
                     {{-- bawaan data user --}}
                     <div class="mb-2">
-                        <p> <span class="font-semibold">Nomor Telpon/WA:</span> {{ $nomorTelepon }}</p>
-                        <p><span class="font-semibold">Alamat Lengkap:</span>  {{ $alamat }}</p>
-                  
-
+                        <p><span class="font-semibold">Nomor Telpon/WA:</span> {{ $nomorTelepon }}</p>
+                        <p><span class="font-semibold">Alamat Lengkap:</span> {{ $alamat }}</p>
+            
                         @if ($id_provinsi)
-                        <p><span class="font-semibold">Provinsi:</span> 
-                            {{ collect($provinces)->where('id', $id_provinsi)->first()['name'] ?? 'Tidak Diketahui' }}
-                        </p>
+                            <p><span class="font-semibold">Provinsi:</span>
+                                {{ collect($provinces)->where('id', $id_provinsi)->first()['name'] ?? 'Tidak Diketahui' }}
+                            </p>
                         @else
                             <p class="text-red-500 text-sm">⚠ Provinsi harus diisi.</p>
                         @endif
                         @if ($id_kota)
-                            <p><span class="font-semibold">Kota:</span> 
+                            <p><span class="font-semibold">Kota:</span>
                                 {{ collect($cities)->where('id', $id_kota)->first()['name'] ?? 'Tidak Diketahui' }}
                             </p>
                         @else
                             <p class="text-red-500 text-sm">⚠ Kota harus diisi.</p>
-                        @endif                    
-                        </div>
-                  
-                        {{-- input data  --}}
-                  
-                        <h2 class="text-lg font-semibold text-gray-800 mb-4">Isi Data Berikut</h2>
-                    
-                        <div class="mb-4">
-                            <x-input-label for="namaPenerima" :value="__('Nama Penerima')" />
-                            <x-text-input
-                                id="namaPenerima"
-                                wire:model="namaPenerima"
-                                class="mt-1 block w-full"
-                                type="text"
-                                required
-                            />
-                        </div>
-                    
-                        <div class="mb-4">
-                            <x-input-label for="catatan" :value="__('Catatan Untuk Kurir')" />
-                            <textarea
-                                id="catatan"
-                                wire:model="catatan"
-                                class="block mt-1 w-full p-2 shadow-lg rounded-md border border-gray-300 appearance-none resize-y"
-                                rows="3"
-                            ></textarea>
-                        </div>
-
-                        {{-- Form Pilih Ekspedisi --}}
-                        {{-- <div class="mb-4">
-                            <x-input-label for="courier" :value="__('Pilih Ekspedisi')" />
-                            <div class="relative">
-                                <select class="mt-1 mb-3 block w-full p-2 shadow-lg rounded-md border border-gray-200 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-4 py-2 appearance-none bg-white">
-                                  
-                                    <option value="">Pilih Kurir</option>
-                                    <option value="">Pilih Expedisi</option>
-                                    <option value="jne">JNE</option>
-                                    <option value="pos">POS Indonesia</option>
-                                    <option value="tiki">TiKi</option>
-
-                                    <option value="spx">Shopee Express</option>
-                                    <option value="jne">JNE</option>
-                                    <option value="pos">POS Indonesia</option>
-                                    <option value="jnt">J&T Express</option>
-                                    <option value="sicepat">SiCepat</option>
-                                    <option value="tiki">TiKi</option>
-                                    <option value="anteraja">AnterAja</option>
-                                    <option value="wahana">Wahana Express</option>
-                                    <option value="ninja">Ninja Express</option>
-                                    <option value="lion">Lion Parcel</option>
-                                    
-                                </select>
-
-                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
+                        @endif
+                    </div>
+            
+                    {{-- input data  --}}
+            
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Isi Data Berikut</h2>
+            
+                    <div class="mb-4">
+                        <x-input-label for="namaPenerima" :value="__('Nama Penerima')" />
+                        <x-text-input id="namaPenerima" wire:model="namaPenerima" class="mt-1 block w-full" type="text" required />
+                        @error('namaPenerima') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    </div>
+            
+                    <div class="mb-4">
+                        <x-input-label for="catatan" :value="__('Catatan Untuk Kurir (Opsional)')" />
+                        <textarea id="catatan" wire:model="catatan" class="block mt-1 w-full p-2 shadow-lg rounded-md border border-gray-300 appearance-none resize-y" rows="3"></textarea>
+                        @error('catatan') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    </div>
+            
+                    {{-- Form Pilih Ekspedisi --}}
+                    <div class="mb-4">
+                        <x-input-label for="courier" :value="__('Pilih Ekspedisi')" />
+                        <div class="relative">
+                            <select wire:model="courier" class="mt-1 mb-3 block w-full p-2 shadow-lg rounded-md border border-gray-200 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-4 py-2 appearance-none bg-white">
+                                <option value="">Pilih Expedisi</option>
+                                <option value="jne">JNE</option>
+                                <option value="pos">POS Indonesia</option>
+                                <option value="tiki">TiKi</option>
+                                <option value="spx">Shopee Express</option>
+                                <option value="jne">JNE</option>
+                                <option value="pos">POS Indonesia</option>
+                                <option value="jnt">J&T Express</option>
+                                <option value="sicepat">SiCepat</option>
+                                <option value="tiki">TiKi</option>
+                                <option value="anteraja">AnterAja</option>
+                                <option value="wahana">Wahana Express</option>
+                                <option value="ninja">Ninja Express</option>
+                                <option value="lion">Lion Parcel</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7-7-7-7"></path>
+                                </svg>
                             </div>
-                        </div> --}}
-                        
-                        <button wire:click="submitData" class="mt-1 w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
-                            Submit Data
-                        </button>
-                        <p class="text-sm text-gray-500 mt-4">
-                            *Pastikan data pengiriman sudah benar, jika ingin melakukan perubahan,
-                            <a href="/profile" class="text-blue-600">klik di sini</a>
-                        </p>
+                        </div>
+                        @error('courier') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    </div>
+            
+                    <button wire:click="submitData" class="mt-1 w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                        Submit Data
+                    </button>
+                    <p class="text-sm text-gray-500 mt-4">
+                        *Pastikan data pengiriman sudah benar, jika ingin melakukan perubahan,
+                        <a href="/profile" class="text-blue-600">klik di sini</a>
+                    </p>
                 </div>
-                @endif
+            @endif
 
                 {{-- Muncul ketika submit data admin --}}
                 @if ($showRingkasan)
-                <form wire:submit="checkout">
+                <form wire:submit.prevent="checkout">
                     <div class="w-full lg:w-96 bg-white rounded-lg shadow p-6">
+
                         <h2 class="text-lg font-semibold text-gray-800 mb-4">Ringkasan Pesanan</h2>
                     
                         {{-- Daftar Item (Produk) --}}
@@ -263,8 +250,8 @@
                             <p><span class="font-semibold">Provinsi Tujuan:</span>{{ collect($provinces)->where('id', $id_provinsi)->first()['name'] ?? 'Tidak Diketahui' }}</p>
                             <p><span class="font-semibold">Kota Tujuan:</span>{{ collect($cities)->where('id', $id_kota)->first()['name'] ?? 'Tidak Diketahui' }}</p>
                             <p><span class="font-semibold">Alamat Lengkap:</span>{{ $alamat }}</p>
+                            <p><span class="font-semibold">Ekspedisi:</span>{{$courier}}</p>
                             <hr class="my-4">
-                            {{-- <p><span class="font-semibold">Ekspedisi:</span>{{$courier}}</p> --}}
                         </div>
                     
                         {{-- Informasi Penerima --}}
@@ -277,9 +264,15 @@
                     
                         {{-- Tombol Checkout menuju Midtrans --}}
                         <div class="flex flex-col lg:flex-row gap-8">
-                            <button class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
                                 Checkout Sekarang
                             </button>
+                            {{-- notif --}}
+                            @if ($pesanSukses)
+                                <div class="bg-green-500 text-white px-4 py-2 rounded-md mb-3">
+                                    {{ $pesanSukses }}
+                                </div>
+                            @endif
                         </div>
                         <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
                     </div>

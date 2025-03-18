@@ -36,8 +36,8 @@ class OrderSeeder extends Seeder
             [
                 'id_user' => 2,
                 'id_detailorder' => 1,
-                'total_weight' => 30,
-                'total_price' => 50000,
+                'total_berat' => 30,
+                'total_harga' => 50000,
                 'status' => 'completed',
                 'created_at' => now(),
                 'updated_at' => now(),

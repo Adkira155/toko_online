@@ -3,9 +3,12 @@
 namespace App\Livewire\Cart;
 
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\Orderdetail;
 use App\Models\User;
 use App\Models\Produk;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 use App\Services\BinderbyteService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -39,8 +42,10 @@ class Index extends Component
     public $kotaAsalName;
     public $provinsiAsalId;
     public $kotaAsalId;
+    public $courier;
 
     public $showCheckout = false;
+    public $pesanSukses = '';
 
     public function mount()
     {
@@ -246,9 +251,9 @@ class Index extends Component
         $this->validate([
             'namaPenerima' => 'required',
             'catatan' => 'nullable',
-            // 'courier' => 'required',
+            'courier' => 'required',
         ]);
-    
+
         $this->showRingkasan = true;
         $this->ongkir();
         $this->hitungTotalHarga();
@@ -268,6 +273,6 @@ class Index extends Component
 
     public function checkout()
     {
-        return redirect()->route('checkout');
+        $this->pesanSukses = 'Tombol Checkout ditekan!';
     }
 }
