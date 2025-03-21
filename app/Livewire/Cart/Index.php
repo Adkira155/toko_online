@@ -3,16 +3,12 @@
 namespace App\Livewire\Cart;
 
 use App\Models\Cart;
-use App\Models\Order;
-use App\Models\Orderdetail;
-use App\Models\User;
-use App\Models\Produk;
+
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use App\Services\BinderbyteService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
 class Index extends Component
@@ -107,38 +103,6 @@ class Index extends Component
             }
         }
     }
-    
-    // ambil Kota dan Provinsi asal Admin
-    // public function loadAdminLocation()
-    // {
-    //     $adminUser = User::where('id', 1)->where('role', 'admin')->first();
-
-    //     if ($adminUser) {
-    //         $this->id_provinsi = $adminUser->id_provinsi;
-    //         $this->id_kota = $adminUser->id_kota;
-
-    //         Log::info('Admin User ID Provinsi: ' . $this->id_provinsi);
-    //         Log::info('Admin User ID Kota: ' . $this->id_kota);
-
-    //         $binderbyteService = app(BinderbyteService::class);
-    //         $this->provinces = $binderbyteService->getProvinces();
-    //         Log::info('Provinces: ' . json_encode($this->provinces));
-
-    //         if ($this->id_provinsi) {
-    //             $this->cities = $binderbyteService->getCities($this->id_provinsi);
-    //             Log::info('Cities: ' . json_encode($this->cities));
-
-    //             $provinsi = collect($this->provinces)->firstWhere('id', $this->id_provinsi);
-    //             $kota = collect($this->cities)->firstWhere('id', $this->id_kota);
-
-    //             Log::info('Provinsi Data: ' . json_encode($provinsi));
-    //             Log::info('Kota Data: ' . json_encode($kota));
-
-    //             $this->provinsiAsalName = $provinsi['name'] ?? 'Tidak Diketahui';
-    //             $this->kotaAsalName = $kota['name'] ?? 'Tidak Diketahui';
-    //         }
-    //     }
-    // }
 
        // cart
        public function loadCartItems()
@@ -271,8 +235,113 @@ class Index extends Component
         return view('livewire.cart.index');
     }
 
-    public function checkout()
+    // update Status 
+        public function updateStatus($cartId, $status)
     {
-        $this->pesanSukses = 'Tombol Checkout ditekan!';
+        $cartItem = Cart::find($cartId);
+        
+        if ($cartItem) {
+            $cartItem->status = $status; // Update status
+            $cartItem->save();
+
+            $this->loadCartItems(); // Reload keranjang setelah update status
+        }
     }
+
+// checkout
+public function checkout()
+{
+    // Validasi data
+    $this->validate([
+        'namaPenerima' => 'required',
+        'nomorTelepon' => 'required',
+        'alamat' => 'required',
+        'courier' => 'required',
+        'catatan' => 'nullable',
+    ]);
+
+    // Cek ID user
+    $userId = Auth::id();
+    $carts = Cart::where('user_id', $userId)->get();
+
+    // Kondisi jika keranjang kosong
+    if ($carts->isEmpty()) {
+        session()->flash('error', 'Keranjang Anda kosong.');
+        return;
+    }
+
+    // Ubah status keranjang menjadi 'checkout'
+    foreach ($carts as $cart) {
+        $this->updateStatus($cart->id, 'checkout');
+    }
+
+    // Ambil item keranjang dengan status 'checkout'
+    $cartsCheckout = Cart::where('user_id', $userId)->where('status', 'checkout')->with('produk')->get();
+
+    // Kondisi jika tidak ada item 'checkout' di keranjang
+    if ($cartsCheckout->isEmpty()) {
+        session()->flash('error', 'Tidak ada item yang di-checkout.');
+        return;
+    }
+
+    // Mulai transaksi database
+    DB::beginTransaction();
+
+    try {
+        // Buat pesanan terlebih dahulu
+        $order = \App\Models\Order::create([
+            'id_user' => $userId,
+            'total_harga' => $this->totalHarga,
+            'total_berat' => $this->totalBerat,
+            'nama_penerima' => $this->namaPenerima,
+            'nomor_telepon' => $this->nomorTelepon,
+            'alamat' => $this->alamat,
+            'courier' => $this->courier,
+            'catatan' => $this->catatan,
+            'status' => 'pending',
+            'ongkir' => $this->ongkir,
+        ]);
+
+        // Ambil item pertama dari keranjang yang di-checkout
+        $cart = $cartsCheckout->first();
+        $produk = $cart->produk;
+
+        // Periksa stok sebelum membuat detail pesanan
+        if ($produk->stok > 0) {
+            // Buat detail pesanan
+            $orderDetail = \App\Models\OrderDetail::create([
+                'id_order' => $order->id,
+                'id_produk' => $produk->id,
+                'quantity' => $cart->quantity,
+                'subtotal_harga_item' => $produk->harga * $cart->quantity,
+                'subtotal_berat_item' => $produk->berat * $cart->quantity,
+            ]);
+
+            // Update order dengan id_detailorder
+            $order->update(['id_detailorder' => $orderDetail->id]);
+
+            // Kurangi stok produk
+            $produk->stok -= $cart->quantity;
+            $produk->save();
+
+            // Hapus item dari keranjang
+            $cart->delete();
+        } else {
+            session()->flash('error', 'Stok ' . $produk->nama_produk . ' tidak mencukupi.');
+            throw new \Exception('Stok tidak mencukupi.');
+        }
+
+        DB::commit();
+
+        $this->pesanSukses = 'Pesanan berhasil dibuat!';
+        $this->loadCartItems(); // Muat ulang keranjang setelah checkout
+        $this->showCheckout = false; // Sembunyikan form checkout
+        $this->showRingkasan = false; // Sembunyikan ringkasan
+
+    } catch (\Exception $e) {
+        DB::rollback();
+        Log::error('Error during checkout: ' . $e->getMessage());
+        session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
+    }
+}
 }

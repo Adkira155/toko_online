@@ -15,14 +15,15 @@ return new class extends Migration
             Schema::create('orders', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('id_user');
-               $table->foreignId('id_detailorder');
+               $table->foreignId('id_detailorder')->nullable();
 
                $table->integer('total_berat')->nullable();
                $table->decimal('total_harga', 15, 2)->nullable();
 
                $table->enum('status', [
-                   'pending', 'processing', 'shipped', 'delivered', 'completed', 'cancelled'
+                   'pending', 'paid', 'processing', 'shipped', 'delivered', 'completed', 'cancelled'
                ])->default('pending');
+
 
                $table->string('nama_penerima')->nullable();
                $table->string('nomor_telepon')->nullable();
