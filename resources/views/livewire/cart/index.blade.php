@@ -1,4 +1,3 @@
-
 <div class="">
     <div class="bg-gray-100 min-h-screen">
         <div class="container mx-auto py-10 px-4">
@@ -264,7 +263,8 @@
                     
                         {{-- Tombol Checkout menuju Midtrans --}}
                         <div class="flex flex-col lg:flex-row gap-8">
-                            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                            {{-- @dd($snapToken) --}}
+                            <button type="submit" id="pay-button" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
                                 Checkout Sekarang
                             </button>
                         </div>
