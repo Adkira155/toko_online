@@ -21,6 +21,13 @@ class OrderSeeder extends Seeder
                 'subtotal_harga' => 25000,
                 'subtotal_berat' => 15, 
             ],
+            [
+                'user_id' => 3,
+                'produk_id' => 2,
+                'quantity' => 2,
+                'subtotal_harga' => 25000,
+                'subtotal_berat' => 15, 
+            ],
         ]);  
         DB::table('detailorders')->insert([     
             [
