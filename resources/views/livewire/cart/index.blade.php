@@ -266,11 +266,12 @@
                     
                         {{-- Tombol Checkout menuju Midtrans --}}
                         <div class="flex flex-col lg:flex-row gap-8">
-                            {{-- @dd($snapToken) --}}
-                            <button type="submit" id="pay-button" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                            <a href="{{ route('checkout') }}" 
+                               class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-center">
                                 Checkout Sekarang
-                            </button>
+                            </a>
                         </div>
+                        
                         <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
 
                          {{-- notif --}}
