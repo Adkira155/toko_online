@@ -67,15 +67,18 @@
                         <span class="text-gray-600">Subtotal</span>
                         <span class="font-semibold">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                     </div>
+                    @if (count($cartItems) > 0 )
                     <div class="flex justify-between mb-2">
                         <span class="text-gray-600">Admin</span>
                         <span class="font-semibold">Rp {{ number_format($admin, 0, ',', '.') }}</span>
                     </div>
+                    
                     <hr class="my-4">
                     <div class="flex justify-between mb-4">
                         <span class="text-lg font-semibold text-gray-800">Total</span>
                         <span class="text-lg font-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
                     </div>
+                    @endif
 
                     <div class="flex flex-col lg:flex-row gap-8">
                         @if (count($cartItems) > 0)
@@ -177,7 +180,7 @@
                         <a href="/profile" class="text-blue-600">klik di sini</a>
                     </p>
                 </div>
-            @endif
+                @endif
 
                 {{-- Muncul ketika submit data admin --}}
                 @if ($showRingkasan)

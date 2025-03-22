@@ -23,6 +23,7 @@
                         class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
                         <option value="">Semua Status</option>
                         <option value="pending">Menunggu Pembayaran</option>
+                        <option value="paid">Sudah Dibayar</option>
                         <option value="processing">Diproses</option>
                         <option value="shipped">Dikirim</option>
                         <option value="delivered">Diterima</option>
@@ -52,6 +53,7 @@
                             </div>
                             <span class="px-3 py-1 text-sm font-semibold rounded-full
                                 {{ $order->status === 'pending' ? 'bg-yellow-400 text-white' : '' }}
+                                {{ $order->status === 'paid' ? 'bg-orange-500 text-white' : '' }}
                                 {{ $order->status === 'processing' ? 'bg-blue-500 text-white' : '' }}
                                 {{ $order->status === 'shipped' ? 'bg-purple-500 text-white' : '' }}
                                 {{ $order->status === 'delivered' ? 'bg-green-500 text-white' : '' }}
