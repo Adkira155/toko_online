@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "livewire/volt": "^1.0",
+        "midtrans/midtrans-php": "*",
         "realrashid/sweet-alert": "*",
         "yajra/laravel-datatables-oracle": "^11.1"
     },

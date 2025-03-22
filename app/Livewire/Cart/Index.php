@@ -5,6 +5,8 @@ namespace App\Livewire\Cart;
 use App\Models\Cart;
 
 use Livewire\Component;
+use Midtrans\Config;
+use Midtrans\Snap;
 use Illuminate\Support\Facades\DB;
 use App\Services\BinderbyteService;
 use Illuminate\Support\Facades\Log;
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Session;
 
 class Index extends Component
 {
+
+    public $snapToken;
+
     public $cartItems = [];
     public $subtotal = 0;
     public $total = 0;
@@ -43,6 +48,7 @@ class Index extends Component
     public $showCheckout = false;
     public $pesanSukses = '';
 
+  
     public function mount()
     {
         $this->loadCartItems();
@@ -74,8 +80,31 @@ class Index extends Component
               $this->cities = $binderbyteService->getCities($this->id_provinsi); 
 
             }
+
+        // // Konfigurasi Midtrans
+        // Config::$serverKey = config('midtrans.server_key');
+        // Config::$isProduction = false;
+        // Config::$isSanitized = true;
+        // Config::$is3ds = true;
+
+        // // Data transaksi
+        // $params = [
+        //     'transaction_details' => array(
+        //         'order_id' => rand(),
+        //         'gross_amount' => 10000,
+        //     ),
+        //     'customer_details' => array (
+        //         'first_name' => 'Juna',
+        //         'email' => 'user@gmail.com',
+        //         'phone' => '08111222333',
+        //     ),
+        // ];
+        // // Ambil Snap Token
+        // $this->snapToken = \Midtrans\Snap::getSnapToken($params);
+        // // dd($this->snapToken);
+        // return view('livewire.cart.index');
         }
-        // dd($this->all());
+        
     }
 
     public function loadDefaultLocation()
@@ -436,10 +465,11 @@ class Index extends Component
             $this->showCheckout = false; // Sembunyikan form checkout
             $this->showRingkasan = false; // Sembunyikan ringkasan
 
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error('Error during checkout: ' . $e->getMessage());
-            session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
-        }
+    } catch (\Exception $e) {
+        DB::rollback();
+        Log::error('Error during checkout: ' . $e->getMessage());
+        session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
     }
+
+}
 }
