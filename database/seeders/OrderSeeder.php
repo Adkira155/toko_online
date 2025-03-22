@@ -42,7 +42,6 @@ class OrderSeeder extends Seeder
         DB::table('orders')->insert([
             [
                 'id_user' => 2,
-                'id_detailorder' => 1,
                 'total_berat' => 30,
                 'total_harga' => 50000,
                 'status' => 'completed',

@@ -256,101 +256,99 @@ class Index extends Component
         }
     }
 
-// checkout
-public function checkout()
-{
-    // Validasi data
-    $this->validate([
-        'namaPenerima' => 'required',
-        'nomorTelepon' => 'required',
-        'alamat' => 'required',
-        'courier' => 'required',
-        'catatan' => 'nullable',
-    ]);
-
-    // Cek ID user
-    $userId = Auth::id();
-    $carts = Cart::where('user_id', $userId)->get();
-
-    // Kondisi jika keranjang kosong
-    if ($carts->isEmpty()) {
-        session()->flash('error', 'Keranjang Anda kosong.');
-        return;
-    }
-
-    // Ubah status keranjang menjadi 'checkout'
-    foreach ($carts as $cart) {
-        $this->updateStatus($cart->id, 'checkout');
-    }
-
-    // Ambil item keranjang dengan status 'checkout'
-    $cartsCheckout = Cart::where('user_id', $userId)->where('status', 'checkout')->with('produk')->get();
-
-    // Kondisi jika tidak ada item 'checkout' di keranjang
-    if ($cartsCheckout->isEmpty()) {
-        session()->flash('error', 'Tidak ada item yang di-checkout.');
-        return;
-    }
-
-    // Mulai transaksi database
-    DB::beginTransaction();
-
-    try {
-        // Buat pesanan terlebih dahulu
-        $order = \App\Models\Order::create([
-            'id_user' => $userId,
-            'total_harga' => $this->totalHarga,
-            'total_berat' => $this->totalBerat,
-            'nama_penerima' => $this->namaPenerima,
-            'nomor_telepon' => $this->nomorTelepon,
-            'alamat' => $this->alamat,
-            'courier' => $this->courier,
-            'catatan' => $this->catatan,
-            'status' => 'pending',
-            'ongkir' => $this->ongkir,
+    public function checkout()
+    {
+        // Validasi data
+        $this->validate([
+            'namaPenerima' => 'required',
+            'nomorTelepon' => 'required',
+            'alamat' => 'required',
+            'courier' => 'required',
+            'catatan' => 'nullable',
         ]);
 
-        // Ambil item pertama dari keranjang yang di-checkout
-        $cart = $cartsCheckout->first();
-        $produk = $cart->produk;
+        // Cek ID user
+        $userId = Auth::id();
+        $carts = Cart::where('user_id', $userId)->get();
 
-        // Periksa stok sebelum membuat detail pesanan
-        if ($produk->stok > 0) {
-            // Buat detail pesanan
-            $orderDetail = \App\Models\OrderDetail::create([
-                'id_order' => $order->id,
-                'id_produk' => $produk->id,
-                'quantity' => $cart->quantity,
-                'subtotal_harga_item' => $produk->harga * $cart->quantity,
-                'subtotal_berat_item' => $produk->berat * $cart->quantity,
-            ]);
-
-            // Update order dengan id_detailorder
-            $order->update(['id_detailorder' => $orderDetail->id]);
-
-            // Kurangi stok produk
-            $produk->stok -= $cart->quantity;
-            $produk->save();
-
-            // Hapus item dari keranjang
-            $cart->delete();
-        } else {
-            session()->flash('error', 'Stok ' . $produk->nama_produk . ' tidak mencukupi.');
-            throw new \Exception('Stok tidak mencukupi.');
+        // Kondisi jika keranjang kosong
+        if ($carts->isEmpty()) {
+            session()->flash('error', 'Keranjang Anda kosong.');
+            return;
         }
 
-        DB::commit();
+        // Ubah status keranjang menjadi 'checkout'
+        foreach ($carts as $cart) {
+            $this->updateStatus($cart->id, 'checkout');
+        }
 
-        $this->pesanSukses = 'Pesanan berhasil dibuat!';
-        $this->loadCartItems(); // Muat ulang keranjang setelah checkout
-        $this->showCheckout = false; // Sembunyikan form checkout
-        $this->showRingkasan = false; // Sembunyikan ringkasan
+        // Ambil item keranjang dengan status 'checkout'
+        $cartsCheckout = Cart::where('user_id', $userId)->where('status', 'checkout')->with('produk')->get();
 
-    } catch (\Exception $e) {
-        DB::rollback();
-        Log::error('Error during checkout: ' . $e->getMessage());
-        session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
+        // Kondisi jika tidak ada item 'checkout' di keranjang
+        if ($cartsCheckout->isEmpty()) {
+            session()->flash('error', 'Tidak ada item yang di-checkout.');
+            return;
+        }
+
+        // Mulai transaksi database
+        DB::beginTransaction();
+
+        try {
+            // Buat pesanan terlebih dahulu
+            $order = \App\Models\Order::create([
+                'id_user' => $userId,
+                'total_harga' => $this->totalHarga,
+                'total_berat' => $this->totalBerat,
+                'nama_penerima' => $this->namaPenerima,
+                'nomor_telepon' => $this->nomorTelepon,
+                'id_provinsi' => $this->id_provinsi,
+                'id_kota' => $this->id_kota,
+                'alamat' => $this->alamat,
+                'courier' => $this->courier,
+                'catatan' => $this->catatan,
+                'status' => 'pending',
+                'ongkir' => $this->ongkir,
+            ]);
+
+            // Loop melalui setiap item di keranjang yang di-checkout
+            foreach ($cartsCheckout as $cart) {
+                $produk = $cart->produk;
+
+                // Periksa stok sebelum membuat detail pesanan
+                if ($produk->stok >= $cart->quantity) {
+                    // Buat detail pesanan
+                    $orderDetail = \App\Models\OrderDetail::create([
+                        'id_order' => $order->id,
+                        'id_produk' => $produk->id,
+                        'quantity' => $cart->quantity,
+                        'subtotal_harga_item' => $produk->harga * $cart->quantity,
+                        'subtotal_berat_item' => $produk->berat * $cart->quantity,
+                    ]);
+
+                    // Kurangi stok produk
+                    $produk->stok -= $cart->quantity;
+                    $produk->save();
+
+                    // Hapus item dari keranjang
+                    $cart->delete();
+                } else {
+                    session()->flash('error', 'Stok ' . $produk->nama_produk . ' tidak mencukupi.');
+                    throw new \Exception('Stok tidak mencukupi.');
+                }
+            }
+
+            DB::commit();
+
+            $this->pesanSukses = 'Pesanan berhasil dibuat!';
+            $this->loadCartItems(); // Muat ulang keranjang setelah checkout
+            $this->showCheckout = false; // Sembunyikan form checkout
+            $this->showRingkasan = false; // Sembunyikan ringkasan
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error during checkout: ' . $e->getMessage());
+            session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
+        }
     }
-
-}
 }

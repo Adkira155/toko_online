@@ -3,6 +3,7 @@
 namespace App\Livewire\User;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,8 +19,7 @@ class Status extends Component
 
     public function render()
     {
-        $orders = Order::with('orderdetail.produk')
-            ->where('id_user', auth()->id())
+        $orders = Order::where('id_user', auth()->id())
             ->when($this->search, function ($query) {
                 $query->where('id', 'like', '%' . $this->search . '%');
             })
@@ -42,12 +42,17 @@ class Status extends Component
             $order->status = 'completed';
             $order->save();
             $this->dispatch('order-status-updated');
-            $this->closeModal('orderModal' . $orderId); // Tambahkan $orderId
+            $this->closeModal('orderModal' . $orderId);
         }
     }
 
     public function closeModal($modalId)
     {
         $this->dispatch('closeModal', modalId: $modalId);
+    }
+
+    public function getOrderDetail($orderId)
+    {
+        return OrderDetail::where('id_order', $orderId)->with('produk')->get();
     }
 }

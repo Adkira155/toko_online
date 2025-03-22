@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_produk');
             $table->foreignId('id_order');
+            $table->integer('quantity')->nullable();
             $table->integer('subtotal_harga_item');
             $table->integer('subtotal_berat_item');
             $table->timestamps();
