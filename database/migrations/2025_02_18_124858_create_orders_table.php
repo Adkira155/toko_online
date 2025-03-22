@@ -15,7 +15,6 @@ return new class extends Migration
             Schema::create('orders', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('id_user');
-               $table->foreignId('id_detailorder')->nullable();
 
                $table->integer('total_berat')->nullable();
                $table->decimal('total_harga', 15, 2)->nullable();
@@ -32,8 +31,9 @@ return new class extends Migration
                $table->string('courier')->nullable();
                $table->decimal('ongkir', 15, 2)->nullable();
 
-               $table->integer('id_provinsi')->nullable();
-               $table->integer('id_kota')->nullable();
+               $table->unsignedBigInteger('id_provinsi')->nullable();
+                $table->decimal('id_kota')->nullable();
+                $table->string('alamat')->nullable();
 
                $table->string('metode_pembayaran')->nullable();
                $table->string('midtrans_transaction_id')->nullable();
