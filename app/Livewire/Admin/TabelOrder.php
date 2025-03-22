@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Order;
+use App\Models\Orderdetail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -78,6 +79,11 @@ class TabelOrder extends Component
         $this->showModal = false;
         session()->flash('message', 'Status berhasil diperbarui.');
         $this->dispatch('refreshTable');
+    }
+
+    public function getOrderDetail($orderId)
+    {
+        return Orderdetail::where('id_order', $orderId)->with('produk')->get();
     }
     
 }

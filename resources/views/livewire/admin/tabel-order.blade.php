@@ -120,9 +120,9 @@
                     <div class="border rounded-lg p-4">
                         <h3 class="text-lg font-semibold mb-4">Produk yang Dipesan</h3>
                         @php
-                            $orderDetails = $selectedOrder->detailorders;
-                            // dd($this);
+                        $orderDetails = $this->getOrderDetail($order->id);
                         @endphp
+                        
                         @if($orderDetails && $orderDetails->count() > 0)
                             <div class="space-y-3">
                                 @foreach($orderDetails as $orderDetail)
