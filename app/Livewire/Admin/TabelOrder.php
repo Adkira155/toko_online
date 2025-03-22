@@ -11,14 +11,12 @@ class TabelOrder extends Component
     use WithPagination;
 
     public $search = '';
-    public $statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+    public $statuses = ['paid', 'pending', 'processing', 'shipped', 'delivered', 'cancelled'];
     
     public $selectedOrder;
     public $orderId;
     public $status;
     public $showModal = false;
-
-    protected $paginationTheme = 'bootstrap';
 
     public function render()
     {
@@ -68,7 +66,7 @@ class TabelOrder extends Component
 
     public function updateStatus()
     {
-        if (!in_array($this->status, ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])) {
+        if (!in_array($this->status, ['paid','pending', 'processing', 'shipped', 'delivered', 'cancelled'])) {
             session()->flash('error', 'Status tidak valid.');
             return;
         }

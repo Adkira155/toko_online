@@ -48,7 +48,7 @@
                     <div class="bg-white rounded-xl shadow-sm p-6">
                         <div class="flex flex-wrap justify-between items-start gap-4">
                             <div>
-                                <div class="text-lg font-medium">Pesanan #{{ $order->id }}</div>
+                                <div class="text-lg font-medium">Pesanan #{{$loop->iteration }}</div>
                                 <div class="text-sm text-gray-500">{{ $order->created_at }}</div>
                             </div>
                             <span class="px-3 py-1 text-sm font-semibold rounded-full
