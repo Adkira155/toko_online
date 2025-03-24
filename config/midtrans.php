@@ -11,10 +11,10 @@ return [
     |
     */
 
-    'merchant_id' => env('MIDTRANS_MERCHANT_ID'),
-    'client_key' => env('MIDTRANS_CLIENT_KEY'),
-    'server_key' => env('MIDTRANS_SERVER_KEY'),
-    'is_production' => env('MIDTRANS_PRODUCTION', false),
+    'merchant_id' => env('MIDTRANS_MERCHANT_ID'), 
+    'client_key' => env('MIDTRANS_CLIENT_KEY'), // Midtrans client key
+    'server_key' => env('MIDTRANS_SERVER_KEY'), // Midtrans server key
+    'is_production' => env('MIDTRANS_PRODUCTION', false),  // Isi false jika masih tahap development dan true jika sudah di production, default false (development)
     'is_sanitized' => env('MIDTRANS_SANITIZED', true),
     'is_3ds' => env('MIDTRANS_3DS', true),
 
