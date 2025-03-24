@@ -56,7 +56,7 @@ class Index extends Component
         // Ambil Provinsi dan Kota Admin
         // $this->loadAdminLocation();
 
-        // Ambil Provinsi dan Kota default kaloa admin kdd kota dan provinsi
+        // Ambil Provinsi dan Kota default kalonya admin kdd kota dan provinsi
         $this->loadDefaultLocation();
 
         $user = Auth::user();
@@ -80,10 +80,7 @@ class Index extends Component
               $this->cities = $binderbyteService->getCities($this->id_provinsi); 
 
             }
-
-       
-        }
-        
+        } 
     }
 
     public function loadDefaultLocation()
@@ -111,7 +108,7 @@ class Index extends Component
             }
         }
     }
-
+    
        // cart
        public function loadCartItems()
        {

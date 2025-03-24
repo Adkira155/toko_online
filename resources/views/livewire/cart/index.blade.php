@@ -12,7 +12,8 @@
             </div>
 
             <div class="flex flex-col lg:flex-row gap-8">
-                
+           
+                {{-- Cart --}}
                 <div class="flex-1 bg-white rounded-lg shadow p-6">
                     @if ($cartItems->isEmpty())
                         <p class="text-center text-gray-600 py-10">Keranjang Kosong.</p>
@@ -51,6 +52,7 @@
                     @endif
                 </div>
 
+                {{-- Ringkasan Subtotal --}}
                 <div class="lg:w-96 bg-white rounded-lg shadow p-6 h-full">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Order Summary</h2>
 
@@ -96,7 +98,6 @@
                         @endif
                     </div>
                 </div>
-
             </div>
 
             {{-- Informasi Shippping dan Ringkasan --}}
@@ -128,7 +129,6 @@
                     </div>
             
                     {{-- input data  --}}
-            
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Isi Data Berikut</h2>
             
                     <div class="mb-4">
@@ -289,8 +289,7 @@
                 @endif
 
             </div>
-          
-            
+        
         </div>
     </div>
 </div>
