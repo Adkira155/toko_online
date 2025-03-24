@@ -15,20 +15,21 @@ class Status extends Component
     public $statusFilter = '';
     public $selectedOrder = null;
 
-    protected $paginationTheme = 'bootstrap';
-
     public function render()
     {
         $orders = Order::where('id_user', auth()->id())
             ->when($this->search, function ($query) {
-                $query->where('id', 'like', '%' . $this->search . '%');
+                $query->where(function ($query) {
+                    $query->where('id', 'like', '%' . $this->search . '%')
+                        ->orWhere('resi_code', 'like', '%' . $this->search . '%');
+                });
             })
             ->when($this->statusFilter, function ($query) {
                 $query->where('status', $this->statusFilter);
             })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-
+    
         return view('livewire.user.status', [
             'orders' => $orders,
         ]);

@@ -15,7 +15,7 @@
             <form wire:submit.prevent="render" class="flex flex-wrap gap-4">
                 <div class="flex-1 min-w-[200px]">
                     <input type="text" wire:model.live="search" placeholder="Cari nomor pesanan..."
-                        class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
+                        class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
                 </div>
 
                 <div class="w-full sm:w-auto">
