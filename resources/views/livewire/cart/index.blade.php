@@ -12,6 +12,12 @@
             </div>
 
             <div class="flex flex-col lg:flex-row gap-8">
+                {{-- notif --}}
+                @if ($pesanSukses)
+                <div class="bg-orange-500 text-white px-4 py-2 rounded-md mb-3">
+                    {{ $pesanSukses }}
+                </div>
+                @endif
            
                 {{-- Cart --}}
                 <div class="flex-1 bg-white rounded-lg shadow p-6">
@@ -278,12 +284,6 @@
                         
                         <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
 
-                         {{-- notif --}}
-                         @if ($pesanSukses)
-                         <div class="bg-orange-500 text-white px-4 py-2 rounded-md mb-3">
-                             {{ $pesanSukses }}
-                         </div>
-                     @endif
                     </div>
                 </form>
                 @endif
@@ -293,9 +293,41 @@
         </div>
     </div>
 
+    @if (session('snapToken'))
     <script type="text/javascript">
-        window.addEventListener('snapTokenGenerated', event => {
-            snap.pay(event.detail);
-        })
+    //   console.log('Snap Token: {{ session('snapToken') }}'); 
+        window.snap.pay('{{ session('snapToken') }}', {
+            onSuccess: function(result) {
+                /* Anda dapat melakukan apa pun di sini ketika pembayaran berhasil, misalnya:
+                - Redirect ke halaman sukses
+                - Tampilkan pesan sukses
+                - Update status pesanan di database */
+                console.log(result);
+                alert('Pembayaran berhasil!');
+            },
+            onPending: function(result) {
+                /* Anda dapat melakukan apa pun di sini ketika pembayaran tertunda, misalnya:
+                - Redirect ke halaman tertunda
+                - Tampilkan pesan tertunda
+                - Update status pesanan di database */
+                console.log(result);
+                alert('Menunggu pembayaran Anda!');
+            },
+            onError: function(result) {
+                /* Anda dapat melakukan apa pun di sini ketika pembayaran gagal, misalnya:
+                - Redirect ke halaman gagal
+                - Tampilkan pesan gagal
+                - Update status pesanan di database */
+                console.log(result);
+                alert('Pembayaran gagal!');
+            },
+            onClose: function() {
+                /* Anda dapat melakukan apa pun di sini ketika popup ditutup, misalnya:
+                - Redirect ke halaman pesanan
+                - Tampilkan pesan */
+                alert('Popup ditutup tanpa menyelesaikan pembayaran');
+            }
+        });
     </script>
+@endif
 </div>
