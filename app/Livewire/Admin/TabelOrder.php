@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Order;
+use App\Models\Orderdetail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,14 +12,12 @@ class TabelOrder extends Component
     use WithPagination;
 
     public $search = '';
-    public $statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+    public $statuses = ['paid', 'pending', 'processing', 'shipped', 'delivered', 'cancelled'];
     
     public $selectedOrder;
     public $orderId;
     public $status;
     public $showModal = false;
-
-    protected $paginationTheme = 'bootstrap';
 
     public function render()
     {
@@ -68,7 +67,7 @@ class TabelOrder extends Component
 
     public function updateStatus()
     {
-        if (!in_array($this->status, ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])) {
+        if (!in_array($this->status, ['paid','pending', 'processing', 'shipped', 'delivered', 'cancelled'])) {
             session()->flash('error', 'Status tidak valid.');
             return;
         }
@@ -80,6 +79,11 @@ class TabelOrder extends Component
         $this->showModal = false;
         session()->flash('message', 'Status berhasil diperbarui.');
         $this->dispatch('refreshTable');
+    }
+
+    public function getOrderDetail($orderId)
+    {
+        return Orderdetail::where('id_order', $orderId)->with('produk')->get();
     }
     
 }

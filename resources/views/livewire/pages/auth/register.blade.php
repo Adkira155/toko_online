@@ -61,7 +61,7 @@ new #[Layout('layouts.guest')] class extends Component
         <!-- nomor -->
         <div>
             <x-input-label for="nomor" :value="__('Nomor Telepon/Whatsapp')" />
-            <x-text-input wire:model="nomor" id="nomor" class="block mt-1 w-full" type="number" name="nomor" required autofocus autocomplete="nomor" />
+            <x-text-input wire:model="nomor" id="nomor" class="block mt-1 w-full" type="text" name="nomor" required autofocus autocomplete="nomor" />
             <x-input-error :messages="$errors->get('nomor')" class="mt-2" />
         </div>
 

@@ -16,31 +16,34 @@ return new class extends Migration
                 $table->id();
                 $table->foreignId('id_user');
 
-               $table->integer('total_berat')->nullable();
-               $table->decimal('total_harga', 15, 2)->nullable();
+                $table->integer('total_berat')->nullable();
+                $table->decimal('total_harga', 15, 2)->nullable();
 
-               $table->enum('status', [
+                $table->enum('status', [
                    'pending', 'paid', 'processing', 'shipped', 'delivered', 'completed', 'cancelled'
-               ])->default('pending');
+                ])->default('pending');
 
 
-               $table->string('nama_penerima')->nullable();
-               $table->string('nomor_telepon')->nullable();
-               $table->string('catatan')->nullable();
+                $table->string('nama_penerima')->nullable();
+                $table->string('nomor_telepon')->nullable();
+                $table->string('catatan')->nullable();
 
-               $table->string('courier')->nullable();
-               $table->decimal('ongkir', 15, 2)->nullable();
+                $table->string('courier')->nullable();
+                $table->decimal('ongkir', 15, 2)->nullable();
 
-               $table->unsignedBigInteger('id_provinsi')->nullable();
+                $table->unsignedBigInteger('id_provinsi')->nullable();
                 $table->decimal('id_kota')->nullable();
                 $table->string('alamat')->nullable();
 
-               $table->string('metode_pembayaran')->nullable();
-               $table->string('midtrans_transaction_id')->nullable();
-               $table->string('midtrans_payment_type')->nullable();
-               $table->string('snap_token')->nullable();
-               $table->string('resi_code')->nullable();
-               $table->timestamps();
+                $table->string('metode_pembayaran')->nullable();
+                $table->string('midtrans_transaction_id')->nullable();
+                $table->string('midtrans_payment_type')->nullable();
+                $table->string('snap_token')->nullable();
+                $table->string('resi_code')->nullable();
+    
+                $table->index('status');
+                $table->index('midtrans_transaction_id');
+                $table->timestamps();
             });
         }
     }

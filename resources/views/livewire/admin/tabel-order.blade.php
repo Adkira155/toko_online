@@ -8,7 +8,7 @@
                     <tr>
                         <th scope="col" class="px-6 py-3">No</th>
                         <th scope="col" class="px-6 py-3">Pesanan Dari</th>
-                        <th scope="col" class="px-6 py-3">Produk yang dipesan</th>
+                        <th scope="col" class="px-6 py-3">Nomor Resi Pesanan</th>
                         <th scope="col" class="px-6 py-3">Total Harga</th>
                         <th scope="col" class="px-6 py-3">Nama Penerima</th>
                         <th scope="col" class="px-6 py-3">Metode Pembayaran</th>
@@ -19,49 +19,43 @@
                 </thead>
                 <tbody>
                     @foreach($orders as $order)
-                        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->user->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->orderdetail->produk->nama_produk }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->nama_penerima }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->metode_pembayaran }}</td>
+                    <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $loop->iteration }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->user->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->resi_code }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->nama_penerima }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->metode_pembayaran }}</td>
 
-                            <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <a wire:click="openModal({{ $order->id }})" 
-                                   class="px-3 py-1 rounded-lg text-white font-semibold text-sm cursor-pointer
-                                   {{ $order->status === 'pending' ? 'bg-yellow-400' : '' }}
-                                   {{ $order->status === 'processing' ? 'bg-blue-500' : '' }}
-                                   {{ $order->status === 'shipped' ? 'bg-purple-500' : '' }}
-                                   {{ $order->status === 'delivered' ? 'bg-green-500' : '' }}
-                                   {{ $order->status === 'cancelled' ? 'bg-red-500' : '' }}
-                                   {{ $order->status === 'completed' ? 'bg-orange-500' : '' }}">
-                                    {{ ucfirst($order->status) }}
-                                </a>
-                            </td>
-                            
-                            
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->created_at }}</td>
-                            <td class="px-6 py-4 text-right">
-
-                                {{-- detail --}}
-                                <x-secondary-button wire:click="showOrders({{ $order->id }})"
-                                    class="px-4 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600">
-                                    Lihat Detail
-                                </x-secondary-button>
-
-                                {{-- hapus
-                                    <x-danger-button wire:click="hapusOrder({{ $order->id }})" class="ml-2 px-4 py-2">Hapus</x-danger-button> --}}
-                            </td>
-                        </tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            <a wire:click="openModal({{ $order->id }})" 
+                                class="px-3 py-1 rounded-lg text-white font-semibold text-sm cursor-pointer
+                                {{ $order->status === 'pending' ? 'bg-yellow-400' : '' }}
+                                {{ $order->status === 'paid' ? 'bg-orange-400' : '' }}
+                                {{ $order->status === 'processing' ? 'bg-blue-500' : '' }}
+                                {{ $order->status === 'shipped' ? 'bg-purple-500' : '' }}
+                                {{ $order->status === 'delivered' ? 'bg-green-500' : '' }}
+                                {{ $order->status === 'cancelled' ? 'bg-red-500' : '' }}
+                                {{ $order->status === 'completed' ? 'bg-orange-700' : '' }}">
+                                {{ ucfirst($order->status) }}
+                            </a>
+                        </td>
+                        
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->created_at }}</td>
+                        <td class="px-6 py-4 text-right">
+                            <x-secondary-button wire:click="showOrders({{ $order->id }})"
+                                class="px-4 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600">
+                                Lihat Detail
+                            </x-secondary-button>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
 
-        <!-- Tampilan kartu untuk mobile -->
-    <div class="block sm:hidden">
-        @foreach($orders as $order)
+        <div class="block sm:hidden">
+            @foreach($orders as $order)
             <div class="bg-white p-4 rounded-lg shadow-md mb-4">
                 <p class="mt-2 text-sm font-semibold">Pesanan Dari: {{ $order->user->name }}</p>
                 <p class="mt-2 text-sm text-gray-600">Produk: {{ $order->orderdetail->produk->nama_produk }}</p>
@@ -71,11 +65,12 @@
                 <p class="mt-2 text-sm text-gray-600">Status:
                     <span class="px-3 py-1 rounded-lg text-white text-sm font-semibold
                         {{ $order->status === 'pending' ? 'bg-yellow-400' : '' }}
+                        {{ $order->status === 'paid' ? 'bg-orange-400' : '' }}
                         {{ $order->status === 'processing' ? 'bg-blue-500' : '' }}
                         {{ $order->status === 'shipped' ? 'bg-purple-500' : '' }}
                         {{ $order->status === 'delivered' ? 'bg-green-500' : '' }}
                         {{ $order->status === 'cancelled' ? 'bg-red-500' : '' }}
-                        {{ $order->status === 'completed' ? 'bg-orange-500' : '' }}">
+                        {{ $order->status === 'completed' ? 'bg-orange-700' : '' }}">
                         {{ ucfirst($order->status) }}
                     </span>
                 </p>
@@ -91,52 +86,111 @@
                     </x-secondary-button>
                 </div>
             </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
 
         <div class="mt-4">{{ $orders->links() }}</div>
     </div>
 
-       <!-- Main modal -->
     @if ($selectedOrder)
-       <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-           <div class="bg-white p-6 rounded-lg shadow-lg w-96 overflow-y-auto max-h-[80vh]">
-               <h2 class="text-lg font-semibold mb-4">Detail Order</h2>
-   
-               <p class="text-gray-600"><strong>Pesanan Dari:</strong> {{ $selectedOrder->user->name }}</p>
-               <p class="text-gray-600"><strong>Nama Penerima:</strong> {{ $selectedOrder->nama_penerima }}</p>
-               <p class="text-gray-600"><strong>Total Harga:</strong> Rp {{ number_format($selectedOrder->total_price, 0, ',', '.') }}</p>
-               <p class="text-gray-600"><strong>Status:</strong> {{ ucfirst($selectedOrder->status) }}</p>
-               <p class="text-gray-600"><strong>Metode Pembayaran:</strong> {{ $selectedOrder->metode_pembayaran }}</p>
-               <p class="text-gray-600"><strong>Ongkos Kirim:</strong> Rp {{ number_format($selectedOrder->ongkir, 0, ',', '.') }}</p>
-               <p class="text-gray-600"><strong>Alamat Pengiriman:</strong> {{ $selectedOrder->shipping_address }}</p>
-               <p class="text-gray-600"><strong>Catatan:</strong> {{ $selectedOrder->catatan }}</p>
-   
-               <h3 class="text-lg font-semibold mt-4">Produk yang Dipesan</h3>
-   
-               @if ($selectedOrder->produk)
-                   <ul class="mt-2">
-                       <li class="border-b border-gray-200 py-2">
-                           <img class="w-full h-auto object-cover rounded" 
-                                src="{{ asset('storage/' . $selectedOrder->produk->image) }}" 
-                                alt="{{ $selectedOrder->produk->nama_produk }}">
-   
-                           <p class="text-gray-600"><strong>Nama Produk:</strong> {{ $selectedOrder->produk->nama_produk }}</p>
-                           <p class="text-gray-600"><strong>Harga:</strong> Rp {{ number_format($selectedOrder->produk->harga, 0, ',', '.') }}</p>
-                        </li>
-                   </ul>
-               @else
-                   <p class="text-red-600">Produk tidak ditemukan untuk order ini.</p>
-               @endif
-   
-               <button wire:click="closeModal" class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-                   Tutup
-               </button>
-           </div>
-       </div>
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl overflow-y-auto max-h-[80vh]">
+                <h2 class="text-lg font-semibold mb-4">Detail Order</h2>
+
+                <div class="space-y-6">
+                    <div class="border rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-4">Informasi Pemesan</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600"><strong>Pesanan Dari:</strong> {{ $selectedOrder->user->name }}</p>
+                            <p class="text-gray-600"><strong>Nama Penerima:</strong> {{ $selectedOrder->nama_penerima }}</p>
+                        </div>
+                    </div>
+                
+                    <div class="border rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-4">Informasi Pengiriman</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600"><strong>Alamat Pengiriman:</strong> {{ $selectedOrder->alamat }}</p>
+                            {{-- <p class="text-gray-600"><strong>Provinsi Tujuan:</strong> {{ $this->getProvinceName($order->id_provinsi) }}</p>
+                            <p class="text-gray-600"><strong>Kota Tujuan:</strong> {{ $this->getCityName($order->id_provinsi, $order->id_kota) }}</p> --}}
+                            <p class="text-gray-600"><strong>Catatan:</strong> {{ $selectedOrder->catatan }}</p>
+                        </div>
+                    </div>
+
+                    {{-- data Produk --}}
+                    <div class="border rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-4">Produk yang Dipesan</h3>
+                        @php
+                        $orderDetails = $this->getOrderDetail($order->id);
+                        @endphp
+                        
+                        @if($orderDetails && $orderDetails->count() > 0)
+                            <div class="space-y-3">
+                                @foreach($orderDetails as $orderDetail)
+                                    <div class="flex justify-between items-center py-3 border-b">
+                                        <div>
+                                            @if ($orderDetail->produk)
+                                                <div class="font-medium">{{ $orderDetail->produk->nama_produk }}</div>
+                                                <div class="text-sm text-gray-500">Harga: Rp {{ number_format($orderDetail->produk->harga, 0, ',', '.') }}</div>
+                                                <div class="text-sm text-gray-500">Jumlah: {{ $orderDetail->quantity }}</div>
+                                            @else
+                                                <div>
+                                                    <div class="font-medium">Produk Tidak Ditemukan</div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        @if ($orderDetail->produk)
+                                            <div class="font-medium">Rp {{ number_format($orderDetail->produk->harga * $orderDetail->quantity, 0, ',', '.') }}</div>
+                                        @endif
+                                    </div>
+                                @endforeach
+                
+                                <div class="mt-4">
+                                    <div class="flex justify-between items-center">
+                                        <div class="text-sm text-gray-600">Ongkir:</div>
+                                        <div class="text-sm text-gray-500">Rp {{ number_format($selectedOrder->ongkir, 0, ',', '.') }}</div>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="text-sm text-gray-600">Biaya Admin:</div>
+                                        <div class="text-sm text-gray-500">Rp {{ number_format(2000, 0, ',', '.') }}</div>
+                                    </div>
+                                </div>
+                
+                                <div class="flex justify-between items-center pt-3 font-medium">
+                                    <div>Total:</div>
+                                    <div>Rp {{ number_format($selectedOrder->total_harga, 0, ',', '.') }}</div>
+                                </div>
+                            </div>
+                        @else
+                            <p class="text-gray-600">Detail pesanan tidak tersedia.</p>
+                        @endif
+                    </div>
+                
+                    {{-- Info Bayar --}}
+                    <div class="border rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-4">Informasi Pembayaran</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600"><strong>Status:</strong> {{ ucfirst($selectedOrder->status) }}</p>
+                            <p class="text-gray-600"><strong>Metode Pembayaran:</strong> {{ $selectedOrder->midtrans_payment_type }}</p>
+                            <p class="text-gray-600"><strong>Snap Token:</strong> {{ $selectedOrder->snap_token }}</p>
+                            <p class="text-gray-600"><strong>Kode Resi:</strong> {{ $selectedOrder->resi_code }}</p>
+                        </div>
+                        <div class="flex justify-between items-center mt-4 p-4 border-t">
+                            <p class="text-gray-600"><strong>Total Harga:</strong> Rp {{ number_format($selectedOrder->total_harga, 0, ',', '.') }}</p>
+                            <p class="text-gray-600"><strong>Total Berat:</strong> {{ number_format($selectedOrder->total_berat, 0, ',', '.') }} Gram</p>
+                        </div>
+                    </div>
+                
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6 p-4 border-t">
+                    <button wire:click="closeModal" class="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition-colors">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
     @endif
 
-    <!-- Modal Update Status -->
     @if ($showModal)
     <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
@@ -156,9 +210,6 @@
         </div>
     </div>
     @endif
-
-       
-
 
     @script
     <script>

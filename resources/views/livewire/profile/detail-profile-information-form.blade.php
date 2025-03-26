@@ -56,15 +56,15 @@ new class extends Component
             'id_provinsi' => ['required', Rule::in(array_map(fn($p) => (string) $p['id'], $this->provinces))],
             'id_kota' => ['required', Rule::in(array_map(fn($c) => (string) $c['id'], $this->cities))],
             'alamat' => [
-                    'required',
-                    'string',
-                    'max:255',
-                    function ($attribute, $value, $fail) {
-                        if (!preg_match('/\b(rt|rw)\b/i', $value)) {
-                            $fail('Alamat harus menyertakan RT, RW dan Nomor Rumah ');
-                        }
-                    },
-                ],
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/\b(rt|rw)\b/i', $value)) {
+                        $fail('Alamat harus menyertakan RT, RW dan Nomor Rumah.');
+                    }
+                },
+            ],
         ]);
 
         $user = Auth::user();
@@ -85,10 +85,14 @@ new class extends Component
 
         $user->save();
 
-        // Refre agar kota yang dipilih muncul
+        // Flash message untuk notifikasi
+        session()->flash('message', 'Profil berhasil diperbarui.');
+
+        // Refresh agar data baru muncul
         $this->mount();
         $this->dispatch('profile-updated')->self();
     }
+
 
 
     public function updatedAvatar()
@@ -182,9 +186,14 @@ new class extends Component
          
             <div class="flex items-center gap-4">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
-                <x-action-message class="me-3" on="profile-updated">
-                    {{ __('Saved.') }}
-                </x-action-message>
+                    @if (session()->has('message'))
+                        <div x-data="{ show: true }" 
+                            x-show="show" 
+                            x-init="setTimeout(() => show = false, 3000)" 
+                            class="text-orange-700 text-sm">
+                            {{ session('message') }}
+                        </div>
+                    @endif
             </div>
         </div>
     </form>

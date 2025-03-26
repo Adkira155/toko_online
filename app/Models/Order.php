@@ -15,6 +15,7 @@ class Order extends Model
     {
         return $this->hasOne(Orderdetail::class, 'id_order');
     }
+    
 
     public function user(): BelongsTo
     {

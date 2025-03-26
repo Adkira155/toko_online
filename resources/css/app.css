@@ -10,3 +10,9 @@
   background-color: #ffffff;
 }
 
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  /* --tw-space-y-reverse: 0; */
+  margin-top: calc(0rem * calc(0 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+

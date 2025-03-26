@@ -1,5 +1,5 @@
 <div class="">
-    <div class="bg-gray-100 min-h-screen">
+    <div class="bg-gray-100 min-h-screen rounded-lg ">
         <div class="container mx-auto py-10 px-4">
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-2xl font-semibold text-gray-800">Keranjang Belanja</h1>
@@ -12,7 +12,8 @@
             </div>
 
             <div class="flex flex-col lg:flex-row gap-8">
-                
+           
+                {{-- Cart --}}
                 <div class="flex-1 bg-white rounded-lg shadow p-6">
                     @if ($cartItems->isEmpty())
                         <p class="text-center text-gray-600 py-10">Keranjang Kosong.</p>
@@ -51,6 +52,7 @@
                     @endif
                 </div>
 
+                {{-- Ringkasan Subtotal --}}
                 <div class="lg:w-96 bg-white rounded-lg shadow p-6 h-full">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Order Summary</h2>
 
@@ -96,7 +98,6 @@
                         @endif
                     </div>
                 </div>
-
             </div>
 
             {{-- Informasi Shippping dan Ringkasan --}}
@@ -128,7 +129,6 @@
                     </div>
             
                     {{-- input data  --}}
-            
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Isi Data Berikut</h2>
             
                     <div class="mb-4">
@@ -266,17 +266,21 @@
                     
                         {{-- Tombol Checkout menuju Midtrans --}}
                         <div class="flex flex-col lg:flex-row gap-8">
-                            <a href="{{ route('checkout') }}" 
+
+                            <button wire:click="checkout" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
+                               Checkout Sekarang
+                             </button> 
+                            {{-- <a href="{{ route('checkout') }}" 
                                class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-center">
                                 Checkout Sekarang
-                            </a>
+                            </a> --}}
                         </div>
                         
                         <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
 
                          {{-- notif --}}
                          @if ($pesanSukses)
-                         <div class="bg-green-500 text-white px-4 py-2 rounded-md mb-3">
+                         <div class="bg-orange-500 text-white px-4 py-2 rounded-md mb-3">
                              {{ $pesanSukses }}
                          </div>
                      @endif
@@ -285,8 +289,13 @@
                 @endif
 
             </div>
-          
-            
+        
         </div>
     </div>
+
+    <script type="text/javascript">
+        window.addEventListener('snapTokenGenerated', event => {
+            snap.pay(event.detail);
+        })
+    </script>
 </div>

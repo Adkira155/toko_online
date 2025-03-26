@@ -15,7 +15,7 @@
             <form wire:submit.prevent="render" class="flex flex-wrap gap-4">
                 <div class="flex-1 min-w-[200px]">
                     <input type="text" wire:model.live="search" placeholder="Cari nomor pesanan..."
-                        class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
+                        class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
                 </div>
 
                 <div class="w-full sm:w-auto">
@@ -41,14 +41,13 @@
             </form>
         </div>
 
-        
         <div class="space-y-4">
             @if ($orders->count() > 0)
                 @foreach($orders as $order)
                     <div class="bg-white rounded-xl shadow-sm p-6">
                         <div class="flex flex-wrap justify-between items-start gap-4">
                             <div>
-                                <div class="text-lg font-medium">Pesanan #{{ $order->id }}</div>
+                                <div class="text-lg font-medium">Pesanan #{{$loop->iteration }}</div>
                                 <div class="text-sm text-gray-500">{{ $order->created_at }}</div>
                             </div>
                             <span class="px-3 py-1 text-sm font-semibold rounded-full
@@ -87,7 +86,7 @@
                                             @php
                                                 $orderDetails = $this->getOrderDetail($order->id);
                                             @endphp
-                                                @if($orderDetails->count() > 0)
+                                            @if($orderDetails->count() > 0)
                                                 @foreach($orderDetails as $orderDetail)
                                                     <div class="flex justify-between items-center py-3 border-b">
                                                         <div>
@@ -114,9 +113,9 @@
                                                     <div>Total:</div>
                                                     <div>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</div> 
                                                 </div>
-                                                @else
+                                            @else
                                                 <p class="text-gray-600">Detail pesanan tidak tersedia.</p>
-                                                @endif
+                                            @endif
                                         </div>
 
                                         <div class="mt-6">
@@ -140,44 +139,44 @@
                                                 class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
                                                 Pesanan Sudah Diterima
                                             </button>
-                                            @endif
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                @else
-                    <div class="bg-white rounded-xl shadow-sm p-6 text-center">
-                        <p class="text-gray-600">Pesanan kosong.</p>
                     </div>
-                @endif
-            </div>
+                @endforeach
+            @else
+                <div class="bg-white rounded-xl shadow-sm p-6 text-center">
+                    <p class="text-gray-600">Pesanan kosong.</p>
+                </div>
+            @endif
         </div>
     </div>
-    
-    <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-    
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-    
-        window.onclick = function(event) {
-            const modals = document.querySelectorAll('.fixed.inset-0');
-            modals.forEach(modal => {
-                if (event.target === modal) {
-                    modal.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
-    
-        window.addEventListener('closeModal', event => {
-            closeModal(event.detail.modalId);
+</div>
+
+<script>
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = function(event) {
+        const modals = document.querySelectorAll('.fixed.inset-0');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
         });
-    </script>
+    }
+
+    window.addEventListener('closeModal', event => {
+        closeModal(event.detail.modalId);
+    });
+</script>

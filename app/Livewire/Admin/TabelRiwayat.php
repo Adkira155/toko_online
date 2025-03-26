@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\Order;
 use Livewire\Component;
+use App\Models\Orderdetail;
 use Livewire\WithPagination;
 
 class TabelRiwayat extends Component
@@ -13,8 +14,8 @@ class TabelRiwayat extends Component
     public $search = '';
     public $selectedOrder;
     public $orderId;
-    public $status;
     public $showModal = false;
+    public $orderDetails;
 
     public function render()
     {
@@ -39,6 +40,7 @@ class TabelRiwayat extends Component
     public function showOrders($id)
     {
         $this->selectedOrder = Order::with(['user', 'orderdetail.produk'])->findOrFail($id);
+        $this->orderDetails = $this->getOrderDetail($id); // Tambahkan baris ini
     }
 
     public function closeModal()
@@ -51,7 +53,12 @@ class TabelRiwayat extends Component
     {
         $this->orderId = $orderId;
         $order = Order::findOrFail($orderId);
-        $this->status = $order->status;
         $this->showModal = true;
     }
+
+    public function getOrderDetail($orderId)
+    {
+        return Orderdetail::where('id_order', $orderId)->with('produk')->get();
+    }
+    
 }
