@@ -41,7 +41,6 @@
             </form>
         </div>
 
-        
         <div class="space-y-4">
             @if ($orders->count() > 0)
                 @foreach($orders as $order)
@@ -87,7 +86,7 @@
                                             @php
                                                 $orderDetails = $this->getOrderDetail($order->id);
                                             @endphp
-                                                @if($orderDetails->count() > 0)
+                                            @if($orderDetails->count() > 0)
                                                 @foreach($orderDetails as $orderDetail)
                                                     <div class="flex justify-between items-center py-3 border-b">
                                                         <div>
@@ -114,9 +113,9 @@
                                                     <div>Total:</div>
                                                     <div>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</div> 
                                                 </div>
-                                                @else
+                                            @else
                                                 <p class="text-gray-600">Detail pesanan tidak tersedia.</p>
-                                                @endif
+                                            @endif
                                         </div>
 
                                         <div class="mt-6">
@@ -140,44 +139,44 @@
                                                 class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
                                                 Pesanan Sudah Diterima
                                             </button>
-                                            @endif
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                @else
-                    <div class="bg-white rounded-xl shadow-sm p-6 text-center">
-                        <p class="text-gray-600">Pesanan kosong.</p>
                     </div>
-                @endif
-            </div>
+                @endforeach
+            @else
+                <div class="bg-white rounded-xl shadow-sm p-6 text-center">
+                    <p class="text-gray-600">Pesanan kosong.</p>
+                </div>
+            @endif
         </div>
     </div>
-    
-    <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-    
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-    
-        window.onclick = function(event) {
-            const modals = document.querySelectorAll('.fixed.inset-0');
-            modals.forEach(modal => {
-                if (event.target === modal) {
-                    modal.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
-    
-        window.addEventListener('closeModal', event => {
-            closeModal(event.detail.modalId);
+</div>
+
+<script>
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = function(event) {
+        const modals = document.querySelectorAll('.fixed.inset-0');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
         });
-    </script>
+    }
+
+    window.addEventListener('closeModal', event => {
+        closeModal(event.detail.modalId);
+    });
+</script>
