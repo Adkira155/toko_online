@@ -292,4 +292,10 @@
         
         </div>
     </div>
+
+    <script type="text/javascript">
+        window.addEventListener('snapTokenGenerated', event => {
+            snap.pay(event.detail);
+        })
+    </script>
 </div>

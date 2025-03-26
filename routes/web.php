@@ -5,9 +5,10 @@ use App\Livewire\Layout\About;
 use App\Http\Middleware\pengunjung;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-
 
 Route::view('dashboard', 'dashboard')
 ->middleware(['auth', 'verified'])
@@ -25,6 +26,10 @@ Route::view('profile', 'profile')
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('callback/google', [GoogleController::class, 'handleCallback']);  
 Route::view('/', 'dashboard');
+
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+                ->middleware(['signed', 'throttle:6,1'])
+                ->name('verification.verify');
 
 Route::view('/tentang', 'tentang')->name('tentang');
 
