@@ -119,13 +119,13 @@
                     {{-- data Produk --}}
                     <div class="border rounded-lg p-4">
                         <h3 class="text-lg font-semibold mb-4">Produk yang Dipesan</h3>
-                        @php
-                        $orderDetails = $this->getOrderDetail($order->id);
-                        @endphp
+                          @php
+                          $orderDetails = $this->getOrderDetail($order->id);
+                          @endphp
                         
-                        @if($orderDetails && $orderDetails->count() > 0)
-                            <div class="space-y-3">
-                                @foreach($orderDetails as $orderDetail)
+                        @if($this->orderDetails && $this->orderDetails->count() > 0)
+                        <div class="space-y-3">
+                            @foreach($this->orderDetails as $orderDetail)
                                     <div class="flex justify-between items-center py-3 border-b">
                                         <div>
                                             @if ($orderDetail->produk)

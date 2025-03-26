@@ -261,101 +261,102 @@ class Index extends Component
         }
     }
 
-    // public function checkout()
-    // {
-    //     // Validasi data
-    //     $this->validate([
-    //         'namaPenerima' => 'required',
-    //         'nomorTelepon' => 'required',
-    //         'alamat' => 'required',
-    //         'courier' => 'required',
-    //         'catatan' => 'nullable',
-    //     ]);
+    public function checkout()
+    {
+        // Validasi data
+        $this->validate([
+            'namaPenerima' => 'required',
+            'nomorTelepon' => 'required',
+            'alamat' => 'required',
+            'courier' => 'required',
+            'catatan' => 'nullable',
+        ]);
 
-    //     // Cek ID user
-    //     $userId = Auth::id();
-    //     $carts = Cart::where('user_id', $userId)->get();
+        // Cek ID user
+        $userId = Auth::id();
+        $carts = Cart::where('user_id', $userId)->get();
 
-    //     // Kondisi jika keranjang kosong
-    //     if ($carts->isEmpty()) {
-    //         session()->flash('error', 'Keranjang Anda kosong.');
-    //         return;
-    //     }
+        // Kondisi jika keranjang kosong
+        if ($carts->isEmpty()) {
+            session()->flash('error', 'Keranjang Anda kosong.');
+            return;
+        }
 
-    //     // Ubah status keranjang menjadi 'checkout'
-    //     foreach ($carts as $cart) {
-    //         $this->updateStatus($cart->id, 'checkout');
-    //     }
+        // Ubah status keranjang menjadi 'checkout'
+        foreach ($carts as $cart) {
+            $this->updateStatus($cart->id, 'checkout');
+        }
 
-    //     // Ambil item keranjang dengan status 'checkout'
-    //     $cartsCheckout = Cart::where('user_id', $userId)->where('status', 'checkout')->with('produk')->get();
+        // Ambil item keranjang dengan status 'checkout'
+        $cartsCheckout = Cart::where('user_id', $userId)->where('status', 'checkout')->with('produk')->get();
 
-    //     // Kondisi jika tidak ada item 'checkout' di keranjang
-    //     if ($cartsCheckout->isEmpty()) {
-    //         session()->flash('error', 'Tidak ada item yang di-checkout.');
-    //         return;
-    //     }
+        // Kondisi jika tidak ada item 'checkout' di keranjang
+        if ($cartsCheckout->isEmpty()) {
+            session()->flash('error', 'Tidak ada item yang di-checkout.');
+            return;
+        }
 
-    //     // Mulai transaksi database
-    //     DB::beginTransaction();
+        // Mulai transaksi database
+        DB::beginTransaction();
 
-    //     try {
-    //         // Buat pesanan terlebih dahulu
-    //         $order = \App\Models\Order::create([
-    //             'id_user' => $userId,
-    //             'total_harga' => $this->totalHarga,
-    //             'total_berat' => $this->totalBerat,
-    //             'nama_penerima' => $this->namaPenerima,
-    //             'nomor_telepon' => $this->nomorTelepon,
-    //             'id_provinsi' => $this->id_provinsi,
-    //             'id_kota' => $this->id_kota,
-    //             'alamat' => $this->alamat,
-    //             'courier' => $this->courier,
-    //             'catatan' => $this->catatan,
-    //             'status' => 'pending',
-    //             'ongkir' => $this->ongkir,
-    //         ]);
+        try {
+            // Buat pesanan terlebih dahulu
+            $order = \App\Models\Order::create([
+                'id_user' => $userId,
+                'total_harga' => $this->totalHarga,
+                'total_berat' => $this->totalBerat,
+                'nama_penerima' => $this->namaPenerima,
+                'nomor_telepon' => $this->nomorTelepon,
+                'id_provinsi' => $this->id_provinsi,
+                'id_kota' => $this->id_kota,
+                'alamat' => $this->alamat,
+                'courier' => $this->courier,
+                'catatan' => $this->catatan,
+                'status' => 'pending',
+                'ongkir' => $this->ongkir,
+            ]);
 
-    //         // Loop melalui setiap item di keranjang yang di-checkout
-    //         foreach ($cartsCheckout as $cart) {
-    //             $produk = $cart->produk;
+            // Loop melalui setiap item di keranjang yang di-checkout
+            foreach ($cartsCheckout as $cart) {
+                $produk = $cart->produk;
 
-    //             // Periksa stok sebelum membuat detail pesanan
-    //             if ($produk->stok >= $cart->quantity) {
-    //                 // Buat detail pesanan
-    //                 $orderDetail = \App\Models\OrderDetail::create([
-    //                     'id_order' => $order->id,
-    //                     'id_produk' => $produk->id,
-    //                     'quantity' => $cart->quantity,
-    //                     'subtotal_harga_item' => $produk->harga * $cart->quantity,
-    //                     'subtotal_berat_item' => $produk->berat * $cart->quantity,
-    //                 ]);
+                // Periksa stok sebelum membuat detail pesanan
+                if ($produk->stok >= $cart->quantity) {
+                    // Buat detail pesanan
+                    $orderDetail = \App\Models\OrderDetail::create([
+                        'id_order' => $order->id,
+                        'id_produk' => $produk->id,
+                        'quantity' => $cart->quantity,
+                        'subtotal_harga_item' => $produk->harga * $cart->quantity,
+                        'subtotal_berat_item' => $produk->berat * $cart->quantity,
+                    ]);
 
-    //                 // Kurangi stok produk
-    //                 $produk->stok -= $cart->quantity;
-    //                 $produk->save();
+                    // Kurangi stok produk
+                    $produk->stok -= $cart->quantity;
+                    $produk->save();
 
-    //                 // Hapus item dari keranjang
-    //                 $cart->delete();
-    //             } else {
-    //                 session()->flash('error', 'Stok ' . $produk->nama_produk . ' tidak mencukupi.');
-    //                 throw new \Exception('Stok tidak mencukupi.');
-    //             }
-    //         }
+                    // Hapus item dari keranjang
+                    $cart->delete();
 
-    //         DB::commit();
+                } else {
+                    session()->flash('error', 'Stok ' . $produk->nama_produk . ' tidak mencukupi.');
+                    throw new \Exception('Stok tidak mencukupi.');
+                }
+            }
 
-    //         $this->pesanSukses = 'Pesanan berhasil dibuat!';
-    //         $this->loadCartItems(); // Muat ulang keranjang setelah checkout
-    //         $this->showCheckout = false; // Sembunyikan form checkout
-    //         $this->showRingkasan = false; // Sembunyikan ringkasan
+            DB::commit();
 
-    //     } catch (\Exception $e) {
-    //         DB::rollback();
-    //         Log::error('Error during checkout: ' . $e->getMessage());
-    //         session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
-    //     }
-    // }
+            $this->pesanSukses = 'Pesanan berhasil dibuat!';
+            $this->loadCartItems(); // Muat ulang keranjang setelah checkout
+            $this->showCheckout = false; // Sembunyikan form checkout
+            $this->showRingkasan = false; // Sembunyikan ringkasan
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error during checkout: ' . $e->getMessage());
+            session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
+        }
+    }
 
     // public function checkout()
     // {
@@ -607,111 +608,111 @@ class Index extends Component
     //     }
     // }
 
-    public function checkout()
-{
-    // Validasi data
-    $this->validate([
-        'namaPenerima' => 'required',
-        'nomorTelepon' => 'required',
-        'alamat' => 'required',
-        'courier' => 'required',
-        'catatan' => 'nullable',
-    ]);
+//     public function checkout()
+// {
+//     // Validasi data
+//     $this->validate([
+//         'namaPenerima' => 'required',
+//         'nomorTelepon' => 'required',
+//         'alamat' => 'required',
+//         'courier' => 'required',
+//         'catatan' => 'nullable',
+//     ]);
 
-    // Cek ID user
-    $userId = Auth::id();
-    $carts = Cart::where('user_id', $userId)->get();
+//     // Cek ID user
+//     $userId = Auth::id();
+//     $carts = Cart::where('user_id', $userId)->get();
 
-    if ($carts->isEmpty()) {
-        session()->flash('error', 'Keranjang Anda kosong.');
-        return;
-    }
+//     if ($carts->isEmpty()) {
+//         session()->flash('error', 'Keranjang Anda kosong.');
+//         return;
+//     }
 
-    foreach ($carts as $cart) {
-        $this->updateStatus($cart->id, 'checkout');
-    }
+//     foreach ($carts as $cart) {
+//         $this->updateStatus($cart->id, 'checkout');
+//     }
 
-    $cartsCheckout = Cart::where('user_id', $userId)->where('status', 'checkout')->with('produk')->get();
+//     $cartsCheckout = Cart::where('user_id', $userId)->where('status', 'checkout')->with('produk')->get();
 
-    if ($cartsCheckout->isEmpty()) {
-        session()->flash('error', 'Tidak ada item yang di-checkout.');
-        return;
-    }
+//     if ($cartsCheckout->isEmpty()) {
+//         session()->flash('error', 'Tidak ada item yang di-checkout.');
+//         return;
+//     }
 
-    DB::beginTransaction();
-    try {
-        $order = \App\Models\Order::create([
-            'id_user' => $userId,
-            'total_harga' => $this->totalHarga,
-            'total_berat' => $this->totalBerat,
-            'nama_penerima' => $this->namaPenerima,
-            'nomor_telepon' => $this->nomorTelepon,
-            'id_provinsi' => $this->id_provinsi,
-            'id_kota' => $this->id_kota,
-            'alamat' => $this->alamat,
-            'courier' => $this->courier,
-            'catatan' => $this->catatan,
-            'status' => 'pending',
-            'ongkir' => $this->ongkir,
-        ]);
+//     DB::beginTransaction();
+//     try {
+//         $order = \App\Models\Order::create([
+//             'id_user' => $userId,
+//             'total_harga' => $this->totalHarga,
+//             'total_berat' => $this->totalBerat,
+//             'nama_penerima' => $this->namaPenerima,
+//             'nomor_telepon' => $this->nomorTelepon,
+//             'id_provinsi' => $this->id_provinsi,
+//             'id_kota' => $this->id_kota,
+//             'alamat' => $this->alamat,
+//             'courier' => $this->courier,
+//             'catatan' => $this->catatan,
+//             'status' => 'pending',
+//             'ongkir' => $this->ongkir,
+//         ]);
 
-        foreach ($cartsCheckout as $cart) {
-            $produk = $cart->produk;
+//         foreach ($cartsCheckout as $cart) {
+//             $produk = $cart->produk;
 
-            if ($produk->stok >= $cart->quantity) {
-                \App\Models\OrderDetail::create([
-                    'id_order' => $order->id,
-                    'id_produk' => $produk->id,
-                    'quantity' => $cart->quantity,
-                    'subtotal_harga_item' => $produk->harga * $cart->quantity,
-                    'subtotal_berat_item' => $produk->berat * $cart->quantity,
-                ]);
+//             if ($produk->stok >= $cart->quantity) {
+//                 \App\Models\OrderDetail::create([
+//                     'id_order' => $order->id,
+//                     'id_produk' => $produk->id,
+//                     'quantity' => $cart->quantity,
+//                     'subtotal_harga_item' => $produk->harga * $cart->quantity,
+//                     'subtotal_berat_item' => $produk->berat * $cart->quantity,
+//                 ]);
 
-                $produk->stok -= $cart->quantity;
-                $produk->save();
-                $cart->delete();
-            } else {
-                session()->flash('error', 'Stok ' . $produk->nama_produk . ' tidak mencukupi.');
-                throw new \Exception('Stok tidak mencukupi.');
-            }
-        }
+//                 $produk->stok -= $cart->quantity;
+//                 $produk->save();
+//                 $cart->delete();
+//             } else {
+//                 session()->flash('error', 'Stok ' . $produk->nama_produk . ' tidak mencukupi.');
+//                 throw new \Exception('Stok tidak mencukupi.');
+//             }
+//         }
 
-        DB::commit();
+//         DB::commit();
 
-        // Konfigurasi Midtrans
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = config('midtrans.sanitize');
-        Config::$is3ds = config('midtrans.enable_3ds');
+//         // Konfigurasi Midtrans
+//         Config::$serverKey = config('midtrans.server_key');
+//         Config::$isProduction = config('midtrans.is_production');
+//         Config::$isSanitized = config('midtrans.sanitize');
+//         Config::$is3ds = config('midtrans.enable_3ds');
 
-        $params = [
-            'transaction_details' => [
-                'order_id' => $order->id,
-                'gross_amount' => (int) $this->totalHarga + (int) $this->ongkir,
-            ],
-            'customer_details' => [
-                'first_name' => $this->namaPenerima,
-                'email' => Auth::user()->email,
-                'phone' => $this->nomorTelepon,
-                'shipping_address' => $this->alamat,
-            ],
-            'item_details' => $this->getItemDetails($cartsCheckout),
-        ];
+//         $params = [
+//             'transaction_details' => [
+//                 'order_id' => $order->id,
+//                 'gross_amount' => (int) $this->totalHarga + (int) $this->ongkir,
+//             ],
+//             'customer_details' => [
+//                 'first_name' => $this->namaPenerima,
+//                 'email' => Auth::user()->email,
+//                 'phone' => $this->nomorTelepon,
+//                 'shipping_address' => $this->alamat,
+//             ],
+//             'item_details' => $this->getItemDetails($cartsCheckout),
+//         ];
 
-        $this->snapToken = Snap::getSnapToken($params);
+//         $this->snapToken = Snap::getSnapToken($params);
 
-        $order->snap_token = $this->snapToken;
-        $order->save();
+//         $order->snap_token = $this->snapToken;
+//         $order->save();
 
-        $this->showCheckout = false;
-        $this->showRingkasan = false;
-        $this->dispatch('snapTokenGenerated', ['token' => $this->snapToken]);
-    } catch (\Exception $e) {
-        DB::rollback();
-        Log::error('Error during checkout: ' . $e->getMessage());
-        session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
-    }
-}
+//         $this->showCheckout = false;
+//         $this->showRingkasan = false;
+//         $this->dispatch('snapTokenGenerated', ['token' => $this->snapToken]);
+//     } catch (\Exception $e) {
+//         DB::rollback();
+//         Log::error('Error during checkout: ' . $e->getMessage());
+//         session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
+//     }
+// }
 
 
     // // Fungsi untuk mendapatkan detail item untuk Midtrans

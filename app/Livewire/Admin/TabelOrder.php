@@ -16,6 +16,7 @@ class TabelOrder extends Component
     
     public $selectedOrder;
     public $orderId;
+    public $orderDetails;
     public $status;
     public $showModal = false;
 
@@ -49,6 +50,7 @@ class TabelOrder extends Component
     public function showOrders($id)
     {
         $this->selectedOrder = Order::with(['user', 'orderdetail.produk'])->findOrFail($id);
+        $this->orderDetails = $this->getOrderDetail($id); // Tambahkan baris ini
     }
 
     public function closeModal()

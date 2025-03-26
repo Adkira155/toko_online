@@ -41,6 +41,7 @@ return new class extends Migration
                 $table->string('snap_token')->nullable();
                 $table->string('resi_code')->nullable();
     
+                $table->string('invoice')->nullable();
                 $table->index('status');
                 $table->index('midtrans_transaction_id');
                 $table->timestamps();
