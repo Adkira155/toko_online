@@ -44,7 +44,7 @@ class OrderSeeder extends Seeder
                 'id_user' => 2,
                 'total_berat' => 30,
                 'total_harga' => 50000,
-                'status' => 'completed',
+                'status' => 'paid',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
