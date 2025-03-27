@@ -35,7 +35,6 @@ return new class extends Migration
                 $table->decimal('id_kota')->nullable();
                 $table->string('alamat')->nullable();
 
-                $table->string('metode_pembayaran')->nullable();
                 $table->string('midtrans_transaction_id')->nullable();
                 $table->string('midtrans_payment_type')->nullable();
                 $table->string('snap_token')->nullable();

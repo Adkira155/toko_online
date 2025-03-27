@@ -271,14 +271,9 @@
                     
                         {{-- Tombol Checkout menuju Midtrans --}}
                         <div class="flex flex-col lg:flex-row gap-8">
-
                             <button wire:click="checkout" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
-                               Checkout Sekarang
-                             </button> 
-                            {{-- <a href="{{ route('checkout') }}" 
-                               class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-center">
                                 Checkout Sekarang
-                            </a> --}}
+                            </button>
                         </div>
                         
                         <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
@@ -286,36 +281,33 @@
                     </div>
                 </form>
                 @endif
-
             </div>
-        
         </div>
     </div>
     
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    @push('scripts')
+    <script src="{{ config('midtrans.payment_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
     <script type="text/javascript">
         window.addEventListener('show-midtrans-modal', event => {
             snap.pay(event.detail.snapToken, {
-                // Optional
                 onSuccess: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                     console.log(result);
+                    alert('Pembayaran Berhasil!');
+                    // Tambahkan logika untuk update status pesanan dan redirect
                 },
-                // Optional
                 onPending: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                     console.log(result);
+                    alert('Pembayaran Tertunda!');
+                    // Tambahkan logika untuk update status pesanan dan redirect
                 },
-                // Optional
                 onError: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                     console.log(result);
+                    alert('Pembayaran Gagal!');
+                    // Tambahkan logika untuk menampilkan pesan error
                 }
             });
         });
     </script>
+    @endpush
     
 </div>

@@ -5,14 +5,14 @@
                 Jelajahi Produk Kami
             </h2>
         
-            <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 w-full sm:w-auto">
+            <div class="mb-6 flex items-center">
                 <!-- Search Bar -->
                 <input type="text" wire:model.defer="search" placeholder="Search products..."  
                     class="w-full sm:w-auto px-4 py-2 border border-gray-200 rounded-lg 
-                           focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
+                           focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
                 
                     <button wire:click="applySearch" 
-                        class="ml-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
+                    class="ml-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
                            Cari
                     </button>
             </div>
