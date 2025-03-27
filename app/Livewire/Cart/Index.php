@@ -128,9 +128,9 @@ class Index extends Component
                 'alamat' => $this->alamat,
                 'courier' => $this->courier,
                 'catatan' => $this->catatan,
-                'status' => 'pending',
+                // 'status' => 'pending',
                 'ongkir' => $this->ongkir,
-                'invoice' => 'INV-' . Str::random(10), // Generate invoice number
+                'invoice' => 'ORD-' . Str::random(10), // Generate invoice number
             ]);
 
             $items = [];
@@ -176,16 +176,17 @@ class Index extends Component
                 'quantity' => 1,
                 'name' => 'Shipping Cost'
             ];
-            $admins[] = [
+            
+            // Tambahkan biaya admin ke daftar item
+            $items[] = [
                 'id' => 'admin',
                 'price' => (int) $this->admin,
                 'quantity' => 1,
                 'name' => 'Biaya Admin'
             ];
-
-            // Generate Midtrans Snap Token
-            $this->snapToken = $this->generateSnapToken($order, $items, $admins);
             
+            // Generate Midtrans Snap Token
+            $this->snapToken = $this->generateSnapToken($order, $items);
 
             // Commit transaksi database
             DB::commit();
@@ -199,14 +200,9 @@ class Index extends Component
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi error
             DB::rollback();
-
             // Tangani error
             session()->flash('error', 'Terjadi kesalahan saat memproses checkout. Silakan coba lagi.');
             Log::error('Checkout error: ' . $e->getMessage());
-
-            // Set loading
-            $this->loading = false;
-            return;
         }
     }
 

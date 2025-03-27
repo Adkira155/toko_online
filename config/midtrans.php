@@ -25,6 +25,6 @@ return [
 
     // URL untuk midtrans
     'payment_url' => env('MIDTRANS_IS_PRODUCTION', false)
-        ? 'https://app.midtrans.com/snap/snap.js'
-        : 'https://app.sandbox.midtrans.com/snap/snap.js',
+    ? 'https://app.midtrans.com/snap/snap.js'
+    : 'https://app.sandbox.midtrans.com/snap/snap.js',
 ];

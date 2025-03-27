@@ -281,7 +281,9 @@
                     </div>
                 </form>
                 @endif
+
             </div>
+        
         </div>
     </div>
     
@@ -309,5 +311,5 @@
         });
     </script>
     @endpush
-    
+
 </div>
