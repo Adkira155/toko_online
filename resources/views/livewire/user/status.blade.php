@@ -47,7 +47,7 @@
                     <div class="bg-white rounded-xl shadow-sm p-6">
                         <div class="flex flex-wrap justify-between items-start gap-4">
                             <div>
-                                <div class="text-lg font-medium">Pesanan #{{$loop->iteration }}</div>
+                                <div class="text-lg font-medium">Pesanan #{{ $order->invoice }}</div>
                                 <div class="text-sm text-gray-500">{{ $order->created_at }}</div>
                             </div>
                             <span class="px-3 py-1 text-sm font-semibold rounded-full
@@ -129,14 +129,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex justify-between gap-3 mt-6 p-4 border-t">
+                                    <div class="flex justify-between gap-3 mt-6 p-4 border-t ">
                                         <button type="button" onclick="closeModal('orderModal{{ $order->id }}')"
                                             class="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition-colors">
                                             Tutup
                                         </button>
                                         @if ($order->status === 'delivered')
                                             <button wire:click="markAsCompleted({{ $order->id }})"
-                                                class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                                                class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
                                                 Pesanan Sudah Diterima
                                             </button>
                                         @endif

@@ -143,7 +143,7 @@ new class extends Component
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>
 
-        <div class="md:col-span-2 space-y-4">
+        <div class="md:col-span-2 space-y-3">
 
             <div>
                 <x-input-label for="id_provinsi" :value="__('Provinsi')" />

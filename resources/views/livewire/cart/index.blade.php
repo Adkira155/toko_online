@@ -11,8 +11,13 @@
                 </a>
             </div>
 
-            <div class="flex flex-col lg:flex-row gap-8">
-           
+            @if ($pesanSukses)
+            <div class="bg-orange-500 text-white px-4 py-2 rounded-md mb-3 relative">
+                {{ $pesanSukses }}
+            </div>
+            @endif
+
+            <div class="flex flex-col lg:flex-row gap-8">        
                 {{-- Cart --}}
                 <div class="flex-1 bg-white rounded-lg shadow p-6">
                     @if ($cartItems->isEmpty())
@@ -266,24 +271,13 @@
                     
                         {{-- Tombol Checkout menuju Midtrans --}}
                         <div class="flex flex-col lg:flex-row gap-8">
-
                             <button wire:click="checkout" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg">
-                               Checkout Sekarang
-                             </button> 
-                            {{-- <a href="{{ route('checkout') }}" 
-                               class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-center">
                                 Checkout Sekarang
-                            </a> --}}
+                            </button>
                         </div>
                         
                         <p class="text-sm text-gray-500 mt-4">*Periksa kembali pesanan Anda sebelum melanjutkan pembayaran.</p>
 
-                         {{-- notif --}}
-                         @if ($pesanSukses)
-                         <div class="bg-orange-500 text-white px-4 py-2 rounded-md mb-3">
-                             {{ $pesanSukses }}
-                         </div>
-                     @endif
                     </div>
                 </form>
                 @endif
@@ -292,10 +286,30 @@
         
         </div>
     </div>
-
+    
+    @push('scripts')
+    <script src="{{ config('midtrans.payment_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
     <script type="text/javascript">
-        window.addEventListener('snapTokenGenerated', event => {
-            snap.pay(event.detail);
-        })
+        window.addEventListener('show-midtrans-modal', event => {
+            snap.pay(event.detail.snapToken, {
+                onSuccess: function(result) {
+                    console.log(result);
+                    alert('Pembayaran Berhasil!');
+                    // Tambahkan logika untuk update status pesanan dan redirect
+                },
+                onPending: function(result) {
+                    console.log(result);
+                    alert('Pembayaran Tertunda!');
+                    // Tambahkan logika untuk update status pesanan dan redirect
+                },
+                onError: function(result) {
+                    console.log(result);
+                    alert('Pembayaran Gagal!');
+                    // Tambahkan logika untuk menampilkan pesan error
+                }
+            });
+        });
     </script>
+    @endpush
+
 </div>

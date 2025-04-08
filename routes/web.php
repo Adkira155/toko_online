@@ -27,9 +27,6 @@ Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('callback/google', [GoogleController::class, 'handleCallback']);  
 Route::view('/', 'dashboard');
 
-Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-                ->middleware(['signed', 'throttle:6,1'])
-                ->name('verification.verify');
 
 Route::view('/tentang', 'tentang')->name('tentang');
 

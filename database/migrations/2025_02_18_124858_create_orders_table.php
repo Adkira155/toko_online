@@ -35,12 +35,12 @@ return new class extends Migration
                 $table->decimal('id_kota')->nullable();
                 $table->string('alamat')->nullable();
 
-                $table->string('metode_pembayaran')->nullable();
                 $table->string('midtrans_transaction_id')->nullable();
                 $table->string('midtrans_payment_type')->nullable();
                 $table->string('snap_token')->nullable();
                 $table->string('resi_code')->nullable();
     
+                $table->string('invoice')->nullable();
                 $table->index('status');
                 $table->index('midtrans_transaction_id');
                 $table->timestamps();
