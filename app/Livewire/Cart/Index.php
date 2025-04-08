@@ -432,45 +432,47 @@ class Index extends Component
             }
 
             DB::commit();
-
-            // Konfigurasi Midtrans
-            Config::$serverKey = config('midtrans.server_key');
-            Config::$isProduction = config('midtrans.is_production');
-            Config::$isSanitized = config('midtrans.sanitize');
-            Config::$is3ds = config('midtrans.enable_3ds');
-
-            // Parameter Midtrans
-            $params = [
-                'transaction_details' => [
-                    'order_id' => $order->id,
-                    'gross_amount' => (int) $this->totalHarga,
-                ],
-                'customer_details' => [
-                    'first_name' => $this->namaPenerima,
-                    'email' => Auth::user()->email,
-                    'phone' => $this->nomorTelepon,
-                    'shipping_address' => $this->alamat,
-                ],
-                'item_details' => $this->getItemDetails($cartsCheckout),
-            ];
-
-            // Mendapatkan token Snap
-            $this->snapToken = Snap::getSnapToken($params);
-
-            // Menyimpan token Snap ke pesanan
-            $order->snap_token = $this->snapToken;
-            $order->save();
-
-            // Menampilkan halaman pembayaran Midtrans
-            $this->showCheckout = false;
-            $this->showRingkasan = false;
-            $this->dispatch('snapTokenGenerated', $this->snapToken); //menampilkan modal pembayaran
-
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error('Error during checkout: ' . $e->getMessage());
-            session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
-        }
+            
+                // Konfigurasi Midtrans
+                Config::$serverKey = config('midtrans.server_key');
+                Config::$isProduction = config('midtrans.is_production');
+                Config::$isSanitized = config('midtrans.sanitize');
+                Config::$is3ds = config('midtrans.enable_3ds');
+            
+                // Parameter Midtrans
+                $params = [
+                    'transaction_details' => [
+                        'order_id' => $order->id,
+                        'gross_amount' => (int) $this->totalHarga,
+                    ],
+                    'customer_details' => [
+                        'first_name' => $this->namaPenerima,
+                        'email' => Auth::user()->email,
+                        'phone' => $this->nomorTelepon,
+                        'shipping_address' => $this->alamat,
+                    ],
+                    'item_details' => $this->getItemDetails($cartsCheckout),
+                    'enabled_payments' => ['gopay', 'qris'], // Hanya mengizinkan GoPay & QRIS
+                ];
+            
+                // Mendapatkan token Snap
+                $this->snapToken = Snap::getSnapToken($params);
+            
+                // Menyimpan token Snap ke pesanan
+                $order->snap_token = $this->snapToken;
+                $order->save();
+            
+                // Menampilkan halaman pembayaran Midtrans
+                $this->showCheckout = false;
+                $this->showRingkasan = false;
+                $this->dispatch('snapTokenGenerated', $this->snapToken); // Menampilkan modal pembayaran
+            
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::error('Error during checkout: ' . $e->getMessage());
+                session()->flash('error', 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage());
+            }
+            
     }
 
     // Fungsi untuk mendapatkan detail item untuk Midtrans
