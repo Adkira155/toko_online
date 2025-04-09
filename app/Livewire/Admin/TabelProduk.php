@@ -23,15 +23,15 @@ class TabelProduk extends Component
         'konfirmasiHapus' => 'hapusProduk'
     ];
     
-    
     public function showSwal($data)
-{
-    $this->dispatch('swal', $data);
-}
+    {
+        $this->dispatch('swal', $data);
+    }
 
     public function showProduct($id)
     {
         $this->selectedProduk = Produk::findOrFail($id);
+        $this->selectedProduk = Produk::with('kategoris')->findOrFail($id);
     }
 
     public function closeModal()

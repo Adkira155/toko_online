@@ -235,21 +235,29 @@
         <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
             <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl max-h-[90vh]">
                 <h2 class="text-lg font-semibold mb-4">Detail Produk</h2>
-        
+
                 <div class="grid grid-cols-2 gap-4">
-                    <img class="w-full h-auto object-cover rounded" 
-                        src="{{ asset('storage/' . $selectedProduk->image) }}" 
-                        alt="{{ $selectedProduk->nama_produk }}">
-        
+                    <img class="w-full h-auto object-cover rounded"
+                         src="{{ asset('storage/' . $selectedProduk->image) }}"
+                         alt="{{ $selectedProduk->nama_produk }}">
+
                     <div class="space-y-2">
                         <h3 class="text-xl font-bold">{{ $selectedProduk->nama_produk }}</h3>
                         <p class="text-gray-600 truncate" title="{{ $selectedProduk->deskripsi }}">
                             {{ Str::limit($selectedProduk->deskripsi, 150, '...') }}
                         </p>
+                        <p class="text-gray-600">
+                            Kategori:
+                            @if ($selectedProduk->kategoris)
+                                {{ $selectedProduk->kategoris->nama }}
+                            @else
+                                -
+                            @endif
+                        </p>
                         <p class="text-gray-600">Harga: Rp {{ number_format($selectedProduk->harga, 0, ',', '.') }}</p>
                         <p class="text-gray-600">Berat: {{ $selectedProduk->berat ? $selectedProduk->berat . ' Gram' : '0 Gram' }}</p>
                         <p class="text-gray-600">Stok: {{ $selectedProduk->stok }}</p>
-                        <p class="text-gray-600">Status: 
+                        <p class="text-gray-600">Status:
                             <span class="{{ $selectedProduk->status == 'aktif' ? 'text-green-600' : 'text-red-600' }}">
                                 {{ ucfirst($selectedProduk->status) }}
                             </span>

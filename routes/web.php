@@ -1,5 +1,6 @@
 <?php
 
+use Livewire\Livewire;
 use App\Http\Middleware\admin;
 use App\Livewire\Layout\About;
 use App\Http\Middleware\pengunjung;
@@ -48,6 +49,9 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/keranjang', 'user.cart.keranjang')->name('user.keranjang');
     Route::view('/checkout', 'user.checkout')->name('checkout');
     Route::view('/Riwayat-Pemesanan', 'user.riwayat-status')->name('status');
+
+    Route::post('/midtrans/callback', Livewire::class, ['action' => 'handleMidtransCallback'])->name('midtrans.callback');
+    // Route::post('/midtrans/callback', [MidtransCallbackController::class, 'handle']);
       
         //Di Pengunjung punya halaman keranjang, create keranjang, lalu checkout
         //bayar, lihat status transaksi punya dia dan melihat detail transaksi, user bisa membuat review
