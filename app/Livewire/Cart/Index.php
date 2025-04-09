@@ -128,7 +128,8 @@ class Index extends Component
                 'alamat' => $this->alamat,
                 'courier' => $this->courier,
                 'catatan' => $this->catatan,
-                // 'status' => 'pending',
+                'status' => 'paid',
+                'courier' => $this->courier,
                 'ongkir' => $this->ongkir,
                 'invoice' => 'ORD-' . Str::random(10), // Generate invoice number
             ]);
