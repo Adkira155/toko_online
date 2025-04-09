@@ -16,9 +16,10 @@ class DashboardAdmin extends Component
     public $totalStok;
     public $totalPelanggan;
     public $totalPesanan;
-    public $totalPending;
+    // public $totalPending;
     public $totalProses;
     public $totalSelesai;
+    public $totalCancel;
     public $totalPesananPerBulan;
 
     public function mount()
@@ -28,9 +29,10 @@ class DashboardAdmin extends Component
         $this->totalPelanggan = User::count();
         $this->totalPesanan = Order::count();
 
-        $this->totalPending = Order::where('status', 'pending')->count();
-        $this->totalProses = Order::where('status', 'processing')->count();
+        // $this->totalPending = Order::where('status', 'pending')->count();
+        $this->totalProses = Order::whereIn('status', [ 'pending', 'paid', 'processing', 'shipped', 'delivered'])->count();
         $this->totalSelesai = Order::where('status', 'completed')->count();
+        $this->totalCancel = Order::where('status', 'cancelled')->count();
 
         $this->totalPesananPerBulan = Order::where('status', 'completed')
         ->whereMonth('created_at', Carbon::now()->month)

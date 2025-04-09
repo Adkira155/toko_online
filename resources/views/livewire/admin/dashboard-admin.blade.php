@@ -39,10 +39,10 @@
                 <span class="ml-2 text-sm text-gray-500">pesanan</span>
             </div>
             <div class="mt-4 grid grid-cols-3 gap-4">
-                <div class="text-center p-2 bg-gray-50 rounded-lg">
+                {{-- <div class="text-center p-2 bg-gray-50 rounded-lg">
                     <p class="text-sm text-gray-500">Pending</p>
                     <p class="font-semibold text-gray-900">{{ $totalPending }}</p>
-                </div>
+                </div> --}}
                 <div class="text-center p-2 bg-gray-50 rounded-lg">
                     <p class="text-sm text-gray-500">Proses</p>
                     <p class="font-semibold text-gray-900">{{ $totalProses }}</p>
@@ -50,6 +50,10 @@
                 <div class="text-center p-2 bg-gray-50 rounded-lg">
                     <p class="text-sm text-gray-500">Selesai</p>
                     <p class="font-semibold text-gray-900">{{ $totalSelesai }}</p>
+                </div>
+                <div class="text-center p-2 bg-gray-50 rounded-lg">
+                    <p class="text-sm text-gray-500">Gagal</p>
+                    <p class="font-semibold text-gray-900">{{ $totalCancel }}</p>
                 </div>
             </div>
         </div>
