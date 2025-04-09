@@ -4,11 +4,13 @@ namespace App\Livewire\Produk;
 use App\Models\Produk;
 use Livewire\Component;
 use App\Models\Kategori;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class ProdukPage extends Component
 {
-    public $produk;
+    use WithPagination;
+
     public $kategori;
     public $kategoriInputs = [];
     public $hargainputs = [];
@@ -22,41 +24,54 @@ class ProdukPage extends Component
         'above_100000' => 'Lebih dari 100.000',
     ];
 
+    protected $updatesQueryString = ['page'];
+
     public function mount()
     {
-        $this->kategori = Kategori::all(); //menampilkan semua kategori
-        $this->produk = Produk::inRandomOrder()->get(); // Menampilkan semua prodk
+        $this->kategori = Kategori::all();
+    }
 
-        $this->totalProduk = Produk::count();
+    // Reset ke halaman 1 saat filter berubah
+    public function updatedSearch()
+    {
+        $this->resetPage();
     }
 
     public function applyFilter()
     {
-        $this->searchProduk(); //pencarian
+        $this->resetPage();
     }
 
-    public function updatedSearch()
+    public function resetFilters()
     {
-        $this->searchProduk();
+        $this->reset(['search', 'kategoriInputs', 'hargainputs']);
+        $this->resetPage();
     }
 
-    public function searchProduk()
-    {
-        $query = Produk::query();
+    public function updatedKategoriInputs()
+{
+    $this->resetPage();
+}
 
-        // Filter Nama Produk
+public function updatedHargainputs()
+{
+    $this->resetPage();
+}
+
+
+    public function render()
+    {
+        $query = Produk::query()->where('status', 'aktif');
+
         if (!empty($this->search)) {
             $search = trim($this->search);
-            $query->where(DB::raw('lower(nama_produk)'), 'like', '%' . strtolower($search) . '%')
-                  ->limit(12);
+            $query->where(DB::raw('lower(nama_produk)'), 'like', '%' . strtolower($search) . '%');
         }
 
-        //kategori
         if (!empty($this->kategoriInputs)) {
             $query->whereIn('id_kategori', $this->kategoriInputs);
         }
 
-       //harga
         if (!empty($this->hargainputs)) {
             $query->where(function ($q) {
                 foreach ($this->hargainputs as $filter) {
@@ -73,25 +88,11 @@ class ProdukPage extends Component
             });
         }
 
-        $this->produk = $query->get();
+        $produk = $query->paginate(9); // Atur jumlah per halaman
+        $this->totalProduk = $produk->total();
 
-        // Hitung jumlah produk setelah filter
-        $this->totalProduk = $query->count();
-    }
-
-    public function resetFilters()
-    {
-        $this->search = '';
-        $this->kategoriInputs = [];
-        $this->hargainputs = [];
-        $this->produk = Produk::all();
-        $this->totalProduk = Produk::count(); 
-    }
-
-    public function render()
-    {
         return view('livewire.produk.produk-page', [
-            'produk' => $this->produk,
+            'produk' => $produk,
             'kategori' => $this->kategori,
             'hargaOptions' => $this->hargaOptions,
         ]);
