@@ -43,7 +43,6 @@ return new class extends Migration
                 $table->index('status');
                 $table->index('midtrans_transaction_id');
 
-                $table->timestamp('delivered_at')->nullable();
                 $table->timestamps();
             });
         }

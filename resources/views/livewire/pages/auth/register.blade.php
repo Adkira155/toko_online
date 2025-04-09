@@ -45,21 +45,21 @@ new #[Layout('layouts.guest')] class extends Component
 <div>
     <form wire:submit="register">
         <!-- Name -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="name" :value="__('Nama')" />
             <x-text-input wire:model="name" id="name" class="block mt-1 mb-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Alamat -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="alamat" :value="__('Alamat')" />
             <x-text-input wire:model="alamat" id="alamat" class="block mt-1 w-full" type="text" name="alamat" required autofocus autocomplete="alamat" />
             <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
         </div>
 
         <!-- nomor -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="nomor" :value="__('Nomor Telepon/Whatsapp')" />
             <x-text-input wire:model="nomor" id="nomor" class="block mt-1 w-full" type="text" name="nomor" required autofocus autocomplete="nomor" />
             <x-input-error :messages="$errors->get('nomor')" class="mt-2" />

@@ -23,11 +23,11 @@
             <input 
                 type="text" 
                 wire:model.defer="tempSearch" 
-                class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300" 
+                class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring focus:ring-orange-300" 
                 placeholder="Cari produk...">
             
             <!-- Filter Status -->
-            <select wire:model.defer="tempFilterStatus" class="w-full md:w-1/4 px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300">
+            <select wire:model.defer="tempFilterStatus" class="w-full md:w-1/4 px-4 py-2 border rounded-lg focus:ring focus:ring-orange-300">
                 <option value="">Semua Status</option>
                 <option value="aktif">Aktif</option>
                 <option value="tidak aktif">Tidak Aktif</option>

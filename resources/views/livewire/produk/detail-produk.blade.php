@@ -111,15 +111,35 @@
         </div>
     </div>
 
- <livewire:layout.review-pengguna :id="$id" />
-  
+{{--   
  <div class="flex justify-end">
     <a href="{{ route('review.create', $data->id) }}" 
         class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
        
         <span class="font-semibold">Tambah Review</span>
     </a>
+</div> --}}
+  
+
+
+<div class="bg-white rounded-md p-6 mb-4 mt-6">
+
+    <hr class="border-b border-gray-200 my-6"></hr>
+
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Review Pengguna</h2>
+
+    <livewire:layout.review-pengguna :id="$id" />
+
+    <hr class="border-b border-gray-200 my-6"></hr>
+
+    <div class="flex justify-end">
+        <a href="{{ route('review.create', $data->id) }}"
+           class="mt-2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1">
+            <span class="font-semibold">Tambah Review</span>
+        </a>
+    </div>
 </div>
+
 </div>
 </div>
 </div>
