@@ -129,7 +129,7 @@ new class extends Component
     </header>
 
     <form wire:submit.prevent="updateInfoProfileInformation" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-        <div class="flex flex-col items-center space-y-3">
+        <div class="flex flex-col items-center space-y-6">
             @if ($previewAvatar)
                 <img src="{{ $previewAvatar }}" class="w-32 h-32 rounded-full shadow-lg border-2 border-gray-300">
             @else
@@ -143,7 +143,7 @@ new class extends Component
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>
 
-        <div class="md:col-span-2 space-y-3">
+        <div class="md:col-span-2">
 
             <div>
                 <x-input-label for="id_provinsi" :value="__('Provinsi')" />
@@ -184,7 +184,7 @@ new class extends Component
                 <x-input-error class="mt-2" :messages="$errors->get('nomor')" />
             </div>
          
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 mt-5">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
                     @if (session()->has('message'))
                         <div x-data="{ show: true }" 

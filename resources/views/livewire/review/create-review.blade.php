@@ -19,7 +19,7 @@
     @endif
 
     <div class="lg:grid lg:grid-cols-5 lg:gap-8"> {{-- grid --}}
-        <div class="bg-white w-full h-auto mb-6 lg:mb-0 lg:col-span-2 shadow-md rounded-lg m-2 border border-gray-200 p-5"> {{-- form isi review --}}
+        <div class="bg-white w-full h-min mb-6 lg:mb-0 lg:col-span-2 shadow-md rounded-lg m-2 border border-gray-200 p-5"> {{-- form isi review --}}
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Tulis Review Anda</h3>
             @guest
                 <p>Silakan <a href="{{ route('login') }}" class="text-orange-600 hover:underline">login</a> untuk memberikan review.</p>

@@ -21,7 +21,7 @@ class Status extends Component
             ->when($this->search, function ($query) {
                 $query->where(function ($query) {
                     $query->where('id', 'like', '%' . $this->search . '%')
-                        ->orWhere('resi_code', 'like', '%' . $this->search . '%');
+                        ->orWhere('invoice', 'like', '%' . $this->search . '%');
                 });
             })
             ->when($this->statusFilter, function ($query) {
