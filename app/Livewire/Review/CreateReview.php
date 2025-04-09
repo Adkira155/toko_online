@@ -15,7 +15,11 @@ class CreateReview extends Component
     {
         $this->produk_id = $produk_id;
         $this->produk = Produk::findOrFail($produk_id);
-    }
+
+        if (auth()->check()) {
+            $this->username = auth()->user()->name;
+        }
+    } 
 
     protected $rules = [
         'username' => 'required|string|max:255',
