@@ -1,6 +1,35 @@
 <div>
+    
     <div class="bg-white p-6 shadow-md rounded-lg">
         <h2 class="text-lg font-semibold mb-4">Daftar Order</h2>
+
+        <form wire:submit.prevent="render" class="flex flex-wrap gap-4">
+            <div class="flex-1 min-w-[200px]">
+                <input type="text" wire:model.live="search" placeholder="Cari nomor pesanan..."
+                    class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
+            </div>
+    
+            <div class="w-full sm:w-auto">
+                <select wire:model.live="statusFilter"
+                    class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
+                    <option value="">Semua Status</option>
+                    <option value="pending">Menunggu Pembayaran</option>
+                    <option value="paid">Sudah Dibayar</option>
+                    <option value="processing">Diproses</option>
+                    <option value="shipped">Dikirim</option>
+                    <option value="delivered">Diterima</option>
+                    <option value="completed">Selesai</option>
+                    <option value="cancelled">Dibatalkan</option>
+                </select>
+            </div>
+    
+            <div class="w-full sm:w-auto">
+                <button type="submit"
+                    class="w-full px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
+                    Filter
+                </button>
+            </div>
+        </form>
 
         <div class="relative overflow-x-auto mt-5 shadow-md sm:rounded-lg hidden sm:block">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dat-table">
@@ -11,7 +40,6 @@
                         <th scope="col" class="px-6 py-3">Nomor Resi Pesanan</th>
                         <th scope="col" class="px-6 py-3">Total Harga</th>
                         <th scope="col" class="px-6 py-3">Nama Penerima</th>
-                        <th scope="col" class="px-6 py-3">Metode Pembayaran</th>
                         <th scope="col" class="px-6 py-3">Status</th>
                         <th scope="col" class="px-6 py-3">Tanggal Order</th>
                         <th scope="col" class="px-6 py-3 whitespace-nowrap min-w-[150px]">Aksi</th>
@@ -22,10 +50,9 @@
                     <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $loop->iteration }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $order->user->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->resi_code }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->invoice }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $order->nama_penerima }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->metode_pembayaran }}</td>
 
                         <td class="px-6 py-4 whitespace-nowrap text-center">
                             <a wire:click="openModal({{ $order->id }})" 
@@ -44,7 +71,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $order->created_at }}</td>
                         <td class="px-6 py-4 text-right">
                             <x-secondary-button wire:click="showOrders({{ $order->id }})"
-                                class="px-4 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600">
+                                class="px-4 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600 font-bold">
                                 Lihat Detail
                             </x-secondary-button>
                         </td>
@@ -81,7 +108,7 @@
                         Status
                     </x-primary-button>
                     <x-secondary-button wire:click="showOrders({{ $order->id }})"
-                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 font-bold">
                         Lihat Detail
                     </x-secondary-button>
                 </div>
@@ -172,7 +199,7 @@
                             <p class="text-gray-600"><strong>Status:</strong> {{ ucfirst($selectedOrder->status) }}</p>
                             <p class="text-gray-600"><strong>Metode Pembayaran:</strong> {{ $selectedOrder->midtrans_payment_type }}</p>
                             <p class="text-gray-600"><strong>Snap Token:</strong> {{ $selectedOrder->snap_token }}</p>
-                            <p class="text-gray-600"><strong>Kode Resi:</strong> {{ $selectedOrder->resi_code }}</p>
+                            <p class="text-gray-600"><strong>Kode Resi:</strong> {{ $selectedOrder->invoice }}</p>
                         </div>
                         <div class="flex justify-between items-center mt-4 p-4 border-t">
                             <p class="text-gray-600"><strong>Total Harga:</strong> Rp {{ number_format($selectedOrder->total_harga, 0, ',', '.') }}</p>

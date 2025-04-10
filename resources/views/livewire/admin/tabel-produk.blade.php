@@ -5,7 +5,7 @@
         <!-- tambah data -->
         <x-primary-button>
         <span class="font-bold">+</span>
-        <a href="{{ route('produk.create') }}">Tambah Produk</a>
+        <a class="font-bold" href="{{ route('produk.create') }}"> Tambah Produk</a>
         </x-primary-button>
 
         @if (session()->has('message'))
@@ -18,26 +18,33 @@
         @endif
 
         <!-- Pencarian & Filter -->
-        <div class="flex flex-col md:flex-row md:justify-between md:items-center mt-4 space-y-2 md:space-y-0">
-            <!-- Input Pencarian -->
-            <input 
-                type="text" 
-                wire:model.defer="tempSearch" 
-                class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring focus:ring-orange-300" 
-                placeholder="Cari produk...">
-            
-            <!-- Filter Status -->
-            <select wire:model.defer="tempFilterStatus" class="w-full md:w-1/4 px-4 py-2 border rounded-lg focus:ring focus:ring-orange-300">
-                <option value="">Semua Status</option>
-                <option value="aktif">Aktif</option>
-                <option value="tidak aktif">Tidak Aktif</option>
-            </select>
-
-            <!-- Tombol Filter -->
-            <x-primary-button wire:click="applyFilter">
-                Cari / Filter
-            </x-primary-button>
-        </div>
+            <form wire:submit.prevent="render" class="flex flex-wrap gap-4 mt-4">
+                <div class="flex-1 min-w-[200px]">
+                    <input
+                        type="text"
+                       wire:model.live="search" placeholder="Cari Nama Produk..."
+                        class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                    >
+                </div>
+        
+                <div class="w-full sm:w-auto">
+                    <select
+                       wire:model.live="statusFilter"
+                        class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                    >
+                        <option value="">Semua Status</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="tidak aktif">Tidak Aktif</option>
+                    </select>
+                </div>
+        
+                <div class="w-full sm:w-auto">
+                    <button type="submit"
+                        class="w-full px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
+                        Filter
+                    </button>
+                </div>
+            </form>
     
     <!-- Tabel Produk -->
 <div class="hidden md:block overflow-x-auto w-full mt-5">
@@ -141,7 +148,7 @@
                             </x-primary-button>
                             
                             {{-- hapus --}}
-                        <x-danger-button class="px-6 py-2"
+                        <x-danger-button class="px-6 py-2 font-bold"
                             x-data
                             @click="Swal.fire({
                             title: 'Apakah Anda Yakin?',
@@ -169,7 +176,7 @@
         </div>
 
 <!-- Tampilan Kartu untuk Mobile -->
-<div class="block md:hidden space-y-4">
+<div class="block md:hidden space-y-3 mt-2">
     @foreach($produk as $item)
     <div class="bg-white shadow-md rounded-lg p-4">
         <h3 class="text-lg font-semibold">{{ $item->nama_produk }}</h3>
@@ -197,13 +204,13 @@
              alt="{{ $item->image }}">
              <div class="mt-4 flex flex-wrap justify-between gap-2">
                 <x-secondary-button wire:click="showProduct({{ $item->id }})"
-                    class="flex-1 min-w-[100px] px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    class="flex-1 min-w-[100px] px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 font-bold">
                     Lihat Detail
                 </x-secondary-button>            
                 <x-primary-button class="flex-1 min-w-[100px]">
                     <a href="{{ route('produk.update', $item->id) }}" class="px-5 font-bold">Edit</a>
                 </x-primary-button>
-                <x-danger-button class="flex-1 min-w-[100px] px-6 py-2"
+                <x-danger-button class="flex-1 min-w-[100px] px-6 py-2 font-bold"
                     x-data
                     @click="Swal.fire({
                         title: 'Apakah Anda Yakin?',
