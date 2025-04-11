@@ -468,7 +468,7 @@ class Index extends Component
                  $this->subtotal += $item->produk->harga * $item->quantity;
              }
      
-             $this->total = $this->subtotal + $this->admin;
+             $this->total = $this->subtotal;
         }
 
        // hitung Berat total

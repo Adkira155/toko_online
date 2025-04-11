@@ -75,10 +75,10 @@
                         <span class="font-semibold">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                     </div>
                     @if (count($cartItems) > 0 )
-                    <div class="flex justify-between mb-2">
+                    {{-- <div class="flex justify-between mb-2">
                         <span class="text-gray-600">Admin</span>
                         <span class="font-semibold">Rp {{ number_format($admin, 0, ',', '.') }}</span>
-                    </div>
+                    </div> --}}
                     
                     <hr class="my-4">
                     <div class="flex justify-between mb-4">
