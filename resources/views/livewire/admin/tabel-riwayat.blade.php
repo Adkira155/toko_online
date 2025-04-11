@@ -11,7 +11,6 @@
                         <th scope="col" class="px-6 py-3">Nomor Resi Pesanan</th>
                         <th scope="col" class="px-6 py-3">Total Harga</th>
                         <th scope="col" class="px-6 py-3">Nama Penerima</th>
-                        <th scope="col" class="px-6 py-3">Metode Pembayaran</th>
                         <th scope="col" class="px-6 py-3">Status</th>
                         <th scope="col" class="px-6 py-3">Tanggal Order</th>
                         <th scope="col" class="px-6 py-3 whitespace-nowrap min-w-[150px]">Aksi</th>
@@ -22,10 +21,9 @@
                         <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $order->user->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->resi_code }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->invoice }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $order->nama_penerima }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->metode_pembayaran }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                 <span class="px-3 py-1 rounded-lg text-white font-semibold text-sm bg-orange-500">
                                     {{ ucfirst($order->status) }}
@@ -51,7 +49,6 @@
                 <p class="mt-2 text-sm text-gray-600">Produk: {{ $order->orderdetail->produk->nama_produk }}</p>
                 <p class="mt-2 text-sm text-gray-600">Total: Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-gray-600">Nama Penerima: {{ $order->nama_penerima }}</p>
-                <p class="mt-2 text-sm text-gray-600">Metode: {{ $order->metode_pembayaran }}</p>
                 <p class="mt-2 text-sm text-gray-600">Status:
                     <span class="px-3 py-1 rounded-lg text-white text-sm font-semibold
                         {{ $order->status === 'pending' ? 'bg-yellow-400' : '' }}
@@ -100,8 +97,8 @@
                         <h3 class="text-lg font-semibold mb-4">Informasi Pengiriman</h3>
                         <div class="space-y-2">
                             <p class="text-gray-600"><strong>Alamat Pengiriman:</strong> {{ $selectedOrder->alamat }}</p>
-                            {{-- <p class="text-gray-600"><strong>Provinsi Tujuan:</strong> {{ $this->getProvinceName($order->id_provinsi) }}</p>
-                            <p class="text-gray-600"><strong>Kota Tujuan:</strong> {{ $this->getCityName($order->id_provinsi, $order->id_kota) }}</p> --}}
+                            <p class="text-gray-600"><strong>Provinsi Tujuan:</strong> {{ $this->getProvinceName($selectedOrder->id_provinsi) }}</p>
+                            <p class="text-gray-600"><strong>Kota Tujuan:</strong> {{ $this->getCityName($selectedOrder->id_provinsi, $selectedOrder->id_kota) }}</p>
                             <p class="text-gray-600"><strong>Catatan:</strong> {{ $selectedOrder->catatan }}</p>
                         </div>
                     </div>
@@ -162,7 +159,7 @@
                             <p class="text-gray-600"><strong>Status:</strong> {{ ucfirst($selectedOrder->status) }}</p>
                             <p class="text-gray-600"><strong>Metode Pembayaran:</strong> {{ $selectedOrder->midtrans_payment_type }}</p>
                             <p class="text-gray-600"><strong>Snap Token:</strong> {{ $selectedOrder->snap_token }}</p>
-                            <p class="text-gray-600"><strong>Kode Resi:</strong> {{ $selectedOrder->resi_code }}</p>
+                            <p class="text-gray-600"><strong>Kode Resi:</strong> {{ $selectedOrder->invoice }}</p>
                         </div>
                         <div class="flex justify-between items-center mt-4 p-4 border-t">
                             <p class="text-gray-600"><strong>Total Harga:</strong> Rp {{ number_format($selectedOrder->total_harga, 0, ',', '.') }}</p>
