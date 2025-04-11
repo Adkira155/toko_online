@@ -1,6 +1,6 @@
 <div class="bg-white-100 rounded-md py-10 px-4">
     <h2 class="text-2xl font-semibold text-gray-700 mb-6">
-      Halaman Review untuk 
+      Halaman Review untuk <span class="text-orange-600">{{ $produk['nama'] }}</span>
     </h2>
 
     <a href="/" class="text-orange-600 hover:text-orange-700 flex items-center mb-4">
@@ -11,12 +11,19 @@
     </a>
 
     @if (session()->has('success'))
-        <div id="notification" class="bg-green-500 text-white px-4 py-3 rounded-lg mb-4 shadow-md">
-            {{ session('success') }}
-        </div>
-    @endif
+    <div 
+        x-data="{ show: true }" 
+        x-show="show" 
+        x-init="setTimeout(() => show = false, 3000)" 
+        class="bg-green-500 text-white px-4 py-3 rounded-lg mb-4 shadow-md transition duration-500"
+    >
+        {{ session('success') }}
+    </div>
+@endif
+
 
     <div class="lg:grid lg:grid-cols-5 lg:gap-8"> {{-- grid --}}
+        @if (Auth::check() && Auth::user()->role === 'user')
         <div class="bg-white p-8 rounded-lg w-full h-auto mb-6 lg:mb-0 lg:col-span-2"> {{-- form isi review --}}
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Tulis Review Anda</h3>
             @guest
@@ -37,10 +44,11 @@
                         @error('comment') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
-                    <button class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out font-semibold">Kirim Review</button>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out font-semibold">Kirim Review</button>
                 </form>
             @endguest
         </div>
+        @endif
 
         <div class="lg:col-span-3 space-y-3"> {{-- kanan --}}
             @foreach ($reviews as $review)
@@ -53,6 +61,15 @@
                         @if (Auth::check() && Auth::user()->role === 'admin')
                             <button class="text-sm text-orange-500 hover:underline mt-1" wire:click="reply({{ $review->id }})">Balas</button>
                         @endif
+                        @if (Auth::check() && Auth::user()->role === 'user')
+                            <button 
+                                wire:click="deleteReview({{ $review->id }})" 
+                                class="text-sm text-red-600 hover:underline mt-1"
+                                onclick="return confirm('Yakin ingin menghapus komentar ini?')"
+                                >
+                            Hapus
+                            </button>
+                            @endif
                     </div>
                     <p class="text-gray-700 leading-relaxed">{{ $review->comment }}</p>
 
@@ -77,9 +94,20 @@
                         <div class=" mt-3 border-l-4 border-orange-400 pl-4 bg-gray-100 rounded-lg p-3">
                             <div class="flex justify-between items-center mb-1">
                                 <strong class="text-gray-800">{{ $reply->username }}</strong>
-                                <small class="text-gray-500">{{ $reply->created_at->format('d M Y H:i') }}</small>
+                                
+                                @if (Auth::check() && Auth::user()->role === 'admin')
+                                <button 
+                                wire:click="deleteReply({{ $reply->id }})"
+                                class="text-sm text-red-600 hover:underline mt-1"
+                                onclick="return confirm('Yakin ingin menghapus balasan ini?')"
+                            >
+                                Hapus
+                            </button>
+                            
+                                @endif
                             </div>
-                            <p class="text-gray-700 leading-relaxed">{{ $reply->comment }}</p>
+                            <small class="text-gray-500">{{ $reply->created_at->format('d M Y H:i') }}</small>
+                            <p class="text-gray-700 leading-relaxed mt-4">{{ $reply->comment }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -88,17 +116,23 @@
     </div>
 </div>
 
+<script src="//unpkg.com/alpinejs" defer></script>
+
 <script>
     document.addEventListener('livewire:load', function () {
         Livewire.on('notify', message => {
             let notif = document.getElementById('notification');
             notif.textContent = message;
             notif.classList.remove('hidden');
-
-            // Notifikasi hilang otomatis setelah 3 detik
             setTimeout(() => {
                 notif.classList.add('hidden');
             }, 3000);
         });
     });
+
+    function confirmDelete(reviewId) {
+        if (confirm('Yakin ingin menghapus komentar ini?')) {
+            Livewire.emit('deleteReview', reviewId);
+        }
+    }
 </script>
