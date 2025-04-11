@@ -1,40 +1,35 @@
 <div class="bg-white-100 rounded-md py-10 px-4">
-    <h2 class="text-2xl font-semibold text-gray-700 mb-6">
-      Halaman Review untuk <span class="text-orange-600">{{ $produk['nama'] }}</span>
-    </h2>
 
-    <a href="/" class="text-orange-600 hover:text-orange-700 flex items-center mb-4">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        Kembali Ke Home
-    </a>
+     <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold text-gray-700">
+            Halaman Review untuk {{ $produk->nama_produk }}
+        </h2>
+        <a href="/" class="text-orange-600 hover:text-orange-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Kembali Ke Home
+        </a>
+    </div>
 
     @if (session()->has('success'))
-    <div 
-        x-data="{ show: true }" 
-        x-show="show" 
-        x-init="setTimeout(() => show = false, 3000)" 
-        class="bg-green-500 text-white px-4 py-3 rounded-lg mb-4 shadow-md transition duration-500"
-    >
-        {{ session('success') }}
-    </div>
-@endif
-
+        <div id="notification" class="bg-orange-500 text-white px-4 py-3 rounded-lg mb-4 shadow-md">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div class="lg:grid lg:grid-cols-5 lg:gap-8"> {{-- grid --}}
-        @if (Auth::check() && Auth::user()->role === 'user')
-        <div class="bg-white p-8 rounded-lg w-full h-auto mb-6 lg:mb-0 lg:col-span-2"> {{-- form isi review --}}
+        <div class="bg-white w-full h-min mb-6 lg:mb-0 lg:col-span-2 shadow-md rounded-lg m-2 border border-gray-200 p-5"> {{-- form isi review --}}
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Tulis Review Anda</h3>
             @guest
                 <p>Silakan <a href="{{ route('login') }}" class="text-orange-600 hover:underline">login</a> untuk memberikan review.</p>
             @else
                 <form wire:submit.prevent="submit">
-                    <input type="hidden" wire:model="produk_id">
+                    <input type="hidden" wire:model="produk_id" value="{{ $produk->id }}">
 
                     <div class="mb-4">
                         <label class="block text-gray-700 font-semibold mb-2">Username</label>
-                        <input type="text" class="form-control w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" wire:model="username">
+                        <input type="text" class="form-control w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" wire:model="username" value="{{ Auth::user()->name }}">
                         @error('username') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
@@ -76,7 +71,7 @@
                     {{-- Form Balasan Jika Komentar Ini Dipilih --}}
                     @if (Auth::check() && $parent_id === $review->id)
                         <div class="bg-gray-50 p-4 rounded-lg mt-3">
-                            <input type="text" wire:model="replyUsername" class="w-full px-3 py-2 border rounded-lg focus:ring-orange-500 focus:outline-none mb-2" placeholder="Nama Anda">
+                            <input type="text" wire:model="replyUsername" class="w-full px-3 py-2 border rounded-lg focus:ring-orange-500 focus:outline-none mb-2" placeholder="Nama Anda" value="{{ Auth::user()->name }}">
                             @error('replyUsername') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
 
                             <textarea wire:model="replyComment" class="w-full mt-1 px-3 py-2 border rounded-lg focus:ring-orange-500 focus:outline-none" placeholder="Tulis balasan..."></textarea>

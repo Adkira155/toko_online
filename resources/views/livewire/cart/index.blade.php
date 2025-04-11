@@ -58,7 +58,7 @@
                 </div>
 
                 {{-- Ringkasan Subtotal --}}
-                <div class="lg:w-96 bg-white rounded-lg shadow p-6 h-full">
+                <div class="lg:w-96 bg-white rounded-lg shadow p-6 h-min">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Order Summary</h2>
 
                     @foreach ($cartItems as $item)
@@ -75,10 +75,10 @@
                         <span class="font-semibold">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                     </div>
                     @if (count($cartItems) > 0 )
-                    <div class="flex justify-between mb-2">
+                    {{-- <div class="flex justify-between mb-2">
                         <span class="text-gray-600">Admin</span>
                         <span class="font-semibold">Rp {{ number_format($admin, 0, ',', '.') }}</span>
-                    </div>
+                    </div> --}}
                     
                     <hr class="my-4">
                     <div class="flex justify-between mb-4">
@@ -109,7 +109,7 @@
             <div class="mt-5 flex flex-col lg:flex-row gap-8">
 
                 @if ($showCheckout)
-                <div class="flex-1 bg-white rounded-lg shadow p-6">
+                <div class="flex-1 bg-white rounded-lg shadow p-6 h-min">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Informasi Shipping</h2>
             
                     {{-- bawaan data user --}}

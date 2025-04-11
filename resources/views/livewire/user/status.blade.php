@@ -32,12 +32,12 @@
                     </select>
                 </div>
 
-                <div class="w-full sm:w-auto">
+                {{-- <div class="w-full sm:w-auto">
                     <button type="submit"
                         class="w-full px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
                         Filter
                     </button>
-                </div>
+                </div> --}}
             </form>
         </div>
 

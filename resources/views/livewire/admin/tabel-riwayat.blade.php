@@ -34,7 +34,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $order->created_at }}</td>
                             <td class="px-6 py-4 text-right">
                                 <x-secondary-button wire:click="showOrders({{ $order->id }})"
-                                    class="px-4 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600">
+                                    class="px-4 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600 font-bold">
                                     Lihat Detail
                                 </x-secondary-button>
                             </td>
@@ -71,7 +71,7 @@
                         Status
                     </x-primary-button> --}}
                     <x-secondary-button wire:click="showOrders({{ $order->id }})"
-                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 font-bold">
                         Lihat Detail
                     </x-secondary-button>
                 </div>

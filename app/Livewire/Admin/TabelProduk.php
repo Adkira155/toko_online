@@ -12,7 +12,8 @@ class TabelProduk extends Component
 {
     use WithPagination;
 
-    public $search = ''; 
+    public $search = '';
+    public $statusFilter = '';
     public $filterStatus = '';
     public $tempSearch = '';
     public $tempFilterStatus = '';
@@ -22,7 +23,7 @@ class TabelProduk extends Component
         'refreshTable' => '$refresh',
         'konfirmasiHapus' => 'hapusProduk'
     ];
-    
+
     public function showSwal($data)
     {
         $this->dispatch('swal', $data);
@@ -48,7 +49,6 @@ class TabelProduk extends Component
 
     public function toggleStatus($id)
     {
-
         Log::info("Toggle status diklik untuk ID: $id");
 
         $produk = Produk::findOrFail($id);
@@ -58,7 +58,7 @@ class TabelProduk extends Component
         $this->dispatch('alert-success', message: 'Status produk diperbarui.');
         $this->dispatch('refreshTable');
     }
-    
+
 
     public function hapusProduk($id)
     {
@@ -79,14 +79,16 @@ class TabelProduk extends Component
             'icon' => 'success',
             'timer' => 10000
         ]);
-       
+
     }
 
     public function render()
     {
         $produk = Produk::query()
             ->when($this->search, fn($query) => $query->where('nama_produk', 'like', '%' . $this->search . '%'))
-            ->when($this->filterStatus, fn($query) => $query->where('status', $this->filterStatus))
+            ->when($this->statusFilter, function ($query) {
+                $query->where('status', $this->statusFilter);
+            })
             ->orderBy('created_at', 'desc')
             ->paginate(5);
 

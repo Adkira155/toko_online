@@ -25,7 +25,7 @@ new #[Layout('layouts.guest')] class extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'alamat' => ['required', 'string', 'max:255'],
+            // 'alamat' => ['required', 'string', 'max:255'],
             'nomor' => ['required', 'integer'],
             'role' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
@@ -52,11 +52,11 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <!-- Alamat -->
-        <div class="mt-4">
+        {{-- <div class="mt-4">
             <x-input-label for="alamat" :value="__('Alamat')" />
             <x-text-input wire:model="alamat" id="alamat" class="block mt-1 w-full" type="text" name="alamat" required autofocus autocomplete="alamat" />
             <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
-        </div>
+        </div> --}}
 
         <!-- nomor -->
         <div class="mt-4">

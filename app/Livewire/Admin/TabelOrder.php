@@ -12,8 +12,9 @@ class TabelOrder extends Component
     use WithPagination;
 
     public $search = '';
+    public $statusFilter = '';
     public $statuses = ['paid', 'pending', 'processing', 'shipped', 'delivered', 'cancelled'];
-    
+
     public $selectedOrder;
     public $orderId;
     public $orderDetails;
@@ -23,18 +24,21 @@ class TabelOrder extends Component
     public function render()
     {
         $orders = Order::with(['user', 'orderdetail.produk'])
-            ->where(function ($query) {
-                $query->whereHas('user', function ($subQuery) {
-                    $subQuery->where('name', 'like', '%' . $this->search . '%');
-                })
-                ->orWhereHas('orderdetail.produk', function ($subQuery) {
-                    $subQuery->where('nama_produk', 'like', '%' . $this->search . '%');
+            ->when($this->search, function ($query) {
+                $query->where(function ($query) {
+                    $query->whereHas('user', function ($subQuery) {
+                        $subQuery->where('name', 'like', '%' . $this->search . '%');
+                    })
+                    ->orWhere('invoice', 'like', '%' . $this->search . '%');
                 });
             })
-            ->where('status', '!=', 'completed') // Tambahkan filter status disini
+            ->when($this->statusFilter, function ($query) {
+                $query->where('status', $this->statusFilter);
+            })
+            ->where('status', '!=', 'completed')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-    
+
         return view('livewire.admin.tabel-order', [
             'orders' => $orders,
         ]);

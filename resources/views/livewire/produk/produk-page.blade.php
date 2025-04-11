@@ -11,7 +11,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <aside class="hidden md:block col-span-1 bg-gray-100 p-4 rounded-lg h-96">
+        <aside class="hidden md:block col-span-1 bg-gray-100 p-4 rounded-lg h-min">
             <h3 class="text-lg font-semibold mb-3">Filters</h3>
     
             <div class="mb-4">
