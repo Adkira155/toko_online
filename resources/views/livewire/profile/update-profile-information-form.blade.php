@@ -40,6 +40,9 @@ new class extends Component
 
         $user->save();
 
+        // Flash message untuk notifikasi
+        session()->flash('message', 'Profil berhasil diperbarui.');
+
         $this->dispatch('profile-updated', name: $user->name);
     }
 
