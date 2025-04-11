@@ -39,10 +39,11 @@
                         @error('comment') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
-                    <button class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out font-semibold">Kirim Review</button>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out font-semibold">Kirim Review</button>
                 </form>
             @endguest
         </div>
+        @endif
 
         <div class="lg:col-span-3 space-y-3"> {{-- kanan --}}
             @foreach ($reviews as $review)
@@ -55,6 +56,15 @@
                         @if (Auth::check() && Auth::user()->role === 'admin')
                             <button class="text-sm text-orange-500 hover:underline mt-1" wire:click="reply({{ $review->id }})">Balas</button>
                         @endif
+                        @if (Auth::check() && Auth::user()->role === 'user')
+                            <button 
+                                wire:click="deleteReview({{ $review->id }})" 
+                                class="text-sm text-red-600 hover:underline mt-1"
+                                onclick="return confirm('Yakin ingin menghapus komentar ini?')"
+                                >
+                            Hapus
+                            </button>
+                            @endif
                     </div>
                     <p class="text-gray-700 leading-relaxed">{{ $review->comment }}</p>
 
@@ -79,9 +89,20 @@
                         <div class=" mt-3 border-l-4 border-orange-400 pl-4 bg-gray-100 rounded-lg p-3">
                             <div class="flex justify-between items-center mb-1">
                                 <strong class="text-gray-800">{{ $reply->username }}</strong>
-                                <small class="text-gray-500">{{ $reply->created_at->format('d M Y H:i') }}</small>
+                                
+                                @if (Auth::check() && Auth::user()->role === 'admin')
+                                <button 
+                                wire:click="deleteReply({{ $reply->id }})"
+                                class="text-sm text-red-600 hover:underline mt-1"
+                                onclick="return confirm('Yakin ingin menghapus balasan ini?')"
+                            >
+                                Hapus
+                            </button>
+                            
+                                @endif
                             </div>
-                            <p class="text-gray-700 leading-relaxed">{{ $reply->comment }}</p>
+                            <small class="text-gray-500">{{ $reply->created_at->format('d M Y H:i') }}</small>
+                            <p class="text-gray-700 leading-relaxed mt-4">{{ $reply->comment }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -90,17 +111,23 @@
     </div>
 </div>
 
+<script src="//unpkg.com/alpinejs" defer></script>
+
 <script>
     document.addEventListener('livewire:load', function () {
         Livewire.on('notify', message => {
             let notif = document.getElementById('notification');
             notif.textContent = message;
             notif.classList.remove('hidden');
-
-            // Notifikasi hilang otomatis setelah 3 detik
             setTimeout(() => {
                 notif.classList.add('hidden');
             }, 3000);
         });
     });
+
+    function confirmDelete(reviewId) {
+        if (confirm('Yakin ingin menghapus komentar ini?')) {
+            Livewire.emit('deleteReview', reviewId);
+        }
+    }
 </script>
