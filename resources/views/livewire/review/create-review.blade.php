@@ -13,7 +13,13 @@
     </div>
 
     @if (session()->has('success'))
-        <div id="notification" class="bg-orange-500 text-white px-4 py-3 rounded-lg mb-4 shadow-md">
+        <div 
+            x-data="{ show: true }" 
+            x-show="show" 
+            x-init="setTimeout(() => { show = false; window.location.reload(); }, 3000)" 
+            x-transition 
+            class="bg-orange-500 text-white px-4 py-3 rounded-lg mb-4 shadow-md"
+        >
             {{ session('success') }}
         </div>
     @endif
@@ -43,7 +49,7 @@
                 </form>
             @endguest
         </div>
-        @endif
+    
 
         <div class="lg:col-span-3 space-y-3"> {{-- kanan --}}
             @foreach ($reviews as $review)
