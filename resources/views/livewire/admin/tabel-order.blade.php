@@ -137,8 +137,10 @@
                         <h3 class="text-lg font-semibold mb-4">Informasi Pengiriman</h3>
                         <div class="space-y-2">
                             <p class="text-gray-600"><strong>Alamat Pengiriman:</strong> {{ $selectedOrder->alamat }}</p>
-                            {{-- <p class="text-gray-600"><strong>Provinsi Tujuan:</strong> {{ $this->getProvinceName($order->id_provinsi) }}</p>
-                            <p class="text-gray-600"><strong>Kota Tujuan:</strong> {{ $this->getCityName($order->id_provinsi, $order->id_kota) }}</p> --}}
+                            
+                            <p class="text-gray-600"><strong>Provinsi Tujuan:</strong> {{ $this->getProvinceName($selectedOrder->id_provinsi) }}</p>
+                            <p class="text-gray-600"><strong>Kota Tujuan:</strong> {{ $this->getCityName($selectedOrder->id_provinsi, $selectedOrder->id_kota) }}</p>
+                            
                             <p class="text-gray-600"><strong>Catatan:</strong> {{ $selectedOrder->catatan }}</p>
                         </div>
                     </div>

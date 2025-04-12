@@ -131,7 +131,7 @@ class Index extends Component
                 'status' => 'paid',
                 'courier' => $this->courier,
                 'ongkir' => $this->ongkir,
-                'invoice' => 'ORD-' . Str::random(10), // Generate invoice number
+                'invoice' => 'ORD-' . Str::random(10), // Generate Kode Invoice
             ]);
 
             $items = [];

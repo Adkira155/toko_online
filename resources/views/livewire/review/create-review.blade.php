@@ -13,7 +13,13 @@
     </div>
 
     @if (session()->has('success'))
-        <div id="notification" class="bg-orange-500 text-white px-4 py-3 rounded-lg mb-4 shadow-md">
+        <div 
+            x-data="{ show: true }" 
+            x-show="show" 
+            x-init="setTimeout(() => { show = false; window.location.reload(); }, 3000)" 
+            x-transition 
+            class="bg-orange-500 text-white px-4 py-3 rounded-lg mb-4 shadow-md"
+        >
             {{ session('success') }}
         </div>
     @endif
@@ -27,11 +33,8 @@
                 <form wire:submit.prevent="submit">
                     <input type="hidden" wire:model="produk_id" value="{{ $produk->id }}">
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-semibold mb-2">Username</label>
-                        <input type="text" class="form-control w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" wire:model="username" value="{{ Auth::user()->name }}">
-                        @error('username') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                    </div>
+                    {{-- Username jadi label --}}
+                    <p class="text-gray-700 font-semibold mb-2">Username: {{ Auth::user()->name }}</p>
 
                     <div class="mb-4">
                         <label class="block text-gray-700 font-semibold mb-2">Komentar</label>
@@ -53,18 +56,23 @@
                             <strong class="text-orange-600 block">{{ $review->username }}</strong>
                             <small class="text-gray-500">{{ $review->created_at->format('d M Y H:i') }}</small>
                         </div>
+
+                        {{-- Balas --}}
                         @if (Auth::check() && Auth::user()->role === 'admin')
                             <button class="text-sm text-orange-500 hover:underline mt-1" wire:click="reply({{ $review->id }})">Balas</button>
                         @endif
-                        @if (Auth::check() && Auth::user()->role === 'user')
+
+                        {{-- Hapus --}}
+                        @if (Auth::check() && Auth::user()->role === 'user' && $review->username === Auth::user()->name)
                             <button 
                                 wire:click="deleteReview({{ $review->id }})" 
                                 class="text-sm text-red-600 hover:underline mt-1"
                                 onclick="return confirm('Yakin ingin menghapus komentar ini?')"
-                                >
-                            Hapus
+                            >
+                                Hapus
                             </button>
-                            @endif
+                        @endif
+
                     </div>
                     <p class="text-gray-700 leading-relaxed">{{ $review->comment }}</p>
 

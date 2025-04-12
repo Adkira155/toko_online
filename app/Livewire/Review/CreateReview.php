@@ -34,7 +34,9 @@ class CreateReview extends Component
 
     public function submit()
     {
-        $this->validate();
+        $this->validate([
+            'comment' => 'required|string',
+        ]);
     
         if (!$this->produk_id) {
             session()->flash('error', 'Terjadi kesalahan: Produk tidak ditemukan.');
@@ -43,16 +45,16 @@ class CreateReview extends Component
     
         Review::create([
             'produk_id' => $this->produk_id,
-            'parent_id' => $this->parent_id,
-            'username' => $this->username,
+            'parent_id' => null,
+            'username' => auth()->user()->name,
             'comment' => $this->comment,
         ]);
-
+    
         session()->flash('success', 'Komentar berhasil dikirim!');
         $this->dispatch('notify', 'Komentar berhasil dikirim!');
-    
-        $this->reset(['comment', 'parent_id']); 
+        $this->reset(['comment', 'parent_id']);
     }
+    
 
     public function render()
     {
@@ -98,37 +100,61 @@ class CreateReview extends Component
         $this->replyComment = '';
     }
 
+//     public function deleteReview($id)
+// {
+//     $review = Review::find($id);
+
+//     if (!$review) {
+//         session()->flash('error', 'Komentar tidak ditemukan.');
+//         return;
+//     }
+
+//     // Pastikan hanya komentar utama yang dihapus dengan balasannya
+//     if ($review->parent_id === null) {
+//         DB::transaction(function () use ($review) {
+//             // Hapus semua balasan
+//             Review::where('parent_id', $review->id)->delete();
+//             // Hapus komentar utama
+//             $review->delete();
+//         });
+//         session()->flash('success', 'Komentar dan balasan berhasil dihapus.');
+//     }
+// }
+
     public function deleteReview($id)
-{
-    $review = Review::find($id);
+    {
+        $review = Review::find($id);
 
-    if (!$review) {
-        session()->flash('error', 'Komentar tidak ditemukan.');
-        return;
+        if (!$review) {
+            session()->flash('error', 'Komentar tidak ditemukan.');
+            return;
+        }
+
+        if (auth()->user()->role === 'user' && $review->username !== auth()->user()->name) {
+            abort(403, 'Kamu tidak memiliki izin untuk menghapus komentar ini.');
+        }
+
+        if ($review->parent_id === null) {
+            DB::transaction(function () use ($review) {
+                // Hapus balasan
+                Review::where('parent_id', $review->id)->delete();
+                $review->delete();
+            });
+            session()->flash('success', 'Komentar dan balasan berhasil dihapus.');
+        }
     }
 
-    // Pastikan hanya komentar utama yang dihapus dengan balasannya
-    if ($review->parent_id === null) {
-        DB::transaction(function () use ($review) {
-            // Hapus semua balasan
-            Review::where('parent_id', $review->id)->delete();
-            // Hapus komentar utama
-            $review->delete();
-        });
-        session()->flash('success', 'Komentar dan balasan berhasil dihapus.');
-    }
-}
-protected $listeners = ['deleteReply'];
+    protected $listeners = ['deleteReply'];
 
-public function deleteReply($replyId)
-{
-    $reply = Review::find($replyId);
-    
-    if ($reply) {
-        $reply->delete();
-        session()->flash('success', 'Balasan berhasil dihapus.');
+    public function deleteReply($replyId)
+    {
+        $reply = Review::find($replyId);
+        
+        if ($reply) {
+            $reply->delete();
+            session()->flash('success', 'Balasan berhasil dihapus.');
+        }
     }
-}
 
 
 }

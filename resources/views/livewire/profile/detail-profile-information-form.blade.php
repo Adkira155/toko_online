@@ -184,7 +184,7 @@ new class extends Component
                 <x-input-error class="mt-2" :messages="$errors->get('nomor')" />
             </div>
          
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 mt-4">
                 <x-primary-button>{{ __('Simpan') }}</x-primary-button>
                     @if (session()->has('message'))
                         <div x-data="{ show: true }" 
