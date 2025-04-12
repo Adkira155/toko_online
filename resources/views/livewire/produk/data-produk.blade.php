@@ -3,7 +3,7 @@
         @foreach ($produks as $p)
         <div class="bg-white shadow-md rounded-xl hover:scale-105 hover:shadow-lg transition-transform duration-300">
             <a href="{{ route('produk.detail', ['id' => $p->id]) }}" wire:navigate>
-                <img src="{{ $p->image }}" alt="Product 1" class="h-60 w-full object-cover rounded-t-xl" />
+                <img src="{{ asset('images/' . $p->image) }}" alt="Product 1" class="h-60 w-full object-cover rounded-t-xl" />
                 <div class="px-4 py-3">
                     <h2 class="text-lg font-bold text-black truncate">{{ $p->nama_produk }}</h2>
                     <p class="text-gray-400 text-sm uppercase mt-2">{{ $p->deskripsi }}</p>

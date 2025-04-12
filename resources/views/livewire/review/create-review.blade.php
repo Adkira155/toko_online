@@ -43,7 +43,7 @@
                 </form>
             @endguest
         </div>
-        @endif
+        
 
         <div class="lg:col-span-3 space-y-3"> {{-- kanan --}}
             @foreach ($reviews as $review)

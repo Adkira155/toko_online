@@ -4,7 +4,7 @@
         <input type="text" wire:model.debounce.500ms="search" placeholder="Cari produk..."
         class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
     
-        <button wire:click="searchProduk" 
+        <button wire:click="applyFilter"
             class="ml-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
             Cari
         </button>
