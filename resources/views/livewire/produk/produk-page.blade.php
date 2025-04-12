@@ -1,14 +1,16 @@
 <div class="bg-white px-5">
+
     <!-- 🔎 Search Bar -->
-    <div class="mb-6 flex items-center">
-        <input type="text" wire:model.debounce.500ms="search" placeholder="Cari produk..."
+     <div class="mb-6 flex items-center">
+        <input type="text" wire:model="search" placeholder="Cari produk..."
         class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
     
-        <button wire:click="searchProduk" 
+        <button wire:click="search" 
             class="ml-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
             Cari
         </button>
     </div>
+
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <aside class="hidden md:block col-span-1 bg-gray-100 p-4 rounded-lg h-min">

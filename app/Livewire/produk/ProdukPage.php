@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire\Produk;
 
 use App\Models\Produk;
@@ -28,7 +29,7 @@ class ProdukPage extends Component
 
     public function mount()
     {
-        $this->kategori = Kategori::all();
+        $this->kategori = Kategori::all(); //panggil kategori
     }
 
     // Reset ke halaman 1 saat filter berubah
@@ -49,19 +50,19 @@ class ProdukPage extends Component
     }
 
     public function updatedKategoriInputs()
-{
-    $this->resetPage();
-}
+    {
+        $this->resetPage();
+    }
 
-public function updatedHargainputs()
-{
-    $this->resetPage();
-}
-
+    public function updatedHargainputs()
+    {
+        $this->resetPage();
+    }
+    
 
     public function render()
     {
-        $query = Produk::query()->where('status', 'aktif');
+        $query = Produk::query()->where('status', 'aktif')->where('stok', '>', 0); // Jika stok 0 maka produk tidak muncul
 
         if (!empty($this->search)) {
             $search = trim($this->search);
